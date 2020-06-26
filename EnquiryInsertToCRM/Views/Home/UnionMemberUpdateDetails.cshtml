@@ -1,0 +1,257 @@
+﻿@model EnquiryInsertToCRM.Models.UnionMemberModel
+@{
+    ViewBag.Title = "Union Member Update Details";
+    Layout = "~/Views/Shared/_LayouteUnionMember.cshtml";
+}
+
+<div class="page-template-default page page-id-85 logged-in" data-template="base.twig" style="zoom: 1;">
+    <div class="site-wrap">
+        <header class="header layer layer__header layer__margin-top-large layer__margin-bottom-large" role="banner">
+            <div class="page-width">
+                <div class="col-md-12 warnig-note" style="display:none;">
+                    Note<span style="color:red;"> *</span>: Passed ClientID is not exist in CRM!
+                </div>
+                <div class="wrapper">
+                    <div class="header-logo">
+                        <a class="header-logo-link" href="https://www.unionshopper.com.au/" rel="home"></a>
+                    </div>
+                    <span class="header-space"></span>
+                    <nav id="nav-main" class="main-menu js-main-menu" role="navigation">
+                        <ul>
+                            <li class=" menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-90">
+                                <a target="" href="https://www.unionshopper.com.au/">Home</a>
+                            </li>
+                            <li class=" menu-item menu-item-type-post_type menu-item-object-page menu-item-88">
+                                <a target="" href="https://www.unionshopper.com.au/about/">About</a>
+                            </li>
+                            <li class=" menu-item menu-item-type-post_type menu-item-object-page menu-item-960">
+                                <a target="" href="https://www.unionshopper.com.au/benefits/">Benefits</a>
+                            </li>
+                            <li class=" menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-85 current_page_item menu-item-89">
+                                <a target="" href="https://www.unionshopper.com.au/contact/">Contact</a>
+                            </li>
+                            <li class=" menu-item menu-item-type-tml_action menu-item-object-logout menu-item-840">
+
+                            </li>
+                        </ul>
+                    </nav><!-- #nav -->
+
+                    <button class="header-mobile-menu-btn js-mobile-menu-btn"><i class="fas fa-bars"></i></button>
+
+                </div>
+
+            </div>
+        </header>
+        <section class="main-content" role="main">
+            <div class="layer layer__text_content layer__margin-top-none layer__margin-bottom-none">
+                <div class="page-width page-width__content">
+                    <article class="post-content" id="post-85">
+                        <div class="post-content--body">
+                            @using (Ajax.BeginForm("UnionMemberFormSubmit", "Home", new AjaxOptions { OnBegin = "OnBeginUnionMemberForm", OnSuccess = "OnSuccessUnionMemberForm", OnFailure = "OnFailureUnionMemberForm", LoadingElementId = "iLoading" }, new { @id = "UnionMemberForm" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.HiddenFor(m => m.key)
+                                @Html.HiddenFor(m => m.Addresskey)
+                                @Html.HiddenFor(m => m.ClientId)
+                                @Html.HiddenFor(m => m.IsInvalidClientId)
+                                @Html.HiddenFor(m => m.UnionName, new { @id = "UnionName" })
+                                @Html.HiddenFor(m => m.strDirectOffersName, new { @id = "strDirectOffersName" })
+                                <div class="contact-form">
+                                    <div class="row">
+                                        <div class="col-lg-11 col-lg-11 col-lg-offset-4 col-lg-offset-0">
+                                            <div class="row">
+                                                <div class="col-lg-6 form-group ">
+                                                    <label>First Name <span style="color:red;">*</span></label>
+                                                    @Html.TextBoxFor(m => m.firstname, new { @class = "form-control", @maxlength = "100" })
+                                                    @Html.ValidationMessageFor(m => m.firstname, "", new { @class = "text-danger" })
+                                                </div>
+                                                <div class="col-lg-6 form-group ">
+                                                    <label>Last Name <span style="color:red;">*</span></label>
+                                                    @Html.TextBoxFor(m => m.lastname, new { @class = "form-control", @maxlength = "100" })
+                                                    @Html.ValidationMessageFor(m => m.lastname, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-9 form-group ">
+                                                    <label>E-mail <span style="color:red;">*</span></label>
+                                                    @Html.TextBoxFor(m => m.email, new { @class = "form-control", @maxlength = "40" })
+                                                    @Html.ValidationMessageFor(m => m.email, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6 form-group">
+                                                    <label>Address Line 1 @*<span style="color:red;">*</span>*@</label>
+                                                    @Html.TextBoxFor(m => m.address, new { @class = "form-control", @maxlength = "200" })
+                                                    @Html.ValidationMessageFor(m => m.address, "", new { @class = "text-danger" })
+                                                </div>
+                                                <div class="col-lg-6 form-group">
+                                                    <label>Suburb @*<span style="color:red;">*</span>*@</label>
+                                                    @Html.TextBoxFor(m => m.suburb, new { @class = "form-control", @maxlength = "20" })
+                                                    @Html.ValidationMessageFor(m => m.suburb, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6 form-group">
+                                                    <label>State @*<span style="color:red;">*</span>*@</label>
+                                                    @Html.TextBoxFor(m => m.state, new { @class = "form-control", @maxlength = "20" })
+                                                    @Html.ValidationMessageFor(m => m.state, "", new { @class = "text-danger" })
+                                                </div>
+                                                <div class="col-lg-6 form-group">
+                                                    <label>Post Code @*<span style="color:red;">*</span>*@</label>
+                                                    @Html.TextBoxFor(m => m.ZipCode, new { @class = "form-control", @maxlength = "15" })
+                                                    @Html.ValidationMessageFor(m => m.ZipCode, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6 form-group">
+                                                    <label>Mobile @*<span style="color:red;">*</span>*@</label>
+                                                    @Html.TextBoxFor(m => m.mobile, new { @class = "form-control scpace-notallow", @maxlength = "15" })
+                                                    @Html.ValidationMessageFor(m => m.mobile, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6 form-group">
+                                                    <label>Home @*<span style="color:red;">*</span>*@</label>
+                                                    @Html.TextBoxFor(m => m.home, new { @class = "form-control scpace-notallow", @maxlength = "15" })
+                                                    @Html.ValidationMessageFor(m => m.home, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6 form-group">
+                                                    <label>Work @*<span style="color:red;">*</span>*@</label>
+                                                    @Html.TextBoxFor(m => m.work, new { @class = "form-control scpace-notallow", @maxlength = "15" })
+                                                    @Html.ValidationMessageFor(m => m.work, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <hr />
+                                                    <br />
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-9 form-group">
+                                                    <label>Union Name <span style="color:red;">*</span></label>
+                                                    @Html.DropDownListFor(m => m.UnionID, new SelectList(Model.lstUnionID, "key", "value", Model.UnionID ?? ""), "-- Select --", new { @id = "UnionID", @class = "form-control chosen-select" })
+                                                    @Html.ValidationMessageFor(m => m.UnionID, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6 form-group">
+                                                    <label>Your Union Member ID@*<span style="color:red;"> *</span>*@</label>
+                                                    @Html.TextBoxFor(m => m.UnionMemberID, new { @class = "form-control", @maxlength = "20" })
+                                                    @Html.ValidationMessageFor(m => m.UnionMemberID, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-12 form-group">
+                                                    <label>Would you like to receive our General Offers Email?</label>
+                                                    <div>
+                                                        <input type="radio" id="Yes" name="IsReceiveGeneralOffersEmail" value="true" @((Model.IsReceiveGeneralOffersEmail ?? false) == true ? "checked" : "")>
+                                                        <label class="rdo-label" for="Yes">Yes</label>
+                                                    </div>
+                                                    <div>
+                                                        <input type="radio" id="No" name="IsReceiveGeneralOffersEmail" value="false" @((Model.IsReceiveGeneralOffersEmail ?? false) == false ? "checked" : "")>
+                                                        <label class="rdo-label" for="No">No</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-12 form-group">
+                                                    <label>What Direct Offers would you like to see from Union Shopper?@*<span style="color:red;">*</span>*@</label>
+                                                    @if (Model.lstDirectOffers != null && Model.lstDirectOffers.Count > 0)
+                                                    {
+                                                        <div class="checkbox chk-DirectOffers" style="margin-top: 0!important;">
+                                                            <input id="ckbCheckAll" name="ckbCheckAll" value="" type="checkbox">
+                                                            <label for="ckbCheckAll" style="font-weight:bold!important;">Everything!</label>
+                                                        </div>
+                                                        foreach (var item in Model.lstDirectOffers)
+                                                        {
+                                                            <div class="checkbox chk-DirectOffers">
+                                                                <input id="@item.Key" name="chkDirectOffers" class="chk-all" value="@item.Key" type="checkbox" @(item.Selected == true ? "checked='checked'" : "")>
+                                                                <label for="@item.Key">@item.Value</label>
+                                                            </div>
+                                                        }
+                                                    }
+                                                    @Html.ValidationMessageFor(m => m.DirectOffers, "", new { @class = "text-danger" })
+                                                    @Html.TextBoxFor(m => m.DirectOffers, new { @id = "DirectOffers", @style = "opacity: 0;height:0;padding: 0;" })
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6 form-group">
+                                                    <label>Questions or Comments</label>
+                                                    @Html.TextAreaFor(m => m.comments, new { @class = "form-control", @row = "4" })
+                                                    @Html.ValidationMessageFor(m => m.comments, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-3 form-group">
+                                                    <button id="btnsubmit" type="submit" class="form-submit-button">Submit</button>
+                                                    <span id="spnImgProcessing" style="display: none; padding-top: 13px; text-transform: none; font-size:13px;" class="send-btn">
+                                                        <img src="/images/loader.gif" />&nbsp;&nbsp;Processing ...
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            }
+                        </div>
+                        <div class="text-center" id="divResponse" style="display:none;">
+                            <p style="text-align:center;">
+                                <img src="/images/check-icon.png" id="ImgSrcResponse" alt="" width="128" height="128">
+                            </p>
+                            <div style="text-align:center;">
+                                <h1 style="text-align:center;" id="h1Response">Thank You!</h1>
+                                <p style="text-align:center;" id="lblmsg"></p>
+                                <input type="button" class="form-submit-button" id="btnBack" value="Back" style="display:none;" />
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+        </section>
+        <footer class="footer layer layer__footer layer__padding-top-medium layer__padding-bottom-large">
+            <div class="page-width">
+
+                <div class="wrapper flex-grid">
+                    <div class="flex-grid-item">
+                        <img class="us-logo-img" src="/UnionShopperFiles/us-logo-white.png" alt="Union Shopper Logo">
+                    </div>
+                    <div class="copyright flex-grid-item">
+                        © Copyright 2019
+                    </div>
+                    <nav id="nav-legal" class="legal-menu flex-grid-item" role="navigation">
+                        <ul>
+                            <li class=" menu-item menu-item-type-post_type menu-item-object-page menu-item-865">
+                                <a target="" href="https://www.unionshopper.com.au/about/">About</a>
+                            </li>
+                            <li class=" menu-item menu-item-type-post_type menu-item-object-page menu-item-92">
+                                <a target="" href="https://www.unionshopper.com.au/terms-of-use/">Terms Of Use</a>
+                            </li>
+                            <li class=" menu-item menu-item-type-post_type menu-item-object-page menu-item-privacy-policy menu-item-175973">
+                                <a target="" href="https://www.unionshopper.com.au/privacy-policy/">Privacy Policy</a>
+                            </li>
+                            <li class=" menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-85 current_page_item menu-item-866">
+                                <a target="" href="https://www.unionshopper.com.au/contact/">Contact</a>
+                            </li>
+                        </ul>
+                    </nav><!-- #nav -->
+
+                </div>
+
+            </div>
+        </footer>
+    </div><!-- .site-wrap -->
+
+    <script type="text/javascript" src="/UnionShopperFiles/all-theme-scripts.min.js"></script>
+</div>
+
+
+

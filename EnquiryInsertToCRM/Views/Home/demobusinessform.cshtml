@@ -1,0 +1,80 @@
+﻿@model EnquiryInsertToCRM.Models.FormSubmissionsModel
+@{
+    ViewBag.Title = "jot form";
+}
+<style>
+    @@media (min-width: 992px) {
+        .container {
+            width: 500px;
+        }
+    }
+</style>
+
+<div class="container">
+    @using (Ajax.BeginForm("GetDemoBusinessFormSubmissionList", "Home", new AjaxOptions { OnBegin = "OnJotFormBeginInq", OnSuccess = "OnJotFormSuccessInq", OnFailure = "OnJotFormFailureInq", LoadingElementId = "iLoading" }, new { @id = "jotform2crm" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-lg-12 form-group">
+                @Html.DropDownList("form_id", new SelectList(ViewBag.ddFormList, "key", "value"), "-- Select Form --", new { @id = "form_id", @class = "form-control chosen-select" })
+                @Html.ValidationMessageFor(m => m.form_id, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-lg-12">
+                <label>Date range</label>
+                <div class="form-inline form-group">
+
+                    <div class="input-group" style="width:100%;">
+                        <input type="text" name="daterange" id="dateRange" autocomplete="off" class="form-control" />
+                        <span class="input-group-btn">
+                            <button type="button" id="btncalendar" class="btn btn-default">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 form-group text-center">
+                <button id="btnsubmit" type="submit" class="btn btn-sm btn-success rounded-0" style="width:60%;" title="Update">Update</button>
+                <span id="spnImgProcessing" style="display: none; padding-top: 13px; text-transform: none; font-size:13px;" class="send-btn">
+                    <img src="/images/loader.gif" />&nbsp;&nbsp;Processing ...
+                </span>
+            </div>
+        </div>
+    }
+</div>
+<div class="">
+    <div class="col-lg-12 form-group text-center">
+        <ul id="lblmsg"></ul>
+    </div>
+</div>
+@section scripts{
+<script>
+    $(document).ready(function () {
+        $('.chosen-select').chosen({ 'width': '100%', 'white-space': 'nowrap' });
+        $("#form_id").css("display", "block");
+        $("#form_id").css("visibility", "hidden");
+        $(".chosen-container").before("<label>JotForm List</label>")
+    });
+
+
+    $(function () {
+        $('#dateRange').daterangepicker({
+            autoUpdateInput: false,
+            locale: {
+                cancelLabel: 'Clear',
+                format: 'DD/MM/YYYY'
+            }
+        });
+        $('#dateRange').on('apply.daterangepicker', function (ev, picker) {
+            $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
+        });
+        $('#dateRange').on('cancel.daterangepicker', function (ev, picker) {
+            $(this).val('');
+        });
+        $('#btncalendar').click(function () {
+            $("#dateRange").trigger('click');
+        });
+    });
+
+</script>
+    }

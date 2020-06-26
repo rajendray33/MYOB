@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = " Greater Springfield ";
+    Layout = "~/Views/Shared/_LayouteNews.cshtml";
+}
+<div class="">
+    <div class="col-lg-8 col-lg-offset-3 form-group">
+        <h4>There was a problem with your submission. Errors have been highlighted below.</h4>
+        @*@if (ViewBag.inValidformrequest == "1")
+        {
+            <span style="color: red; font-size: 14px;display:block;">
+                <label>formname</label>: [ERRORS: You have request for invalid form.]
+            </span>
+        }
+        else
+        {*@
+            @foreach (var item in ViewContext.ViewData.ModelState)
+            {
+                if (item.Value.Errors.Any())
+                {
+                    <span style='color: red; font-size: 14px;display:block;'>
+                        @Html.Raw(string.Format("<label>{0}</label>: [ERRORS: {1}]", item.Key, item.Value.Errors.Select(x => x.ErrorMessage).FirstOrDefault()))
+                    </span>
+                }
+            }
+        @*}*@
+    </div>
+</div>
+

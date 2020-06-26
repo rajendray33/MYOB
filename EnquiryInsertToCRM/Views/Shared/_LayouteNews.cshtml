@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greater Springfield</title>
+    @Styles.Render("~/Content/css")
+    <link href="/Content/chosen.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" /
+</head>
+<body>
+    <div class="" style="background:#111;">
+        <br />
+        <div class="text-center ">
+            <h1>@ViewBag.pageheader</h1>
+        </div>
+        <br />
+    </div>
+    <br />
+    <div>
+        @RenderBody()
+    </div>
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="/Scripts/chosen.jquery.min.js"></script>
+    <!--Validation js-->
+    <script src="/Scripts/jquery-migrate-1.2.1.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.0/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="/Scripts/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/mvc/3.0/jquery.unobtrusive-ajax.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    @RenderSection("scripts", required: false)
+    
+</body>
+</html>

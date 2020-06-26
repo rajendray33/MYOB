@@ -1,0 +1,71 @@
+﻿@model IEnumerable<EnquiryInsertToCRM.Models.CustomerInfo>
+@{
+    ViewBag.Title = "";
+    Layout = null;
+}
+<div id="toolbar" class="form-horizontal">
+    <input type="hidden" id="Customercnt" value="@ViewBag.Customercnt" />
+    <input type="hidden" id="TodayCompanyNamecnt" value="@ViewBag.TodayCompanyName" />
+</div>
+<div class="table-responsive">
+    <table id="datatable-fixed-col" class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                @*<th style="display:block">UID</th>*@
+                @*<th>Display ID</th>*@
+                <th>Customer</th>
+                <th>DateTime</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                @*<th style="display:block">UID</th>*@
+                @*<th>Display ID</th>*@
+                <th>Customer</th>
+                <th>DateTime</th>
+            </tr>
+        </tfoot>
+        <tbody>
+            @if (Model != null && Model.Count() > 0)
+            {
+                foreach (var item in Model.OrderByDescending(s=>s.LastModified))
+                {
+                    <tr>
+                        @*<td>
+                            @item.Uid
+                        </td>*@
+                        @*<td>
+                            @item.DisplayId
+                        </td>*@
+                        <td>@item.CompanyName</td>
+                        <td>                             
+                            @if (item.LastModified != null) {
+                                if (item.LastModified.ToString() != "01/01/0001 00:00:00")
+                                {
+                                    @item.LastModified
+                                }
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var table = $('#datatable-fixed-col').DataTable({
+            "stripeClasses": [],
+            paging: true,
+            //"pageLength": 12,
+            "pagingType": "full_numbers",
+            "lengthChange": true,
+            "info": true,
+            "order": false,
+            dom: "<'row'<'col-sm-3'l><'col-sm-3'f><'col-sm-6'p>>" +
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-5'i><'col-sm-7'p>>"
+        });
+    });
+</script>

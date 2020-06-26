@@ -1,0 +1,9 @@
+D:\UpWOrk\Development\30052019\EnquiryInsertToCRM\JotForm\bin\Debug\JotForm.dll
+D:\UpWOrk\Development\30052019\EnquiryInsertToCRM\JotForm\bin\Debug\JotForm.pdb
+D:\UpWOrk\Development\30052019\EnquiryInsertToCRM\JotForm\bin\Debug\Newtonsoft.Json.dll
+D:\UpWOrk\Development\30052019\EnquiryInsertToCRM\JotForm\bin\Debug\Newtonsoft.Json.xml
+D:\UpWOrk\Development\30052019\EnquiryInsertToCRM\JotForm\obj\Debug\JotForm.csprojAssemblyReference.cache
+D:\UpWOrk\Development\30052019\EnquiryInsertToCRM\JotForm\obj\Debug\JotForm.csproj.CoreCompileInputs.cache
+D:\UpWOrk\Development\30052019\EnquiryInsertToCRM\JotForm\obj\Debug\JotForm.csproj.CopyComplete
+D:\UpWOrk\Development\30052019\EnquiryInsertToCRM\JotForm\obj\Debug\JotForm.dll
+D:\UpWOrk\Development\30052019\EnquiryInsertToCRM\JotForm\obj\Debug\JotForm.pdb

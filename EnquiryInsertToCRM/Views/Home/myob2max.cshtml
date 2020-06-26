@@ -1,0 +1,229 @@
+﻿@model IEnumerable<EnquiryInsertToCRM.Models.MyObServiceSaleModel>
+@{
+    ViewBag.Title = "";
+    Layout = null;
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<!-- DataTables -->
+@*<link href="https://essentials.myob.com.au/LA/frontend/vendor-fd707ac5a6b5f1d0142528878fdb7d4b.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="https://essentials.myob.com.au/LA/frontend/application-65bd8c1ee5d0824e1cda8de4667fee57.css" media="all" rel="stylesheet" type="text/css" />
+    <script src="https://essentials.myob.com.au/LA/frontend/head-9433d35233d9a0f91ab57c2af44be978.js" type="text/javascript"></script>*@
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+<link href="/assets/css/application.css" rel="stylesheet" />
+<link href="/assets/css/vendor.css" rel="stylesheet" />
+
+@*<div class="content-page">
+        <div class="content">
+            <input type="hidden" id="client_id" value="@ViewBag.client_id" />
+            <input type="hidden" id="myobid" value="@ViewBag.myobid" />
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 text-right" style="margin-top:15px;">
+                        <input type="button" id="btnUpdateMYOBIDintoCRM" value="Update MYOBID into CRM" class="btn btn-primary" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h4 class="m-t-0 header-title"><b>Sales history</b></h4>
+                        <table id="datatable-fixed-col" class="table-alt table-sortable">
+                            <thead>
+                                <tr>
+                                    <th>Reference</th>
+                                    <th>Customer</th>
+                                    <th>Issued</th>
+                                    <th>Type</th>
+                                    <th class="text-right">Total</th>
+                                    <th class="text-right">Due</th>
+                                    <th>Status</th>
+                                    <th>Sent</th>
+                                </tr>
+                            </thead>
+
+                            <tbody class="tbody">
+                                @if (Model != null && Model.Count() > 0)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <th scope="row">@item.invoiceNumber</th>
+                                            <td>@item.contactModel.name</td>
+                                            <td>@item.issueDate</td>
+                                            <td></td>
+                                            <td>@item.total</td>
+                                            <td>@item.amountDue</td>
+                                            <td>@item.displayStatus</td>
+                                            <td></td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*@
+<div id="outer-wrapper">
+    <div id="wrapper">
+        <input type="hidden" id="client_id" value="@ViewBag.client_id" />
+        <input type="hidden" id="myobid" value="@ViewBag.myobid" />
+        <div id="pageContents" class="container">
+            <div id="transactionHistory">
+                <div class="loadingSpinner" style="display: none;"></div>
+                <div id="page" style="display: block;">
+                    <div id="pageContentHeader" class="page-head">
+                        <div class="page-head__title">
+                            <h1>Sales history</h1>
+                        </div>
+                    </div>
+                    <div id="itemListContainer">
+                        <div id="toolbar" class="form-horizontal">
+                            <div class="form-group">
+                                <div class="col-xs-8">
+                                    <div class="form-group">
+                                        <a href="/Home/GetAuthontication?key=@ViewBag.client_id&myobid=@ViewBag.myobid&IsUpdateMYOBIDintoCRM=1">
+                                            <input type="button" id="btnUpdateMYOBIDintoCRM" value="Update MYOBID into CRM" class="btn btn-primary" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-xs-8">
+                                    <div class="form-group">
+                                        <label class="col-xs-8 control-label" for="dateRange">Date range: </label>
+                                        <div class="col-xs-16 form-control-wrapper" data-id="" data-widget="Select" data-name="dateRange" data-collection="dateRanges" data-name-field="name" data-value-field="id" data-default-name="All dates" data-default-value="all">
+                                            <select id="dateRange" name="dateRange" class="form-control">
+                                                <option value="all">All dates</option>
+                                                <option value="today">Today</option>
+                                                <option value="startOfThisWeek">This week</option>
+                                                <option value="startOfThisMonth">This month</option>
+                                                <option value="startOfThisQuarter" selected="selected">This quarter</option>
+                                                <option value="startOfCurrentFinancialYear">This financial year</option>
+                                            </select>
+                                        </div>                                        
+                                    </div>
+
+                                </div>
+                                <div class="col-xs-8">
+                                    <div class="form-group">
+                                        <label class="col-xs-8 control-label" for="search">Search:</label>
+                                        <div class="col-xs-16 form-control-wrapper" data-id="" data-widget="TextInput" data-name="search">
+                                            <input id="search" name="search" type="text" class="form-control" value="" autocomplete="off" delay="off">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="table">
+                            <table id="datatable-fixed-col" class="table-alt table-sortable">
+                                <thead>
+                                    <tr>
+                                        <th class="sorting_asc">Reference</th>
+                                        <th>Customer</th>
+                                        <th>Date</th>
+                                        <th>Type</th>
+                                        <th>Total</th>
+                                        <th>Payment</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="tbody">
+                                    @if (Model != null && Model.Count() > 0)
+                                    {
+                                        string strClass = "";
+                                        foreach (var item in Model)
+                                        {
+                                            strClass = "";
+                                            <tr>
+                                                <td>@item.invoiceNumber</td>
+                                                <td> @if (item.contactModel != null) {
+                                                    @Html.Raw(item.contactModel.name);
+                                                }</td>
+                                                <td> @Convert.ToDateTime(item.issueDate).ToString("dd/MM/yyyy")</td>
+                                                <td>@item.type</td>
+                                                <td class="text-right">@item.total</td>
+                                                @if (item.displayStatus == "Paid")
+                                                {
+                                                    strClass = "status paid";
+                                                }
+                                                <td></td>
+                                                <td class="@strClass">@item.displayStatus</td>
+                                            </tr>
+                                        }
+                                    }
+                                    else {
+                                            <tr><td colspan="7" class="center">There are no transactions.</td></tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr class="totalLine">
+                                        <td colspan="4"></td>
+                                        <td class="total">0.00</td>
+                                        <td class="total"></td>
+                                        <td></td>
+
+                                    </tr>
+                                 </tfoot>
+                            </table>
+                        </div>
+                        <div id="pagination" class="pagination"><div></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="spotLight" class="container"></div>
+    </div>
+    <div class="clear push-footer-down"></div>
+</div>
+<script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<script>
+   
+    var strUrl = 'http://btc.modelbuzz.in/home/GetAuthontication?key=' + $("#client_id").val() + '&myobid=' + $("#myobid").val();
+    window.history.pushState("", "", strUrl);
+    $(document).ready(function () {
+        @*$('#dateRange').change(function () {
+            window.location.href =  "/Home/GetAuthontication?key=@ViewBag.client_id&myobid=@ViewBag.myobid&IsUpdateMYOBIDintoCRM=0&strDateRange="+$(this).val();            
+        });*@
+       var table = $('#datatable-fixed-col').DataTable({
+                paging: false,
+                "lengthChange": false,
+                "info": false,
+                "footerCallback": function (row, data, start, end, display) {
+                    var api = this.api(), data;
+                    // Remove the formatting to get integer data for summation
+                    var intVal = function (i) {
+                        return typeof i === 'string' ?
+                            i.replace(/[\$,]/g, '') * 1 :
+                            typeof i === 'number' ?
+                                i : 0;
+                    };
+
+                    // Total over all pages
+                    total = api
+                        .column(4)
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+
+                    // Total over this page
+                    pageTotal = api
+                        .column(4, { page: 'current' })
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+
+                    // Update footer
+                    $(api.column(4).footer()).html(
+                        pageTotal
+                    );
+                }
+        });
+        $("#datatable-fixed-col_filter").hide();
+        $('#search').keyup(function () {
+            table.search($(this).val()).draw();
+        })        
+       
+    });
+</script>

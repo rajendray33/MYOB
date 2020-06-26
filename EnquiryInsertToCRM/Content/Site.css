@@ -1,0 +1,61 @@
+﻿body {    
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+    
+}
+@media (min-width: 992px) {
+    .container {
+        width: 350px;
+    }
+}
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+/*input,
+select,
+textarea {
+    max-width: 280px;
+}*/
+h1 {
+    color: #fff;
+    font-size: 22px;
+    letter-spacing: 12px;
+}
+/*.form-submit {
+margin-top: 80px;
+}*/
+/*.contact-form input {
+    margin-bottom: 5px;
+    margin-top: 20px;
+}
+input, select, textarea {
+    max-width: 350px;
+}*/
+/*.contact-form {
+    max-width: 350px;
+    width: 100%;
+    margin: 0 auto;
+}*/
+ul, ol {
+    list-style: none !important;
+}
+
+.m-0 {
+margin : 0;
+}
+.p-0 {
+    padding: 0;
+}
+.p-l-5 {
+    padding-left: 15px;
+}

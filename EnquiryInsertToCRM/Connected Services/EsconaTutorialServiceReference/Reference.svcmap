@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="85b206cf-fa57-4d40-8640-82309288a67d" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://nomorehack12345.zapto.org:6060/maximizerwebdata/data.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="Data.xsd" MetadataType="Schema" ID="9bf085e5-07f5-4c75-826f-ad56928da949" SourceId="1" SourceUrl="http://nomorehack12345.zapto.org:6060/MaximizerWebData/Data.svc?xsd=xsd2" />
+    <MetadataFile FileName="Data1.xsd" MetadataType="Schema" ID="7d911a72-fa11-4593-ba7c-f05c351878ba" SourceId="1" SourceUrl="http://nomorehack12345.zapto.org:6060/MaximizerWebData/Data.svc?xsd=xsd5" />
+    <MetadataFile FileName="Data2.xsd" MetadataType="Schema" ID="437592cd-5c68-4b83-b7ae-cd248c12ce97" SourceId="1" SourceUrl="http://nomorehack12345.zapto.org:6060/MaximizerWebData/Data.svc?xsd=xsd1" />
+    <MetadataFile FileName="Data3.xsd" MetadataType="Schema" ID="287eddbb-566c-433a-a2ab-8be577497825" SourceId="1" SourceUrl="http://nomorehack12345.zapto.org:6060/MaximizerWebData/Data.svc?xsd=xsd3" />
+    <MetadataFile FileName="Data.disco" MetadataType="Disco" ID="177efab9-96ad-4d51-8f18-a8a08d02bdf9" SourceId="1" SourceUrl="http://nomorehack12345.zapto.org:6060/MaximizerWebData/Data.svc?disco" />
+    <MetadataFile FileName="Data.wsdl" MetadataType="Wsdl" ID="bf4a901e-57f7-47a1-8e51-3efd0e057e9a" SourceId="1" SourceUrl="http://nomorehack12345.zapto.org:6060/MaximizerWebData/Data.svc?wsdl" />
+    <MetadataFile FileName="Data4.xsd" MetadataType="Schema" ID="1e82e07d-3e27-46ef-8afc-76bdf381e1ae" SourceId="1" SourceUrl="http://nomorehack12345.zapto.org:6060/MaximizerWebData/Data.svc?xsd=xsd4" />
+    <MetadataFile FileName="Data5.xsd" MetadataType="Schema" ID="fae871db-e66d-4a1e-aff7-ee049751b8d5" SourceId="1" SourceUrl="http://nomorehack12345.zapto.org:6060/MaximizerWebData/Data.svc?xsd=xsd6" />
+    <MetadataFile FileName="Data6.xsd" MetadataType="Schema" ID="1d5e41ba-70f8-44b6-810b-8b73eb6aff4a" SourceId="1" SourceUrl="http://nomorehack12345.zapto.org:6060/MaximizerWebData/Data.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

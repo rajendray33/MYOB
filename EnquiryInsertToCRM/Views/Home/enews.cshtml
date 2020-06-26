@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "Greater Springfield";
+    Layout = "~/Views/Shared/_LayouteNews.cshtml";
+}
+
+<div class="">
+    <div class="col-lg-12 form-group text-center">
+        @if (!string.IsNullOrEmpty(ViewBag.SuccessStage))
+        {
+            string strResponse = Convert.ToString(ViewBag.SuccessStage);
+            if (strResponse == "noteinsertsuccess")
+            {
+                <span style='color:green;font-size: 14px;display:block;'>Record successfully inserted in CRM.</span>
+            }
+            else if (strResponse == "noteupdatesuccess")
+            {
+                <span style='color:green;font-size: 14px;display:block;'>Record already existing with this email id and updated successfully in CRM.</span>
+            }
+            else if (strResponse == "insertsuccessSendingmailfailed")
+            {
+                <span style='color:green;font-size: 14px;display:block;'>Record successfully inserted in CRM.</span> <span style='color: red; font-size: 14px;display:block;margin-top: 5px;'>Sending mail failed.</span>
+            }
+            else if (strResponse == "updatesuccessSendingmailfailed")
+            {
+                <span style='color:green;font-size: 14px;display:block;'>Record already existing with this email id and updated successfully in CRM.</span> <span style='color: red; font-size: 14px;display:block;margin-top: 5px;'>Sending mail failed.</span>
+            }
+            else
+            {
+                <span style='color: red; font-size: 14px;display:block;'>Some internal error occurred.</span>
+            }
+        }
+    </div>
+</div>
+
+
+
+

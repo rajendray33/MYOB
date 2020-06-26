@@ -1,0 +1,62 @@
+&InterestedInType=Office
+
+&InterestInLeaseOrSale=Sale
+
+how did you hear about us (already a field)
+
+&InspectionRequest=Yes
+
+&InformationPackRequest=Yes
+
+
+formname=retail-and-hospitality-leasing
+gsgeneralenews=yes
+gsnewsandviews=yes
+firstname=jes
+lastname=kelly
+email=test011208201@gmail.com
+country=australia
+comments=test%20comment%20123456
+
+GreaterSpringfieldRetailBrochure=YES
+HOWDIDYOUHEARABOUTUS=YES
+
+
+interestedintype  == Udf/$TYPEID(229)
+interestinleaseorsale ==  Udf/$TYPEID(230) 
+howdidyouhearaboutus == Udf/$TYPEID(217)
+inspectionrequest == Udf/$TYPEID(231)
+informationpackrequest== Udf/$TYPEID(232)
+gsbrochurerequest == Udf/$TYPEID(233)
+gstitle == Udf/$TYPEID(237)
+gsupdaterequest == Udf/$TYPEID(235)
+gsopportunitiesrequest == Udf/$TYPEID(236)
+learningcoalitioncommittee == Udf/$TYPEID(234)
+GS Receive Latest News == Udf/$TYPEID(238)
+
+=============================
+a-learning-city
+https://www.greaterspringfield.com.au/enews/
+
+https://btc.modelbuzz.in/home/eNewsPost?formname=a-learning-city&firstname=jhon&lastname=deny&email=test0113082019@gmail.com&phone=02151&howdidyouhearaboutus=Referral&gsupdaterequest=Yes&gsbrochurerequest=Yes&learningcoalitioncommittee=Yes&gsopportunitiesrequest=Yes
+
+=============================
+medical-specialist-office-suites-lease
+
+https://www.greaterspringfield.com.au/health/medical-specialist-office-suites-lease/
+
+https://btc.modelbuzz.in/home/eNewsPost?formname=medical-specialist-office-suites-lease&firstname=jess&lastname=lida&email=test0213082019@gmail.com&phone=02151&howdidyouhearaboutus=Referral&postcode=01245&title=medical%20specialist%20office%20suites%20lease&interestinleaseorsale=sale&interestedintype=Office
+
+=============================
+springfield-central-office-sales-leasing
+
+https://btc.modelbuzz.in/home/eNewsPost?formname=springfield-central-office-sales-leasing&firstname=nikola&lastname=Tesla&email=test0313082019@gmail.com&phone=02151&howdidyouhearaboutus=Referral&postcode=01245&title=springfield%20central%20office%20sales%20leasing&interestinleaseorsale=sale&comments=testcomment%20add%20here&gsreceivelatestnews=Yes
+
+
+=============================================
+
+retail-and-hospitality-leasing
+
+https://www.greaterspringfield.com.au/commercial/retail-and-hospitality-leasing/
+
+https://btc.modelbuzz.in/home/eNewsPost?formname=retail-and-hospitality-leasing&firstname=kiya&lastname=deny&email=test0413082019@gmail.com&phone=02151&howdidyouhearaboutus=Referral&comments=%20test%20comment%20add%20here&gsupdaterequest=Yes&gsbrochurerequest=Yes

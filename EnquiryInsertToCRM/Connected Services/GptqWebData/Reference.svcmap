@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="daf9223a-b96a-4e0b-a6d5-839ee94a4f63" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="https://gptq.crmhd.com/maximizerwebdata/data.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="Data.xsd" MetadataType="Schema" ID="defc71e8-8d49-45ac-95a6-4b9a1c5fdd82" SourceId="1" SourceUrl="https://gptq.crmhd.com/MaximizerWebData/Data.svc?xsd=xsd4" />
+    <MetadataFile FileName="Data1.xsd" MetadataType="Schema" ID="6445800c-5633-458d-b568-c07cc8f1d117" SourceId="1" SourceUrl="https://gptq.crmhd.com/MaximizerWebData/Data.svc?xsd=xsd5" />
+    <MetadataFile FileName="Data2.xsd" MetadataType="Schema" ID="ae40564f-fdaf-4519-a476-9ff0259789f1" SourceId="1" SourceUrl="https://gptq.crmhd.com/MaximizerWebData/Data.svc?xsd=xsd2" />
+    <MetadataFile FileName="Data3.xsd" MetadataType="Schema" ID="010576f4-2736-425c-8d2c-a1d2ee670e66" SourceId="1" SourceUrl="https://gptq.crmhd.com/MaximizerWebData/Data.svc?xsd=xsd3" />
+    <MetadataFile FileName="Data4.xsd" MetadataType="Schema" ID="ab8d7f33-969e-4975-9c00-652321edab78" SourceId="1" SourceUrl="https://gptq.crmhd.com/MaximizerWebData/Data.svc?xsd=xsd0" />
+    <MetadataFile FileName="Data5.xsd" MetadataType="Schema" ID="81f98b90-3dfe-4002-af85-1ad1719b5793" SourceId="1" SourceUrl="https://gptq.crmhd.com/MaximizerWebData/Data.svc?xsd=xsd1" />
+    <MetadataFile FileName="Data.disco" MetadataType="Disco" ID="d296c522-d765-438a-ae0e-b19aea2c29d1" SourceId="1" SourceUrl="https://gptq.crmhd.com/MaximizerWebData/Data.svc?disco" />
+    <MetadataFile FileName="Data.wsdl" MetadataType="Wsdl" ID="3d30fe30-3895-40f9-b27b-7d5d1c29d7de" SourceId="1" SourceUrl="https://gptq.crmhd.com/MaximizerWebData/Data.svc?wsdl" />
+    <MetadataFile FileName="Data6.xsd" MetadataType="Schema" ID="7ce099d5-547f-4018-a7a4-20f1e55db8cf" SourceId="1" SourceUrl="https://gptq.crmhd.com/MaximizerWebData/Data.svc?xsd=xsd6" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

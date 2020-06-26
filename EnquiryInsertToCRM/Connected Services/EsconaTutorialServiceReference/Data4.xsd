@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Maximizer.Web.Data" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Maximizer.Web.Data" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="ImportResults">
+    <xs:sequence>
+      <xs:element name="Bypassed" type="xs:int" />
+      <xs:element name="Errors" type="xs:int" />
+      <xs:element name="Inserted" type="xs:int" />
+      <xs:element name="Log" nillable="true" type="xs:string" />
+      <xs:element name="Updated" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ImportResults" nillable="true" type="tns:ImportResults" />
+</xs:schema>

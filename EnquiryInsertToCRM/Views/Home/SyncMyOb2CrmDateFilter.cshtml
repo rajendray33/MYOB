@@ -1,0 +1,446 @@
+﻿
+@{
+    Layout = null;
+}
+<title>
+    Sync MYOB To CRM
+</title>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<script src="/assets/datatables/jquery.min.js"></script>
+<link href="/assets/datatables/core.css" rel="stylesheet" />
+<link href="/assets/datatables/datatables.min.css" rel="stylesheet" />
+<script src="/assets/datatables/datatables.min.js"></script>
+<link href="/assets/css/glyphicon.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<div class="overlay_bg" style="display:none;"></div>
+<div class="loadingSpinner" style="display: none;"></div>
+
+<div class="content-page">
+    <div class="content">
+        <div id="pageContents" class="container">
+            <input type="hidden" id="myobid" value="@ViewBag.myobid" />
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card-box">
+                        <div id="page" style="display: block;">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <span>Processing For : </span><b>@System.Configuration.ConfigurationManager.AppSettings["MyObCompany"]</b>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 text-right">
+                                </div>
+                                <div class="col-xs-12">
+                                    <b>Filter</b>
+                                </div>
+                                <div class="col-xs-3">
+                                    <div class="form-inline form-group">
+                                        <div class="input-group" style="width:100%;">
+                                            <input type="text" name="daterange" id="dateRange" placeholder="Date range" autocomplete="off" class="form-control" />
+                                            <span class="input-group-btn">
+                                                <button type="button" id="btncalendar" class="btn btn-default">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </button>
+                                            </span>
+                                        </div>
+                                        <span class="text-danger field-validation-error" id="daterangeval" style="display:none;">
+                                            <span id="datetxt" class="">
+                                                Please select date range.
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="form-group">
+                                        <button type="button" id="btnGetList" class="btn btn-warning">Get Customer List</button>
+                                        <button type="button" id="btnClearFilter" class="btn btn-default">Clear Filter</button>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="row" id="divEventList" style="display:none;">
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <button type="button" id="btnSyncDataFieldsBasedOnMyObIdMatch" data-type="basedonmyobid" class="btn btn-primary sync-btn"><span class="spn-spinner"></span>&nbsp;SYNC DATA FIELDS BASED ON MYOBID MATCH</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="divResponse" style="display:none;">
+                <div class="col-lg-12">
+                    <div class="alert alert-dark fade in alert-dismissible">
+                        <p id="strMsgtext"></p>
+                        <button type="button" class="close btn-close">
+                            <span aria-hidden="true" style="font-size:20px">×</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card-box" id="divContainer" style="display:none;">
+                        <div id="divfilterrecord">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    #btncalendar {
+        height: 34px !important;
+    }
+
+    .text-danger {
+        color: #ff0013 !important;
+    }
+
+    .cursor-stop {
+        cursor: not-allowed !important;
+    }
+
+    .content-page .content {
+        margin-top: 20px;
+    }
+</style>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<script>
+    var completedRec = 0;
+    var CustomerInfocnt = 0;
+    var companycreate = 0;
+    var companynameupdate = 0;
+    var myobalreadyexist = 0;
+    var myobupdate = 0;
+    var companynotfound = 0;
+    var myobnotfound = 0;
+    var udfdatafieldsupdate = 0;
+    var compList = [];
+    var totalTaskSupplies = 0;
+    var processedTaskSupplies = 0;
+
+
+    function fnDisplayDynamicResponse() {
+        var strMsg = '';
+        console.log(compList.length);
+        $('#divResponse').show();
+        if (parseInt(CustomerInfocnt) > 0) {
+            strMsg = '<strong>You successfully processed.</strong> ';
+            if (parseInt(companycreate) > 0) {
+                strMsg += '<span class="alert-box alert-success"><strong>' + parseInt(companycreate) + '</strong> company(s) created in CRM</span>,';
+            }
+            if (parseInt(companynameupdate) > 0) {
+                strMsg += '<span class="alert-box alert-primary"><strong>' + parseInt(companynameupdate) + '</strong> company name update</span>,';
+            }
+            if (parseInt(myobalreadyexist) > 0) {
+                strMsg += ' <span class="alert-box alert-secondary"><strong>' + parseInt(myobalreadyexist) + '</strong> company(s) UID and name already sync</span>,';
+            }
+            if (parseInt(myobupdate) > 0) {
+                strMsg += ' <span class="alert-box alert-success"><strong>' + parseInt(myobupdate) + '</strong> company(s) MYOB UID update</span>,';
+            }
+            if (parseInt(companynotfound) > 0) {
+                strMsg += ' <span class="alert-box alert-danger"><strong>' + parseInt(companynotfound) + '</strong> company(s) not found</span>,';
+            }
+            if (parseInt(myobnotfound) > 0) {
+                strMsg += ' <span class="alert-box alert-warning"><strong>' + parseInt(myobnotfound) + '</strong> MYOB UID not found</span>,';
+            }
+            if (parseInt(udfdatafieldsupdate) > 0) {
+                strMsg += ' <span class="alert-box alert-info"><strong>' + parseInt(udfdatafieldsupdate) + '</strong> company(s) data fields updated</span> ';
+            } else {
+                strMsg = strMsg.slice(0, -1);
+                //strMsg += ').';
+            }
+        } else {
+            //strMsg += ').';
+            strMsg = '<strong><span class="alert-box alert-danger">No data available in customer.</span></strong>';
+        }
+        $('#strMsgtext').html(strMsg);
+        $('html, body').animate({
+            scrollTop: $('#divResponse').offset().top
+        }, 'slow');
+        completedRec = 0;
+        CustomerInfocnt = 0;
+        companycreate = 0;
+        companynameupdate = 0;
+        myobalreadyexist = 0;
+        myobupdate = 0;
+        companynotfound = 0;
+        myobnotfound = 0;
+        udfdatafieldsupdate = 0;
+        compList = [];
+        loadingEnd();
+    }
+    function getRequestForSingle(strdata, i) {
+        i = i + 1;
+        $.ajax({
+            type: "POST",
+            url: "/home/GetPartialCustomerInfoDateFilter?" + strdata,
+            timeout: 0,
+            success: function (data) {
+                var strMsg = '';
+                $('#divResponse').show();
+                if (parseInt(data.CustomerInfocnt) > 0) {
+                    CustomerInfocnt = parseInt(CustomerInfocnt) + 1;
+                    strMsg = '<strong>You successfully processed.</strong> ';
+                    if (parseInt(data.companycreate) > 0) {
+                        companycreate = parseInt(companycreate) + 1;
+                        strMsg += '<span class="alert-box alert-success"><strong>' + parseInt(data.companycreate) + '</strong> company(s) created in CRM</span>,';
+                    }
+                    if (parseInt(data.companynameupdate) > 0) {
+                        companynameupdate = parseInt(companynameupdate) + 1;
+                        strMsg += '<span class="alert-box alert-primary"><strong>' + parseInt(data.companynameupdate) + '</strong> company name update</span>,';
+                    }
+                    if (parseInt(data.myobalreadyexist) > 0) {
+                        myobalreadyexist = parseInt(myobalreadyexist) + 1;
+                        strMsg += ' <span class="alert-box alert-secondary"><strong>' + parseInt(data.myobalreadyexist) + '</strong> company(s) UID and name already sync</span>,';
+                    }
+                    if (parseInt(data.myobupdate) > 0) {
+                        myobupdate = parseInt(myobupdate) + 1;
+                        strMsg += ' <span class="alert-box alert-success"><strong>' + parseInt(data.myobupdate) + '</strong> company(s) MYOB UID update</span>,';
+                    }
+                    if (parseInt(data.companynotfound) > 0) {
+                        companynotfound = parseInt(companynotfound) + 1;
+                        strMsg += ' <span class="alert-box alert-danger"><strong>' + parseInt(data.companynotfound) + '</strong> company(s) not found</span>,';
+                    }
+                    if (parseInt(data.myobnotfound) > 0) {
+                        myobnotfound = parseInt(myobnotfound) + 1;
+                        strMsg += ' <span class="alert-box alert-warning"><strong>' + parseInt(data.myobnotfound) + '</strong> MYOB UID not found</span>,';
+                    }
+                    if (parseInt(data.udfdatafieldsupdate) > 0) {
+                        udfdatafieldsupdate = parseInt(udfdatafieldsupdate) + 1;
+                        //strMsg += ' <span class="alert-box alert-info"><strong>' + parseInt(data.udfdatafieldsupdate) + '</strong> company(s) data fields updated</span> ';
+                        strMsg += ' <span class="alert-box alert-info"><strong>' + parseInt(i) + '</strong> company(s) data fields updated</span> ';
+                    } else {
+                        strMsg = strMsg.slice(0, -1);
+                        //strMsg += ').';
+                    }
+                } else {
+                    //strMsg += ').';
+                    strMsg = '<strong><span class="alert-box alert-danger">No data available in customer.</span></strong>';
+                }
+                $('#strMsgtext').html(strMsg);
+                $('html, body').animate({
+                    scrollTop: $('#divResponse').offset().top
+                }, 'slow');
+                loadingEnd();
+            },
+            error: function (data) {
+                loadingEnd();
+                alert("Session Expired! reload url.");
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        var strUrl = 'https://btc.modelbuzz.in/home/SyncMyOb2CrmDateFilter';
+        window.history.pushState("", "", strUrl);
+        $(".sync-btn").on('click', function myfunction(e) {
+            var strdata = "";
+
+            $('#strMsgtext').html('');
+            $('#divResponse').hide();
+            var stringFilterCompany = "";
+
+            var count = $("#datatable-fixed-col").dataTable().fnSettings().aoData.length;
+            if (count == 0) {
+                alert("No data available!");
+            } else {
+                compList = [];
+                var stringFilterCompanynameList = "";
+
+                if ($(this).attr("data-type") === "refresh") {
+                    strdata += "Refresh=true";
+                } else if ($(this).attr("data-type") === "basedoncompanyname") {
+                    strdata += "IsBasedOnCompanyNameMatch=true";
+                } else if ($(this).attr("data-type") === "basedonmyobid") {
+                    strdata += "IsBasedOnMyObIdMatch=true";
+                } else if ($(this).attr("data-type") === "basedonmytoday") {
+                    strdata += "IsBasedOnMyObIdMatch=true";
+                }
+                if ($(this).attr("data-type") === "basedonmytoday") {
+                    var strTodayCompanyNamecnt = $("#TodayCompanyNamecnt").val();
+                    var arryTodayCompanyName = strTodayCompanyNamecnt.split("[BREAK]");
+                    if (arryTodayCompanyName != null && arryTodayCompanyName.length > 0) {
+                        compList = arryTodayCompanyName
+                        loadingStart();
+                        //$('.btn').addClass("cursor-stop");
+                        //$(this).find('span').addClass("glyphicon glyphicon-repeat fast-right-spinner");
+                        totalTaskSupplies = compList.length;
+                        var custFilt = "";
+                        var custFilt1 = "";
+                        console.log("Sync URL for Today");
+                        $.each(compList, function (i, val) {
+                            custFilt = "";
+                            custFilt = "&FilterCustomerName=" + val + "&allowProcess=true&SyncdForToday=false";
+                            custFilt1 = strdata + custFilt //"&FilterDate=" + $('#dateRange').val() + "&FilterCustomerName=" + compList[i];
+                            console.log(custFilt1);
+                            getRequestForList(custFilt1);
+                        });
+                    }
+                }
+            }
+
+        });
+        $('.close').on('click', function () {
+            $('#divResponse').hide();
+        });
+        $("#btnGetList").click(function () {
+            var strdata = "FilterDate=" + $('#dateRange').val() + "&FilterData=true&SyncdForToday=true";
+            loadingStart();
+            $.ajax({
+                type: "POST",
+                url: "/home/GetPartialCustomerInfoDateFilter?" + strdata,
+                success: function (data) {
+                    loadingEnd();
+                    $("#divEventList").show();
+                    $("#divContainer").show();
+                    $("#divfilterrecord").html("");
+                    $("#divfilterrecord").append(data);
+                    $("#btnSyncDataFieldsBasedOnMyObIdMatch").removeAttr("data-type");
+                    $("#btnSyncDataFieldsBasedOnMyObIdMatch").attr("data-type", "basedonmytoday");
+                    $('html, body').animate({
+                        scrollTop: $('#divContainer').offset().top
+                    }, 'slow');
+                },
+                error: function (data) {
+                    $("#divEventList").hide();
+                    $("#divContainer").hide();
+                    loadingEnd();
+                    alert("Session Expired! reload url.");
+                }
+            });
+        });
+        $('#dateRange').daterangepicker({
+            startDate: moment().startOf('hour'),
+            endDate: moment().startOf('hour').add(32, 'hour'),
+            startDate: new Date(),
+            endDate: new Date(),
+            locale: {
+                cancelLabel: 'Clear',
+                format: 'DD/MM/YYYY'
+            }
+        });
+        $('#dateRange').keypress(function (e) {
+            if (e.keyCode == 13) {  // detect the enter key
+                validFilter();
+            }
+        });
+        $('#dateRange').on('apply.daterangepicker', function (ev, picker) {
+            $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
+            $("#daterangeval").hide();
+        });
+        $('#dateRange').on('cancel.daterangepicker', function (ev, picker) {
+            $(this).val('');
+        });
+        $('#btncalendar').click(function () {
+            $("#dateRange").trigger('click');
+        });
+        $("#btnClearFilter").click(function () {
+            loadingStart();
+            $("#divEventList").hide();
+            $("#divContainer").hide();
+            $("#divfilterrecord").html("");
+            $("#daterangeval").hide();
+            $("#datetxt").text("Please select date range.");
+            loadingEnd();
+        });
+    });
+    function loadingStart() {
+        $(".overlay_bg").show();
+        $(".loadingSpinner").show();
+    }
+    function loadingEnd() {
+        $(".overlay_bg").hide();
+        $(".loadingSpinner").hide();
+    }
+    function getRequestForList(strdata) {
+        $.ajax({
+            type: "POST",
+            url: "/home/GetPartialCustomerInfoDateFilter?" + strdata,
+            timeout: 0,
+            success: function (data) {
+                ++processedTaskSupplies;
+                if (parseInt(data.CustomerInfocnt) > 0) {
+                    CustomerInfocnt = parseInt(CustomerInfocnt) + 1;
+                    if (parseInt(data.companycreate) > 0) {
+                        companycreate = parseInt(companycreate) + 1;
+                    }
+                    if (parseInt(data.companynameupdate) > 0) {
+                        companynameupdate = parseInt(companynameupdate) + 1;
+                    }
+                    if (parseInt(data.myobalreadyexist) > 0) {
+                        myobalreadyexist = parseInt(myobalreadyexist) + 1;
+                    }
+                    if (parseInt(data.myobupdate) > 0) {
+                        myobupdate = parseInt(myobupdate) + 1;
+                    }
+                    if (parseInt(data.companynotfound) > 0) {
+                        companynotfound = parseInt(companynotfound) + 1;
+                    }
+                    if (parseInt(data.myobnotfound) > 0) {
+                        myobnotfound = parseInt(myobnotfound) + 1;
+                    }
+                    if (parseInt(data.udfdatafieldsupdate) > 0) {
+                        udfdatafieldsupdate = parseInt(udfdatafieldsupdate) + 1;
+                    }
+                }
+                if (processedTaskSupplies == totalTaskSupplies) {
+                    fnDisplayDynamicResponse();
+                    loadingEnd();
+                    //$('.spn-spinner').removeClass("glyphicon glyphicon-repeat fast-right-spinner");
+                    //$('.btn').removeClass("cursor-stop");
+                }
+            },
+
+            error: function (data) {
+                //
+            }
+        });
+    }
+
+    function validFilter() {
+        var res = false;
+        if ($('#dateRange').val() !== null && $('#dateRange').val() !== "") {
+            if ($('#dateRange').val().indexOf("-") != -1) {
+                var passDate = $('#dateRange').val().split('-');
+                var dtstartDate = passDate[0];
+                var endDate = passDate[1];
+                if (dtstartDate != null && endDate != null) {
+                    if (!isDate(dtstartDate) || !isDate(endDate)) {
+                        $("#daterangeval").show();
+                        $("#datetxt").text("Please select valid date range.");
+                    } else {
+                        $("#daterangeval").hide();
+                        $("#datetxt").text("Please select date range.");
+                        res = true;
+                    }
+                } else {
+                    $("#daterangeval").show();
+                    $("#datetxt").text("Please select valid date range.");
+                }
+            } else {
+                $("#daterangeval").show();
+                $("#datetxt").text("Please select valid date range.");
+            }
+        }
+        //else {
+        //    $("#daterangeval").show();
+        //    $("#datetxt").text("Please select date range.");
+        //}
+        return res;
+    }
+    function isDate(dateVal) {
+        var dateRegex = /^(?=\d)(?:(?:31(?!.(?:0?[2469]|11))|(?:30|29)(?!.0?2)|29(?=.0?2.(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00)))(?:\x20|$))|(?:2[0-8]|1\d|0?[1-9]))([-.\/])(?:1[012]|0?[1-9])\1(?:1[6-9]|[2-9]\d)?\d\d(?:(?=\x20\d)\x20|$))?(((0?[1-9]|1[012])(:[0-5]\d){0,2}(\x20[AP]M))|([01]\d|2[0-3])(:[0-5]\d){1,2})?$/;
+        return dateRegex.test(dateVal.replace(" ", ""));
+    }
+</script>

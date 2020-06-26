@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="7bba8059-3c3a-49ea-a42b-d8595f238f3f" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="https://s1.crmhd.com/maximizerwebdata/data.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="Data.xsd" MetadataType="Schema" ID="1bd17983-808a-4c71-b4e5-f3d74d6abc17" SourceId="1" SourceUrl="https://s1.crmhd.com/MaximizerWebData/Data.svc?xsd=xsd1" />
+    <MetadataFile FileName="Data1.xsd" MetadataType="Schema" ID="b64239ce-dd22-49b6-bbac-d1617d0b120b" SourceId="1" SourceUrl="https://s1.crmhd.com/MaximizerWebData/Data.svc?xsd=xsd4" />
+    <MetadataFile FileName="Data.wsdl" MetadataType="Wsdl" ID="16e9c232-2bea-4426-9cbd-7d22147a03bb" SourceId="1" SourceUrl="https://s1.crmhd.com/MaximizerWebData/Data.svc?wsdl" />
+    <MetadataFile FileName="Data2.xsd" MetadataType="Schema" ID="d2e5e7e5-d491-4229-a379-97bcdda979dd" SourceId="1" SourceUrl="https://s1.crmhd.com/MaximizerWebData/Data.svc?xsd=xsd6" />
+    <MetadataFile FileName="Data3.xsd" MetadataType="Schema" ID="cc3c0fd4-d4df-431a-b0ba-9e89126d3ddc" SourceId="1" SourceUrl="https://s1.crmhd.com/MaximizerWebData/Data.svc?xsd=xsd3" />
+    <MetadataFile FileName="Data4.xsd" MetadataType="Schema" ID="ec9b7bef-7f74-4bdd-b508-51b12b62e51b" SourceId="1" SourceUrl="https://s1.crmhd.com/MaximizerWebData/Data.svc?xsd=xsd5" />
+    <MetadataFile FileName="Data5.xsd" MetadataType="Schema" ID="306ef197-3c65-460e-93d5-e26fdcc37118" SourceId="1" SourceUrl="https://s1.crmhd.com/MaximizerWebData/Data.svc?xsd=xsd2" />
+    <MetadataFile FileName="Data.disco" MetadataType="Disco" ID="fe515ba9-aed3-4f34-90ec-47bc5660fc3c" SourceId="1" SourceUrl="https://s1.crmhd.com/MaximizerWebData/Data.svc?disco" />
+    <MetadataFile FileName="Data6.xsd" MetadataType="Schema" ID="f6182c3d-61ee-40bf-8266-83bfa20be8ed" SourceId="1" SourceUrl="https://s1.crmhd.com/MaximizerWebData/Data.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

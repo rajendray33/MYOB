@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="ff0cbf51-d207-4322-a26f-0dd69c255ae6" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="https://rigon.crmhd.com/maximizerwebdata/Data.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="Data.xsd" MetadataType="Schema" ID="ecd29c75-12d3-4d41-8182-50f2104212fd" SourceId="1" SourceUrl="https://rigon.crmhd.com/MaximizerWebData/Data.svc?xsd=xsd0" />
+    <MetadataFile FileName="Data1.xsd" MetadataType="Schema" ID="d8197002-ee42-4117-bb54-9a8ba2d953ac" SourceId="1" SourceUrl="https://rigon.crmhd.com/MaximizerWebData/Data.svc?xsd=xsd1" />
+    <MetadataFile FileName="Data2.xsd" MetadataType="Schema" ID="67125564-98e4-4d12-898e-da7fc4d1ca04" SourceId="1" SourceUrl="https://rigon.crmhd.com/MaximizerWebData/Data.svc?xsd=xsd2" />
+    <MetadataFile FileName="Data3.xsd" MetadataType="Schema" ID="69cd6727-220f-4947-9c7c-8c15b0c447f1" SourceId="1" SourceUrl="https://rigon.crmhd.com/MaximizerWebData/Data.svc?xsd=xsd3" />
+    <MetadataFile FileName="Data.disco" MetadataType="Disco" ID="5b0aebad-8893-4304-b5cd-3ece82b076a8" SourceId="1" SourceUrl="https://rigon.crmhd.com/MaximizerWebData/Data.svc?disco" />
+    <MetadataFile FileName="Data.wsdl" MetadataType="Wsdl" ID="7139a42a-cb42-4b01-b7cd-9d8053b70306" SourceId="1" SourceUrl="https://rigon.crmhd.com/MaximizerWebData/Data.svc?wsdl" />
+    <MetadataFile FileName="Data4.xsd" MetadataType="Schema" ID="70617adc-f2b6-4865-afa6-1e0db49ef22f" SourceId="1" SourceUrl="https://rigon.crmhd.com/MaximizerWebData/Data.svc?xsd=xsd4" />
+    <MetadataFile FileName="Data5.xsd" MetadataType="Schema" ID="4f589ecc-e47c-4081-a8a0-ae12699b1e7c" SourceId="1" SourceUrl="https://rigon.crmhd.com/MaximizerWebData/Data.svc?xsd=xsd5" />
+    <MetadataFile FileName="Data6.xsd" MetadataType="Schema" ID="ecb6390e-d5d8-4b6c-ab27-45d7e3a35c79" SourceId="1" SourceUrl="https://rigon.crmhd.com/MaximizerWebData/Data.svc?xsd=xsd6" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

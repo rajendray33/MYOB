@@ -1,0 +1,120 @@
+Ryan, 11:04 AM
+I have another easy form job
+
+if u cant do anything else
+
+11:05 AM
+Please provide me details of that job.
+
+Ryan, 11:08 AM
+
+Union Shopper Update Details
+https://cdn.jotfor.ms
+
+
+create this form . I can't do this properly in jotform, so will do one that submits
+
+direct to CRM
+
+us.crmhd.com
+
+uswebupdate/uswebupdatexyz1234
+
+https://cdn.jotfor.ms/93168906505867&firstname=ryan&lastname=murphy&addressline1=addresl1&suburb=suburb&state=state&postcode=4152&&Phone1=0417616058&Phone2=0733986897&Phone3=0733986897&Email1=ryanmurphy@gmail.com&clientid=1231&unionid=nameofunion&unionmemberid=1123123
+
+
+Union Shopper Update Details
+https://cdn.jotfor.ms
+added some additional fields, 
+
+so I will pass that query string via email, the user will click and it will populate
+
+or
+
+I will just pass client ID, then you can lookup and populate
+
+so
+
+https://formname.aspx&clientid=1231321
+
+and you populate all those fields, so create that as a new web form for data entry
+
+
+11:13 AM
+
+I am enter credential in CRM. Then after why should asking for set new password ?
+
+Ryan, 11:14 AM
+set it the same
+
+if you can
+
+or similar
+
+
+Ryan, 11:14 AM
+i just created the login
+
+also use styling from their website 
+
+
+Log In - Union Shopper
+https://www.unionshopper.com.au
+
+
+
+did you get in?
+
+11:15 AM
+ok. I will same password set
+
+did you get in?
+Ryan, Today at 11:15 AM
+yes
+
+Ryan, 11:16 AM
+ok
+
+so basics, create web form, style same as website as much as possible, pass a client ID .. populate fields for them to update
+
+11:19 AM
+ok
+I need Jotform login.
+
+Ryan, 11:24 AM
+why
+
+just look at it and re-create
+
+not using it for jotform, create a new form
+
+
+11:27 AM
+
+same like this right?
+first I have created one page and lookup in crm right ?
+
+Ryan, 11:28 AM
+yes
+
+11:28 AM
+ok
+
+Ryan, 11:29 AM
+that one doesn't re populate I think? just saved
+
+but I want to send ClientID and you need to load record and values into form, then update
+
+
+Behroz, 11:29 AM
+Sure
+
+
+Ryan, 11:30 AM
+
+
+use this record for testing
+
+pass Identification field, highlighted bottom left
+
+then load all other yellow values

@@ -1,0 +1,281 @@
+12/07/2019 - countofGetSubmission: 88
+countofNewEntry: 0
+countofUpdateEntry: 88
+countofInvalidForm: 0
+countofUpdateEntry: 88
+countofInvalidSchema: 0
+countofbadRequest: 0
+countofSkipSubmissionIdForm: 0
+countofbadrequestfornote: 0
+
+------------------------------CreateOrUpdateIndividual Process In : 22/07/2019 3:57:11 PM------------------------------
+
+
+Before Count: 35 
+
+Before1 Count: 20 
+
+
+
+touchpoint 
+
+touchpoint: 2019-10-15 toowoomba (hospital education) 
+
+
+
+Udf/$TYPEID(512)-Record Status-array : Active 
+
+Udf/$TYPEID(555)-Touch Point-array : 2019-10-15 Toowoomba (hospital education) 
+
+Email-Email Address-string : test888@gmail.com 
+
+FirstName-FirstName-string : Nil 
+
+LastName-LastName-string : dear treat 
+
+Phone-Phone-string : 0411111111 
+
+Udf/$TYPEID(15)-Gender-array : Male 
+
+Udf/$TYPEID(53)-Status at first contact-array : PG - Y2 
+
+Udf/$TYPEID(52)-First contact year-array : 2019 
+
+Udf/$TYPEID(55)-Hospital-array : Toowoomba Base Hospital; QLD 
+
+Udf/$TYPEID(58)-Year intend to apply-array : 2019 
+
+Udf/$TYPEID(17)-GP interest-array : Interested 
+
+Udf/$TYPEID(57996)-Rural work interest-array : I am a rural generalist 
+
+Udf/$TYPEID(520)-Lead status-array : Hot II 
+
+Udf/$TYPEID(514)-Rural Generalist-array : Yes 
+
+Udf/$TYPEID(515)-Rural Bonded-array : No 
+
+
+
+After Count: 35 
+
+------------------------------CreateOrUpdateIndividual End Process: 22/07/2019 3:58:41 PM------------------------------
+------------------------------CreateOrUpdateIndividual Process In : 22/07/2019 4:38:50 PM------------------------------
+
+
+Before Count: 35 
+
+Before1 Count: 20 
+
+
+
+touchpoint 
+
+touchpoint: yes 
+
+
+
+Udf/$TYPEID(512)-Record Status-array : Active 
+
+Udf/$TYPEID(555)-Touch Point-array : Yes 
+
+Email-Email Address-string : test888@gmail.com 
+
+FirstName-FirstName-string : Nil 
+
+LastName-LastName-string : dear treat 
+
+Phone-Phone-string : 0411111111 
+
+Udf/$TYPEID(15)-Gender-array : Male 
+
+Udf/$TYPEID(53)-Status at first contact-array : PG - Y2 
+
+Udf/$TYPEID(52)-First contact year-array : 2019 
+
+Udf/$TYPEID(55)-Hospital-array : Toowoomba Base Hospital; QLD 
+
+Udf/$TYPEID(58)-Year intend to apply-array : 2019 
+
+Udf/$TYPEID(17)-GP interest-array : Interested 
+
+Udf/$TYPEID(57996)-Rural work interest-array : I am a rural generalist 
+
+Udf/$TYPEID(520)-Lead status-array : Hot II 
+
+Udf/$TYPEID(514)-Rural Generalist-array : Yes 
+
+Udf/$TYPEID(515)-Rural Bonded-array : No 
+
+
+
+After Count: 35 
+
+------------------------------CreateOrUpdateIndividual End Process: 22/07/2019 4:53:37 PM------------------------------
+------------------------------AbEntry Process In : 25/07/2019 12:07:40 PM------------------------------
+
+
+Before Count: 2 
+
+
+
+
+
+Email-Email Address-string : test25072019@gmail.com 
+
+Udf/$TYPEID(54)-Career Stage-array : Intern 
+
+
+
+------------------------------AbEntry Process In : 25/07/2019 12:08:24 PM------------------------------
+
+
+Before Count: 2 
+
+
+
+
+
+Email-Email Address-string : test25072019@gmail.com 
+
+Udf/$TYPEID(54)-Career Stage-array : Intern 
+
+
+
+------------------------------AbEntry Process In : 25/07/2019 2:50:57 PM------------------------------
+
+
+Before Count: 2 
+
+
+
+
+
+Email-Email2-string : test5525072019@gmail.com 
+
+Udf/$TYPEID(726)-First interaction-array : No 
+
+
+
+------------------------------AbEntry Process In : 25/07/2019 3:26:17 PM------------------------------
+
+
+Before Count: 2 
+
+
+
+
+
+Email2-Email2-string : test5525072019@gmail.com 
+
+Udf/$TYPEID(726)-First interaction-array : No 
+
+
+
+------------------------------AbEntry Process In : 30/07/2019 2:57:15 PM------------------------------
+
+
+Before Count: 5 
+
+
+
+
+
+Email-Email Address-string : test3007@gmail.com 
+
+Udf/$TYPEID(726)-First interaction-array : False 
+
+Phone-Phone-string : 0123456789 
+
+Email-Email Address-string : test3007@gmail.com 
+
+Email-Email Address-string : test3007@gmail.com 
+
+
+
+------------------------------AbEntry Process In : 30/07/2019 2:59:43 PM------------------------------
+
+
+Before Count: 3 
+
+
+
+
+
+Email-Email Address-string : test3007@gmail.com 
+
+Udf/$TYPEID(726)-First interaction-array : False 
+
+Phone-Phone-string : 0123456789 
+
+
+
+------------------------------AbEntry Process In : 30/07/2019 3:17:52 PM------------------------------
+
+
+Before Count: 4 
+
+
+
+
+
+Udf/$TYPEID(726)-First interaction-array : False 
+
+Phone-Phone-string : 044448349 
+
+Email2-E-mail Address 2-string : test349@gmail.com 
+
+Email-Email Address-string : test3007@gmail.com 
+
+
+
+------------------------------AbEntry Process In : 31/07/2019 12:53:21 PM------------------------------
+
+
+Before Count: 3 
+
+
+
+
+
+Email-Email Address-string : test3107@gmail.com 
+
+Udf/$TYPEID(726)-First interaction-array : No 
+
+Phone-Phone-string : 45556699 
+
+
+
+------------------------------AbEntry Process In : 07/08/2019 2:35:30 PM------------------------------
+
+
+Before Count: 18 
+
+
+
+
+
+
+
+------------------------------AbEntry Process In : 07/08/2019 2:39:20 PM------------------------------
+
+
+Before Count: 18 
+
+
+
+
+
+
+
+------------------------------AbEntry Process In : 07/08/2019 3:26:17 PM------------------------------
+
+
+Before Count: 19 
+
+
+
+
+
+
+

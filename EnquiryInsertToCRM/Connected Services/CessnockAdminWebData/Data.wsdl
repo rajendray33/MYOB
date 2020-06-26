@@ -1,0 +1,2216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Data" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="BasicHttpBinding_IData_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <sp:HttpsToken RequireClientCertificate="false" />
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="https://cessnock.crmhd.com/MaximizerWebData/Data.svc?xsd=xsd1" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="https://cessnock.crmhd.com/MaximizerWebData/Data.svc?xsd=xsd0" namespace="http://schemas.microsoft.com/Message" />
+      <xsd:import schemaLocation="https://cessnock.crmhd.com/MaximizerWebData/Data.svc?xsd=xsd2" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="https://cessnock.crmhd.com/MaximizerWebData/Data.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="https://cessnock.crmhd.com/MaximizerWebData/Data.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Maximizer.Web.Data" />
+      <xsd:import schemaLocation="https://cessnock.crmhd.com/MaximizerWebData/Data.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/System.IO" />
+      <xsd:import schemaLocation="https://cessnock.crmhd.com/MaximizerWebData/Data.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/System" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IData_SchemaDelete_InputMessage">
+    <wsdl:part name="parameters" element="tns:SchemaDelete" />
+  </wsdl:message>
+  <wsdl:message name="IData_SchemaDelete_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SchemaDeleteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_SchemaGetFieldInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:SchemaGetFieldInfo" />
+  </wsdl:message>
+  <wsdl:message name="IData_SchemaGetFieldInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SchemaGetFieldInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_SchemaGetFieldOptions_InputMessage">
+    <wsdl:part name="parameters" element="tns:SchemaGetFieldOptions" />
+  </wsdl:message>
+  <wsdl:message name="IData_SchemaGetFieldOptions_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SchemaGetFieldOptionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_SchemaFolderCreate_InputMessage">
+    <wsdl:part name="parameters" element="tns:SchemaFolderCreate" />
+  </wsdl:message>
+  <wsdl:message name="IData_SchemaFolderCreate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SchemaFolderCreateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_SchemaFolderRead_InputMessage">
+    <wsdl:part name="parameters" element="tns:SchemaFolderRead" />
+  </wsdl:message>
+  <wsdl:message name="IData_SchemaFolderRead_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SchemaFolderReadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_SchemaFolderUpdate_InputMessage">
+    <wsdl:part name="parameters" element="tns:SchemaFolderUpdate" />
+  </wsdl:message>
+  <wsdl:message name="IData_SchemaFolderUpdate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SchemaFolderUpdateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_SchemaFolderDelete_InputMessage">
+    <wsdl:part name="parameters" element="tns:SchemaFolderDelete" />
+  </wsdl:message>
+  <wsdl:message name="IData_SchemaFolderDelete_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SchemaFolderDeleteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_SchemaFolderGetFieldInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:SchemaFolderGetFieldInfo" />
+  </wsdl:message>
+  <wsdl:message name="IData_SchemaFolderGetFieldInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SchemaFolderGetFieldInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_SchemaFolderGetFieldOptions_InputMessage">
+    <wsdl:part name="parameters" element="tns:SchemaFolderGetFieldOptions" />
+  </wsdl:message>
+  <wsdl:message name="IData_SchemaFolderGetFieldOptions_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SchemaFolderGetFieldOptionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_ConfigurationRead_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConfigurationRead" />
+  </wsdl:message>
+  <wsdl:message name="IData_ConfigurationRead_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConfigurationReadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_ConfigurationSave_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConfigurationSave" />
+  </wsdl:message>
+  <wsdl:message name="IData_ConfigurationSave_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConfigurationSaveResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_UserCreate_InputMessage">
+    <wsdl:part name="parameters" element="tns:UserCreate" />
+  </wsdl:message>
+  <wsdl:message name="IData_UserCreate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UserCreateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_UserRead_InputMessage">
+    <wsdl:part name="parameters" element="tns:UserRead" />
+  </wsdl:message>
+  <wsdl:message name="IData_UserRead_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UserReadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_UserUpdate_InputMessage">
+    <wsdl:part name="parameters" element="tns:UserUpdate" />
+  </wsdl:message>
+  <wsdl:message name="IData_UserUpdate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UserUpdateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_UserDelete_InputMessage">
+    <wsdl:part name="parameters" element="tns:UserDelete" />
+  </wsdl:message>
+  <wsdl:message name="IData_UserDelete_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UserDeleteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_UserGetFieldInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:UserGetFieldInfo" />
+  </wsdl:message>
+  <wsdl:message name="IData_UserGetFieldInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UserGetFieldInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_UserGetFieldOptions_InputMessage">
+    <wsdl:part name="parameters" element="tns:UserGetFieldOptions" />
+  </wsdl:message>
+  <wsdl:message name="IData_UserGetFieldOptions_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UserGetFieldOptionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_NotificationSetupCreate_InputMessage">
+    <wsdl:part name="parameters" element="tns:NotificationSetupCreate" />
+  </wsdl:message>
+  <wsdl:message name="IData_NotificationSetupCreate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NotificationSetupCreateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_NotificationSetupRead_InputMessage">
+    <wsdl:part name="parameters" element="tns:NotificationSetupRead" />
+  </wsdl:message>
+  <wsdl:message name="IData_NotificationSetupRead_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NotificationSetupReadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_NotificationSetupUpdate_InputMessage">
+    <wsdl:part name="parameters" element="tns:NotificationSetupUpdate" />
+  </wsdl:message>
+  <wsdl:message name="IData_NotificationSetupUpdate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NotificationSetupUpdateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_NotificationSetupDelete_InputMessage">
+    <wsdl:part name="parameters" element="tns:NotificationSetupDelete" />
+  </wsdl:message>
+  <wsdl:message name="IData_NotificationSetupDelete_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NotificationSetupDeleteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_NotificationSetupGetFieldInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:NotificationSetupGetFieldInfo" />
+  </wsdl:message>
+  <wsdl:message name="IData_NotificationSetupGetFieldInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NotificationSetupGetFieldInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_NotificationSetupGetFieldOptions_InputMessage">
+    <wsdl:part name="parameters" element="tns:NotificationSetupGetFieldOptions" />
+  </wsdl:message>
+  <wsdl:message name="IData_NotificationSetupGetFieldOptions_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NotificationSetupGetFieldOptionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_AlertRead_InputMessage">
+    <wsdl:part name="parameters" element="tns:AlertRead" />
+  </wsdl:message>
+  <wsdl:message name="IData_AlertRead_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AlertReadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_EventRead_InputMessage">
+    <wsdl:part name="parameters" element="tns:EventRead" />
+  </wsdl:message>
+  <wsdl:message name="IData_EventRead_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EventReadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_NotificationMessageCreate_InputMessage">
+    <wsdl:part name="parameters" element="tns:NotificationMessageCreate" />
+  </wsdl:message>
+  <wsdl:message name="IData_NotificationMessageCreate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NotificationMessageCreateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_NotificationMessageRead_InputMessage">
+    <wsdl:part name="parameters" element="tns:NotificationMessageRead" />
+  </wsdl:message>
+  <wsdl:message name="IData_NotificationMessageRead_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NotificationMessageReadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_NotificationMessageUpdate_InputMessage">
+    <wsdl:part name="parameters" element="tns:NotificationMessageUpdate" />
+  </wsdl:message>
+  <wsdl:message name="IData_NotificationMessageUpdate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NotificationMessageUpdateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_NotificationMessageDelete_InputMessage">
+    <wsdl:part name="parameters" element="tns:NotificationMessageDelete" />
+  </wsdl:message>
+  <wsdl:message name="IData_NotificationMessageDelete_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NotificationMessageDeleteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_Authenticate_InputMessage">
+    <wsdl:part name="parameters" element="tns:Authenticate" />
+  </wsdl:message>
+  <wsdl:message name="IData_Authenticate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AuthenticateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_TokenValid_InputMessage">
+    <wsdl:part name="parameters" element="tns:TokenValid" />
+  </wsdl:message>
+  <wsdl:message name="IData_TokenValid_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TokenValidResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetSystemInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSystemInfo" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetSystemInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSystemInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetSessionInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSessionInfo" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetSessionInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSessionInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_DatabaseTemplateImport_InputMessage">
+    <wsdl:part name="parameters" element="tns:DatabaseTemplateImport" />
+  </wsdl:message>
+  <wsdl:message name="IData_DatabaseTemplateImport_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DatabaseTemplateImportResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_Read_InputMessage">
+    <wsdl:part name="parameters" element="tns:Read" />
+  </wsdl:message>
+  <wsdl:message name="IData_Read_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_AbEntryCreate_InputMessage">
+    <wsdl:part name="parameters" element="tns:AbEntryCreate" />
+  </wsdl:message>
+  <wsdl:message name="IData_AbEntryCreate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AbEntryCreateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_AbEntryRead_InputMessage">
+    <wsdl:part name="parameters" element="tns:AbEntryRead" />
+  </wsdl:message>
+  <wsdl:message name="IData_AbEntryRead_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AbEntryReadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_AbEntryUpdate_InputMessage">
+    <wsdl:part name="parameters" element="tns:AbEntryUpdate" />
+  </wsdl:message>
+  <wsdl:message name="IData_AbEntryUpdate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AbEntryUpdateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_AbEntryDelete_InputMessage">
+    <wsdl:part name="parameters" element="tns:AbEntryDelete" />
+  </wsdl:message>
+  <wsdl:message name="IData_AbEntryDelete_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AbEntryDeleteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_AbEntryGetFieldInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:AbEntryGetFieldInfo" />
+  </wsdl:message>
+  <wsdl:message name="IData_AbEntryGetFieldInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AbEntryGetFieldInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_AbEntryGetFieldOptions_InputMessage">
+    <wsdl:part name="parameters" element="tns:AbEntryGetFieldOptions" />
+  </wsdl:message>
+  <wsdl:message name="IData_AbEntryGetFieldOptions_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AbEntryGetFieldOptionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_AddressCreate_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddressCreate" />
+  </wsdl:message>
+  <wsdl:message name="IData_AddressCreate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddressCreateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_AddressRead_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddressRead" />
+  </wsdl:message>
+  <wsdl:message name="IData_AddressRead_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddressReadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_AddressUpdate_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddressUpdate" />
+  </wsdl:message>
+  <wsdl:message name="IData_AddressUpdate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddressUpdateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_AddressDelete_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddressDelete" />
+  </wsdl:message>
+  <wsdl:message name="IData_AddressDelete_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddressDeleteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_AddressGetFieldInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddressGetFieldInfo" />
+  </wsdl:message>
+  <wsdl:message name="IData_AddressGetFieldInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddressGetFieldInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_AddressGetFieldOptions_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddressGetFieldOptions" />
+  </wsdl:message>
+  <wsdl:message name="IData_AddressGetFieldOptions_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddressGetFieldOptionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_NoteCreate_InputMessage">
+    <wsdl:part name="parameters" element="tns:NoteCreate" />
+  </wsdl:message>
+  <wsdl:message name="IData_NoteCreate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NoteCreateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_NoteRead_InputMessage">
+    <wsdl:part name="parameters" element="tns:NoteRead" />
+  </wsdl:message>
+  <wsdl:message name="IData_NoteRead_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NoteReadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_NoteUpdate_InputMessage">
+    <wsdl:part name="parameters" element="tns:NoteUpdate" />
+  </wsdl:message>
+  <wsdl:message name="IData_NoteUpdate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NoteUpdateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_NoteDelete_InputMessage">
+    <wsdl:part name="parameters" element="tns:NoteDelete" />
+  </wsdl:message>
+  <wsdl:message name="IData_NoteDelete_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NoteDeleteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_NoteGetFieldInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:NoteGetFieldInfo" />
+  </wsdl:message>
+  <wsdl:message name="IData_NoteGetFieldInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NoteGetFieldInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_NoteGetFieldOptions_InputMessage">
+    <wsdl:part name="parameters" element="tns:NoteGetFieldOptions" />
+  </wsdl:message>
+  <wsdl:message name="IData_NoteGetFieldOptions_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NoteGetFieldOptionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_DocumentCreate_InputMessage">
+    <wsdl:part name="parameters" element="tns:DocumentCreate" />
+  </wsdl:message>
+  <wsdl:message name="IData_DocumentCreate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DocumentCreateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_DocumentRead_InputMessage">
+    <wsdl:part name="parameters" element="tns:DocumentRead" />
+  </wsdl:message>
+  <wsdl:message name="IData_DocumentRead_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DocumentReadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_DocumentUpdate_InputMessage">
+    <wsdl:part name="parameters" element="tns:DocumentUpdate" />
+  </wsdl:message>
+  <wsdl:message name="IData_DocumentUpdate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DocumentUpdateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_DocumentDelete_InputMessage">
+    <wsdl:part name="parameters" element="tns:DocumentDelete" />
+  </wsdl:message>
+  <wsdl:message name="IData_DocumentDelete_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DocumentDeleteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_DocumentGetFieldInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:DocumentGetFieldInfo" />
+  </wsdl:message>
+  <wsdl:message name="IData_DocumentGetFieldInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DocumentGetFieldInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_DocumentGetFieldOptions_InputMessage">
+    <wsdl:part name="parameters" element="tns:DocumentGetFieldOptions" />
+  </wsdl:message>
+  <wsdl:message name="IData_DocumentGetFieldOptions_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DocumentGetFieldOptionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_UploadFile_InputMessage">
+    <wsdl:part name="parameters" element="tns:UploadFile" />
+  </wsdl:message>
+  <wsdl:message name="IData_UploadFile_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UploadFileResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_OpportunityCreate_InputMessage">
+    <wsdl:part name="parameters" element="tns:OpportunityCreate" />
+  </wsdl:message>
+  <wsdl:message name="IData_OpportunityCreate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:OpportunityCreateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_OpportunityRead_InputMessage">
+    <wsdl:part name="parameters" element="tns:OpportunityRead" />
+  </wsdl:message>
+  <wsdl:message name="IData_OpportunityRead_OutputMessage">
+    <wsdl:part name="parameters" element="tns:OpportunityReadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_OpportunityUpdate_InputMessage">
+    <wsdl:part name="parameters" element="tns:OpportunityUpdate" />
+  </wsdl:message>
+  <wsdl:message name="IData_OpportunityUpdate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:OpportunityUpdateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_OpportunityDelete_InputMessage">
+    <wsdl:part name="parameters" element="tns:OpportunityDelete" />
+  </wsdl:message>
+  <wsdl:message name="IData_OpportunityDelete_OutputMessage">
+    <wsdl:part name="parameters" element="tns:OpportunityDeleteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_OpportunityGetFieldInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:OpportunityGetFieldInfo" />
+  </wsdl:message>
+  <wsdl:message name="IData_OpportunityGetFieldInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:OpportunityGetFieldInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_OpportunityGetFieldOptions_InputMessage">
+    <wsdl:part name="parameters" element="tns:OpportunityGetFieldOptions" />
+  </wsdl:message>
+  <wsdl:message name="IData_OpportunityGetFieldOptions_OutputMessage">
+    <wsdl:part name="parameters" element="tns:OpportunityGetFieldOptionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_CaseCreate_InputMessage">
+    <wsdl:part name="parameters" element="tns:CaseCreate" />
+  </wsdl:message>
+  <wsdl:message name="IData_CaseCreate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CaseCreateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_CaseRead_InputMessage">
+    <wsdl:part name="parameters" element="tns:CaseRead" />
+  </wsdl:message>
+  <wsdl:message name="IData_CaseRead_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CaseReadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_CaseUpdate_InputMessage">
+    <wsdl:part name="parameters" element="tns:CaseUpdate" />
+  </wsdl:message>
+  <wsdl:message name="IData_CaseUpdate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CaseUpdateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_CaseDelete_InputMessage">
+    <wsdl:part name="parameters" element="tns:CaseDelete" />
+  </wsdl:message>
+  <wsdl:message name="IData_CaseDelete_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CaseDeleteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_CaseGetFieldInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:CaseGetFieldInfo" />
+  </wsdl:message>
+  <wsdl:message name="IData_CaseGetFieldInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CaseGetFieldInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_CaseGetFieldOptions_InputMessage">
+    <wsdl:part name="parameters" element="tns:CaseGetFieldOptions" />
+  </wsdl:message>
+  <wsdl:message name="IData_CaseGetFieldOptions_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CaseGetFieldOptionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_AppointmentCreate_InputMessage">
+    <wsdl:part name="parameters" element="tns:AppointmentCreate" />
+  </wsdl:message>
+  <wsdl:message name="IData_AppointmentCreate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AppointmentCreateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_AppointmentRead_InputMessage">
+    <wsdl:part name="parameters" element="tns:AppointmentRead" />
+  </wsdl:message>
+  <wsdl:message name="IData_AppointmentRead_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AppointmentReadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_AppointmentUpdate_InputMessage">
+    <wsdl:part name="parameters" element="tns:AppointmentUpdate" />
+  </wsdl:message>
+  <wsdl:message name="IData_AppointmentUpdate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AppointmentUpdateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_AppointmentDelete_InputMessage">
+    <wsdl:part name="parameters" element="tns:AppointmentDelete" />
+  </wsdl:message>
+  <wsdl:message name="IData_AppointmentDelete_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AppointmentDeleteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_AppointmentGetFieldInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:AppointmentGetFieldInfo" />
+  </wsdl:message>
+  <wsdl:message name="IData_AppointmentGetFieldInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AppointmentGetFieldInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_AppointmentGetFieldOptions_InputMessage">
+    <wsdl:part name="parameters" element="tns:AppointmentGetFieldOptions" />
+  </wsdl:message>
+  <wsdl:message name="IData_AppointmentGetFieldOptions_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AppointmentGetFieldOptionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_FreeTimeRead_InputMessage">
+    <wsdl:part name="parameters" element="tns:FreeTimeRead" />
+  </wsdl:message>
+  <wsdl:message name="IData_FreeTimeRead_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FreeTimeReadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_FreeTimeGetFieldInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:FreeTimeGetFieldInfo" />
+  </wsdl:message>
+  <wsdl:message name="IData_FreeTimeGetFieldInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FreeTimeGetFieldInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_FreeTimeGetFieldOptions_InputMessage">
+    <wsdl:part name="parameters" element="tns:FreeTimeGetFieldOptions" />
+  </wsdl:message>
+  <wsdl:message name="IData_FreeTimeGetFieldOptions_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FreeTimeGetFieldOptionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_TaskCreate_InputMessage">
+    <wsdl:part name="parameters" element="tns:TaskCreate" />
+  </wsdl:message>
+  <wsdl:message name="IData_TaskCreate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TaskCreateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_TaskRead_InputMessage">
+    <wsdl:part name="parameters" element="tns:TaskRead" />
+  </wsdl:message>
+  <wsdl:message name="IData_TaskRead_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TaskReadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_TaskUpdate_InputMessage">
+    <wsdl:part name="parameters" element="tns:TaskUpdate" />
+  </wsdl:message>
+  <wsdl:message name="IData_TaskUpdate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TaskUpdateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_TaskDelete_InputMessage">
+    <wsdl:part name="parameters" element="tns:TaskDelete" />
+  </wsdl:message>
+  <wsdl:message name="IData_TaskDelete_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TaskDeleteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_TaskGetFieldInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:TaskGetFieldInfo" />
+  </wsdl:message>
+  <wsdl:message name="IData_TaskGetFieldInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TaskGetFieldInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_TaskGetFieldOptions_InputMessage">
+    <wsdl:part name="parameters" element="tns:TaskGetFieldOptions" />
+  </wsdl:message>
+  <wsdl:message name="IData_TaskGetFieldOptions_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TaskGetFieldOptionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_CustomCreate_InputMessage">
+    <wsdl:part name="parameters" element="tns:CustomCreate" />
+  </wsdl:message>
+  <wsdl:message name="IData_CustomCreate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CustomCreateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_CustomRead_InputMessage">
+    <wsdl:part name="parameters" element="tns:CustomRead" />
+  </wsdl:message>
+  <wsdl:message name="IData_CustomRead_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CustomReadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_CustomUpdate_InputMessage">
+    <wsdl:part name="parameters" element="tns:CustomUpdate" />
+  </wsdl:message>
+  <wsdl:message name="IData_CustomUpdate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CustomUpdateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_CustomDelete_InputMessage">
+    <wsdl:part name="parameters" element="tns:CustomDelete" />
+  </wsdl:message>
+  <wsdl:message name="IData_CustomDelete_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CustomDeleteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_CustomGetFieldInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:CustomGetFieldInfo" />
+  </wsdl:message>
+  <wsdl:message name="IData_CustomGetFieldInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CustomGetFieldInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_CustomGetFieldOptions_InputMessage">
+    <wsdl:part name="parameters" element="tns:CustomGetFieldOptions" />
+  </wsdl:message>
+  <wsdl:message name="IData_CustomGetFieldOptions_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CustomGetFieldOptionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_CustomChildCreate_InputMessage">
+    <wsdl:part name="parameters" element="tns:CustomChildCreate" />
+  </wsdl:message>
+  <wsdl:message name="IData_CustomChildCreate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CustomChildCreateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_CustomChildRead_InputMessage">
+    <wsdl:part name="parameters" element="tns:CustomChildRead" />
+  </wsdl:message>
+  <wsdl:message name="IData_CustomChildRead_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CustomChildReadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_CustomChildUpdate_InputMessage">
+    <wsdl:part name="parameters" element="tns:CustomChildUpdate" />
+  </wsdl:message>
+  <wsdl:message name="IData_CustomChildUpdate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CustomChildUpdateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_CustomChildDelete_InputMessage">
+    <wsdl:part name="parameters" element="tns:CustomChildDelete" />
+  </wsdl:message>
+  <wsdl:message name="IData_CustomChildDelete_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CustomChildDeleteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_CustomChildGetFieldInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:CustomChildGetFieldInfo" />
+  </wsdl:message>
+  <wsdl:message name="IData_CustomChildGetFieldInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CustomChildGetFieldInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_CustomChildGetFieldOptions_InputMessage">
+    <wsdl:part name="parameters" element="tns:CustomChildGetFieldOptions" />
+  </wsdl:message>
+  <wsdl:message name="IData_CustomChildGetFieldOptions_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CustomChildGetFieldOptionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_EmailProfileCreate_InputMessage">
+    <wsdl:part name="parameters" element="tns:EmailProfileCreate" />
+  </wsdl:message>
+  <wsdl:message name="IData_EmailProfileCreate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EmailProfileCreateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_EmailProfileRead_InputMessage">
+    <wsdl:part name="parameters" element="tns:EmailProfileRead" />
+  </wsdl:message>
+  <wsdl:message name="IData_EmailProfileRead_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EmailProfileReadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_EmailProfileUpdate_InputMessage">
+    <wsdl:part name="parameters" element="tns:EmailProfileUpdate" />
+  </wsdl:message>
+  <wsdl:message name="IData_EmailProfileUpdate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EmailProfileUpdateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_EmailProfileDelete_InputMessage">
+    <wsdl:part name="parameters" element="tns:EmailProfileDelete" />
+  </wsdl:message>
+  <wsdl:message name="IData_EmailProfileDelete_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EmailProfileDeleteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_EmailProfileGetFieldInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:EmailProfileGetFieldInfo" />
+  </wsdl:message>
+  <wsdl:message name="IData_EmailProfileGetFieldInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EmailProfileGetFieldInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_EmailProfileGetFieldOptions_InputMessage">
+    <wsdl:part name="parameters" element="tns:EmailProfileGetFieldOptions" />
+  </wsdl:message>
+  <wsdl:message name="IData_EmailProfileGetFieldOptions_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EmailProfileGetFieldOptionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_AuditLogCreate_InputMessage">
+    <wsdl:part name="parameters" element="tns:AuditLogCreate" />
+  </wsdl:message>
+  <wsdl:message name="IData_AuditLogCreate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AuditLogCreateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_AuditLogRead_InputMessage">
+    <wsdl:part name="parameters" element="tns:AuditLogRead" />
+  </wsdl:message>
+  <wsdl:message name="IData_AuditLogRead_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AuditLogReadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_AuditLogUpdate_InputMessage">
+    <wsdl:part name="parameters" element="tns:AuditLogUpdate" />
+  </wsdl:message>
+  <wsdl:message name="IData_AuditLogUpdate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AuditLogUpdateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_AuditLogDelete_InputMessage">
+    <wsdl:part name="parameters" element="tns:AuditLogDelete" />
+  </wsdl:message>
+  <wsdl:message name="IData_AuditLogDelete_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AuditLogDeleteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_AuditLogGetFieldInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:AuditLogGetFieldInfo" />
+  </wsdl:message>
+  <wsdl:message name="IData_AuditLogGetFieldInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AuditLogGetFieldInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_AuditLogGetFieldOptions_InputMessage">
+    <wsdl:part name="parameters" element="tns:AuditLogGetFieldOptions" />
+  </wsdl:message>
+  <wsdl:message name="IData_AuditLogGetFieldOptions_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AuditLogGetFieldOptionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_SchemaCreate_InputMessage">
+    <wsdl:part name="parameters" element="tns:SchemaCreate" />
+  </wsdl:message>
+  <wsdl:message name="IData_SchemaCreate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SchemaCreateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_SchemaRead_InputMessage">
+    <wsdl:part name="parameters" element="tns:SchemaRead" />
+  </wsdl:message>
+  <wsdl:message name="IData_SchemaRead_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SchemaReadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_SchemaUpdate_InputMessage">
+    <wsdl:part name="parameters" element="tns:SchemaUpdate" />
+  </wsdl:message>
+  <wsdl:message name="IData_SchemaUpdate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SchemaUpdateResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IData">
+    <wsdl:operation name="SchemaDelete">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/SchemaDelete" message="tns:IData_SchemaDelete_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/SchemaDeleteResponse" message="tns:IData_SchemaDelete_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SchemaGetFieldInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/SchemaGetFieldInfo" message="tns:IData_SchemaGetFieldInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/SchemaGetFieldInfoResponse" message="tns:IData_SchemaGetFieldInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SchemaGetFieldOptions">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/SchemaGetFieldOptions" message="tns:IData_SchemaGetFieldOptions_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/SchemaGetFieldOptionsResponse" message="tns:IData_SchemaGetFieldOptions_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SchemaFolderCreate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/SchemaFolderCreate" message="tns:IData_SchemaFolderCreate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/SchemaFolderCreateResponse" message="tns:IData_SchemaFolderCreate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SchemaFolderRead">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/SchemaFolderRead" message="tns:IData_SchemaFolderRead_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/SchemaFolderReadResponse" message="tns:IData_SchemaFolderRead_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SchemaFolderUpdate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/SchemaFolderUpdate" message="tns:IData_SchemaFolderUpdate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/SchemaFolderUpdateResponse" message="tns:IData_SchemaFolderUpdate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SchemaFolderDelete">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/SchemaFolderDelete" message="tns:IData_SchemaFolderDelete_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/SchemaFolderDeleteResponse" message="tns:IData_SchemaFolderDelete_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SchemaFolderGetFieldInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/SchemaFolderGetFieldInfo" message="tns:IData_SchemaFolderGetFieldInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/SchemaFolderGetFieldInfoResponse" message="tns:IData_SchemaFolderGetFieldInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SchemaFolderGetFieldOptions">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/SchemaFolderGetFieldOptions" message="tns:IData_SchemaFolderGetFieldOptions_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/SchemaFolderGetFieldOptionsResponse" message="tns:IData_SchemaFolderGetFieldOptions_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ConfigurationRead">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/ConfigurationRead" message="tns:IData_ConfigurationRead_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/ConfigurationReadResponse" message="tns:IData_ConfigurationRead_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ConfigurationSave">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/ConfigurationSave" message="tns:IData_ConfigurationSave_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/ConfigurationSaveResponse" message="tns:IData_ConfigurationSave_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UserCreate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/UserCreate" message="tns:IData_UserCreate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/UserCreateResponse" message="tns:IData_UserCreate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UserRead">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/UserRead" message="tns:IData_UserRead_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/UserReadResponse" message="tns:IData_UserRead_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UserUpdate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/UserUpdate" message="tns:IData_UserUpdate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/UserUpdateResponse" message="tns:IData_UserUpdate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UserDelete">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/UserDelete" message="tns:IData_UserDelete_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/UserDeleteResponse" message="tns:IData_UserDelete_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UserGetFieldInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/UserGetFieldInfo" message="tns:IData_UserGetFieldInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/UserGetFieldInfoResponse" message="tns:IData_UserGetFieldInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UserGetFieldOptions">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/UserGetFieldOptions" message="tns:IData_UserGetFieldOptions_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/UserGetFieldOptionsResponse" message="tns:IData_UserGetFieldOptions_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NotificationSetupCreate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/NotificationSetupCreate" message="tns:IData_NotificationSetupCreate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/NotificationSetupCreateResponse" message="tns:IData_NotificationSetupCreate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NotificationSetupRead">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/NotificationSetupRead" message="tns:IData_NotificationSetupRead_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/NotificationSetupReadResponse" message="tns:IData_NotificationSetupRead_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NotificationSetupUpdate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/NotificationSetupUpdate" message="tns:IData_NotificationSetupUpdate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/NotificationSetupUpdateResponse" message="tns:IData_NotificationSetupUpdate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NotificationSetupDelete">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/NotificationSetupDelete" message="tns:IData_NotificationSetupDelete_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/NotificationSetupDeleteResponse" message="tns:IData_NotificationSetupDelete_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NotificationSetupGetFieldInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/NotificationSetupGetFieldInfo" message="tns:IData_NotificationSetupGetFieldInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/NotificationSetupGetFieldInfoResponse" message="tns:IData_NotificationSetupGetFieldInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NotificationSetupGetFieldOptions">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/NotificationSetupGetFieldOptions" message="tns:IData_NotificationSetupGetFieldOptions_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/NotificationSetupGetFieldOptionsResponse" message="tns:IData_NotificationSetupGetFieldOptions_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AlertRead">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/AlertRead" message="tns:IData_AlertRead_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/AlertReadResponse" message="tns:IData_AlertRead_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EventRead">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/EventRead" message="tns:IData_EventRead_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/EventReadResponse" message="tns:IData_EventRead_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NotificationMessageCreate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/NotificationMessageCreate" message="tns:IData_NotificationMessageCreate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/NotificationMessageCreateResponse" message="tns:IData_NotificationMessageCreate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NotificationMessageRead">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/NotificationMessageRead" message="tns:IData_NotificationMessageRead_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/NotificationMessageReadResponse" message="tns:IData_NotificationMessageRead_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NotificationMessageUpdate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/NotificationMessageUpdate" message="tns:IData_NotificationMessageUpdate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/NotificationMessageUpdateResponse" message="tns:IData_NotificationMessageUpdate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NotificationMessageDelete">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/NotificationMessageDelete" message="tns:IData_NotificationMessageDelete_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/NotificationMessageDeleteResponse" message="tns:IData_NotificationMessageDelete_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Authenticate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/Authenticate" message="tns:IData_Authenticate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/AuthenticateResponse" message="tns:IData_Authenticate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="TokenValid">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/TokenValid" message="tns:IData_TokenValid_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/TokenValidResponse" message="tns:IData_TokenValid_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSystemInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/GetSystemInfo" message="tns:IData_GetSystemInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/GetSystemInfoResponse" message="tns:IData_GetSystemInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSessionInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/GetSessionInfo" message="tns:IData_GetSessionInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/GetSessionInfoResponse" message="tns:IData_GetSessionInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DatabaseTemplateImport">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/DatabaseTemplateImport" message="tns:IData_DatabaseTemplateImport_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/DatabaseTemplateImportResponse" message="tns:IData_DatabaseTemplateImport_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Read">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/Read" message="tns:IData_Read_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/ReadResponse" message="tns:IData_Read_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AbEntryCreate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/AbEntryCreate" message="tns:IData_AbEntryCreate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/AbEntryCreateResponse" message="tns:IData_AbEntryCreate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AbEntryRead">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/AbEntryRead" message="tns:IData_AbEntryRead_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/AbEntryReadResponse" message="tns:IData_AbEntryRead_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AbEntryUpdate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/AbEntryUpdate" message="tns:IData_AbEntryUpdate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/AbEntryUpdateResponse" message="tns:IData_AbEntryUpdate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AbEntryDelete">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/AbEntryDelete" message="tns:IData_AbEntryDelete_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/AbEntryDeleteResponse" message="tns:IData_AbEntryDelete_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AbEntryGetFieldInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/AbEntryGetFieldInfo" message="tns:IData_AbEntryGetFieldInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/AbEntryGetFieldInfoResponse" message="tns:IData_AbEntryGetFieldInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AbEntryGetFieldOptions">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/AbEntryGetFieldOptions" message="tns:IData_AbEntryGetFieldOptions_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/AbEntryGetFieldOptionsResponse" message="tns:IData_AbEntryGetFieldOptions_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddressCreate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/AddressCreate" message="tns:IData_AddressCreate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/AddressCreateResponse" message="tns:IData_AddressCreate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddressRead">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/AddressRead" message="tns:IData_AddressRead_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/AddressReadResponse" message="tns:IData_AddressRead_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddressUpdate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/AddressUpdate" message="tns:IData_AddressUpdate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/AddressUpdateResponse" message="tns:IData_AddressUpdate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddressDelete">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/AddressDelete" message="tns:IData_AddressDelete_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/AddressDeleteResponse" message="tns:IData_AddressDelete_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddressGetFieldInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/AddressGetFieldInfo" message="tns:IData_AddressGetFieldInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/AddressGetFieldInfoResponse" message="tns:IData_AddressGetFieldInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddressGetFieldOptions">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/AddressGetFieldOptions" message="tns:IData_AddressGetFieldOptions_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/AddressGetFieldOptionsResponse" message="tns:IData_AddressGetFieldOptions_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NoteCreate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/NoteCreate" message="tns:IData_NoteCreate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/NoteCreateResponse" message="tns:IData_NoteCreate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NoteRead">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/NoteRead" message="tns:IData_NoteRead_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/NoteReadResponse" message="tns:IData_NoteRead_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NoteUpdate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/NoteUpdate" message="tns:IData_NoteUpdate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/NoteUpdateResponse" message="tns:IData_NoteUpdate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NoteDelete">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/NoteDelete" message="tns:IData_NoteDelete_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/NoteDeleteResponse" message="tns:IData_NoteDelete_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NoteGetFieldInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/NoteGetFieldInfo" message="tns:IData_NoteGetFieldInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/NoteGetFieldInfoResponse" message="tns:IData_NoteGetFieldInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NoteGetFieldOptions">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/NoteGetFieldOptions" message="tns:IData_NoteGetFieldOptions_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/NoteGetFieldOptionsResponse" message="tns:IData_NoteGetFieldOptions_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DocumentCreate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/DocumentCreate" message="tns:IData_DocumentCreate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/DocumentCreateResponse" message="tns:IData_DocumentCreate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DocumentRead">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/DocumentRead" message="tns:IData_DocumentRead_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/DocumentReadResponse" message="tns:IData_DocumentRead_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DocumentUpdate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/DocumentUpdate" message="tns:IData_DocumentUpdate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/DocumentUpdateResponse" message="tns:IData_DocumentUpdate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DocumentDelete">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/DocumentDelete" message="tns:IData_DocumentDelete_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/DocumentDeleteResponse" message="tns:IData_DocumentDelete_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DocumentGetFieldInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/DocumentGetFieldInfo" message="tns:IData_DocumentGetFieldInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/DocumentGetFieldInfoResponse" message="tns:IData_DocumentGetFieldInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DocumentGetFieldOptions">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/DocumentGetFieldOptions" message="tns:IData_DocumentGetFieldOptions_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/DocumentGetFieldOptionsResponse" message="tns:IData_DocumentGetFieldOptions_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadFile">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/UploadFile" message="tns:IData_UploadFile_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/UploadFileResponse" message="tns:IData_UploadFile_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="OpportunityCreate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/OpportunityCreate" message="tns:IData_OpportunityCreate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/OpportunityCreateResponse" message="tns:IData_OpportunityCreate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="OpportunityRead">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/OpportunityRead" message="tns:IData_OpportunityRead_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/OpportunityReadResponse" message="tns:IData_OpportunityRead_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="OpportunityUpdate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/OpportunityUpdate" message="tns:IData_OpportunityUpdate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/OpportunityUpdateResponse" message="tns:IData_OpportunityUpdate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="OpportunityDelete">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/OpportunityDelete" message="tns:IData_OpportunityDelete_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/OpportunityDeleteResponse" message="tns:IData_OpportunityDelete_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="OpportunityGetFieldInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/OpportunityGetFieldInfo" message="tns:IData_OpportunityGetFieldInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/OpportunityGetFieldInfoResponse" message="tns:IData_OpportunityGetFieldInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="OpportunityGetFieldOptions">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/OpportunityGetFieldOptions" message="tns:IData_OpportunityGetFieldOptions_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/OpportunityGetFieldOptionsResponse" message="tns:IData_OpportunityGetFieldOptions_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CaseCreate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/CaseCreate" message="tns:IData_CaseCreate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/CaseCreateResponse" message="tns:IData_CaseCreate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CaseRead">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/CaseRead" message="tns:IData_CaseRead_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/CaseReadResponse" message="tns:IData_CaseRead_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CaseUpdate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/CaseUpdate" message="tns:IData_CaseUpdate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/CaseUpdateResponse" message="tns:IData_CaseUpdate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CaseDelete">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/CaseDelete" message="tns:IData_CaseDelete_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/CaseDeleteResponse" message="tns:IData_CaseDelete_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CaseGetFieldInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/CaseGetFieldInfo" message="tns:IData_CaseGetFieldInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/CaseGetFieldInfoResponse" message="tns:IData_CaseGetFieldInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CaseGetFieldOptions">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/CaseGetFieldOptions" message="tns:IData_CaseGetFieldOptions_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/CaseGetFieldOptionsResponse" message="tns:IData_CaseGetFieldOptions_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AppointmentCreate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/AppointmentCreate" message="tns:IData_AppointmentCreate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/AppointmentCreateResponse" message="tns:IData_AppointmentCreate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AppointmentRead">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/AppointmentRead" message="tns:IData_AppointmentRead_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/AppointmentReadResponse" message="tns:IData_AppointmentRead_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AppointmentUpdate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/AppointmentUpdate" message="tns:IData_AppointmentUpdate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/AppointmentUpdateResponse" message="tns:IData_AppointmentUpdate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AppointmentDelete">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/AppointmentDelete" message="tns:IData_AppointmentDelete_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/AppointmentDeleteResponse" message="tns:IData_AppointmentDelete_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AppointmentGetFieldInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/AppointmentGetFieldInfo" message="tns:IData_AppointmentGetFieldInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/AppointmentGetFieldInfoResponse" message="tns:IData_AppointmentGetFieldInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AppointmentGetFieldOptions">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/AppointmentGetFieldOptions" message="tns:IData_AppointmentGetFieldOptions_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/AppointmentGetFieldOptionsResponse" message="tns:IData_AppointmentGetFieldOptions_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FreeTimeRead">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/FreeTimeRead" message="tns:IData_FreeTimeRead_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/FreeTimeReadResponse" message="tns:IData_FreeTimeRead_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FreeTimeGetFieldInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/FreeTimeGetFieldInfo" message="tns:IData_FreeTimeGetFieldInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/FreeTimeGetFieldInfoResponse" message="tns:IData_FreeTimeGetFieldInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FreeTimeGetFieldOptions">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/FreeTimeGetFieldOptions" message="tns:IData_FreeTimeGetFieldOptions_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/FreeTimeGetFieldOptionsResponse" message="tns:IData_FreeTimeGetFieldOptions_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="TaskCreate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/TaskCreate" message="tns:IData_TaskCreate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/TaskCreateResponse" message="tns:IData_TaskCreate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="TaskRead">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/TaskRead" message="tns:IData_TaskRead_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/TaskReadResponse" message="tns:IData_TaskRead_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="TaskUpdate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/TaskUpdate" message="tns:IData_TaskUpdate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/TaskUpdateResponse" message="tns:IData_TaskUpdate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="TaskDelete">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/TaskDelete" message="tns:IData_TaskDelete_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/TaskDeleteResponse" message="tns:IData_TaskDelete_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="TaskGetFieldInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/TaskGetFieldInfo" message="tns:IData_TaskGetFieldInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/TaskGetFieldInfoResponse" message="tns:IData_TaskGetFieldInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="TaskGetFieldOptions">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/TaskGetFieldOptions" message="tns:IData_TaskGetFieldOptions_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/TaskGetFieldOptionsResponse" message="tns:IData_TaskGetFieldOptions_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CustomCreate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/CustomCreate" message="tns:IData_CustomCreate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/CustomCreateResponse" message="tns:IData_CustomCreate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CustomRead">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/CustomRead" message="tns:IData_CustomRead_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/CustomReadResponse" message="tns:IData_CustomRead_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CustomUpdate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/CustomUpdate" message="tns:IData_CustomUpdate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/CustomUpdateResponse" message="tns:IData_CustomUpdate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CustomDelete">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/CustomDelete" message="tns:IData_CustomDelete_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/CustomDeleteResponse" message="tns:IData_CustomDelete_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CustomGetFieldInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/CustomGetFieldInfo" message="tns:IData_CustomGetFieldInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/CustomGetFieldInfoResponse" message="tns:IData_CustomGetFieldInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CustomGetFieldOptions">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/CustomGetFieldOptions" message="tns:IData_CustomGetFieldOptions_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/CustomGetFieldOptionsResponse" message="tns:IData_CustomGetFieldOptions_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CustomChildCreate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/CustomChildCreate" message="tns:IData_CustomChildCreate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/CustomChildCreateResponse" message="tns:IData_CustomChildCreate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CustomChildRead">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/CustomChildRead" message="tns:IData_CustomChildRead_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/CustomChildReadResponse" message="tns:IData_CustomChildRead_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CustomChildUpdate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/CustomChildUpdate" message="tns:IData_CustomChildUpdate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/CustomChildUpdateResponse" message="tns:IData_CustomChildUpdate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CustomChildDelete">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/CustomChildDelete" message="tns:IData_CustomChildDelete_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/CustomChildDeleteResponse" message="tns:IData_CustomChildDelete_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CustomChildGetFieldInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/CustomChildGetFieldInfo" message="tns:IData_CustomChildGetFieldInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/CustomChildGetFieldInfoResponse" message="tns:IData_CustomChildGetFieldInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CustomChildGetFieldOptions">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/CustomChildGetFieldOptions" message="tns:IData_CustomChildGetFieldOptions_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/CustomChildGetFieldOptionsResponse" message="tns:IData_CustomChildGetFieldOptions_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EmailProfileCreate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/EmailProfileCreate" message="tns:IData_EmailProfileCreate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/EmailProfileCreateResponse" message="tns:IData_EmailProfileCreate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EmailProfileRead">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/EmailProfileRead" message="tns:IData_EmailProfileRead_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/EmailProfileReadResponse" message="tns:IData_EmailProfileRead_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EmailProfileUpdate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/EmailProfileUpdate" message="tns:IData_EmailProfileUpdate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/EmailProfileUpdateResponse" message="tns:IData_EmailProfileUpdate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EmailProfileDelete">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/EmailProfileDelete" message="tns:IData_EmailProfileDelete_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/EmailProfileDeleteResponse" message="tns:IData_EmailProfileDelete_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EmailProfileGetFieldInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/EmailProfileGetFieldInfo" message="tns:IData_EmailProfileGetFieldInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/EmailProfileGetFieldInfoResponse" message="tns:IData_EmailProfileGetFieldInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EmailProfileGetFieldOptions">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/EmailProfileGetFieldOptions" message="tns:IData_EmailProfileGetFieldOptions_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/EmailProfileGetFieldOptionsResponse" message="tns:IData_EmailProfileGetFieldOptions_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AuditLogCreate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/AuditLogCreate" message="tns:IData_AuditLogCreate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/AuditLogCreateResponse" message="tns:IData_AuditLogCreate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AuditLogRead">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/AuditLogRead" message="tns:IData_AuditLogRead_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/AuditLogReadResponse" message="tns:IData_AuditLogRead_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AuditLogUpdate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/AuditLogUpdate" message="tns:IData_AuditLogUpdate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/AuditLogUpdateResponse" message="tns:IData_AuditLogUpdate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AuditLogDelete">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/AuditLogDelete" message="tns:IData_AuditLogDelete_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/AuditLogDeleteResponse" message="tns:IData_AuditLogDelete_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AuditLogGetFieldInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/AuditLogGetFieldInfo" message="tns:IData_AuditLogGetFieldInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/AuditLogGetFieldInfoResponse" message="tns:IData_AuditLogGetFieldInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AuditLogGetFieldOptions">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/AuditLogGetFieldOptions" message="tns:IData_AuditLogGetFieldOptions_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/AuditLogGetFieldOptionsResponse" message="tns:IData_AuditLogGetFieldOptions_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SchemaCreate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/SchemaCreate" message="tns:IData_SchemaCreate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/SchemaCreateResponse" message="tns:IData_SchemaCreate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SchemaRead">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/SchemaRead" message="tns:IData_SchemaRead_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/SchemaReadResponse" message="tns:IData_SchemaRead_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SchemaUpdate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/SchemaUpdate" message="tns:IData_SchemaUpdate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/SchemaUpdateResponse" message="tns:IData_SchemaUpdate_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IData" type="tns:IData">
+    <wsp:PolicyReference URI="#BasicHttpBinding_IData_policy" />
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SchemaDelete">
+      <soap:operation soapAction="http://tempuri.org/IData/SchemaDelete" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SchemaGetFieldInfo">
+      <soap:operation soapAction="http://tempuri.org/IData/SchemaGetFieldInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SchemaGetFieldOptions">
+      <soap:operation soapAction="http://tempuri.org/IData/SchemaGetFieldOptions" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SchemaFolderCreate">
+      <soap:operation soapAction="http://tempuri.org/IData/SchemaFolderCreate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SchemaFolderRead">
+      <soap:operation soapAction="http://tempuri.org/IData/SchemaFolderRead" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SchemaFolderUpdate">
+      <soap:operation soapAction="http://tempuri.org/IData/SchemaFolderUpdate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SchemaFolderDelete">
+      <soap:operation soapAction="http://tempuri.org/IData/SchemaFolderDelete" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SchemaFolderGetFieldInfo">
+      <soap:operation soapAction="http://tempuri.org/IData/SchemaFolderGetFieldInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SchemaFolderGetFieldOptions">
+      <soap:operation soapAction="http://tempuri.org/IData/SchemaFolderGetFieldOptions" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConfigurationRead">
+      <soap:operation soapAction="http://tempuri.org/IData/ConfigurationRead" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConfigurationSave">
+      <soap:operation soapAction="http://tempuri.org/IData/ConfigurationSave" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserCreate">
+      <soap:operation soapAction="http://tempuri.org/IData/UserCreate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserRead">
+      <soap:operation soapAction="http://tempuri.org/IData/UserRead" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserUpdate">
+      <soap:operation soapAction="http://tempuri.org/IData/UserUpdate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserDelete">
+      <soap:operation soapAction="http://tempuri.org/IData/UserDelete" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserGetFieldInfo">
+      <soap:operation soapAction="http://tempuri.org/IData/UserGetFieldInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserGetFieldOptions">
+      <soap:operation soapAction="http://tempuri.org/IData/UserGetFieldOptions" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NotificationSetupCreate">
+      <soap:operation soapAction="http://tempuri.org/IData/NotificationSetupCreate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NotificationSetupRead">
+      <soap:operation soapAction="http://tempuri.org/IData/NotificationSetupRead" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NotificationSetupUpdate">
+      <soap:operation soapAction="http://tempuri.org/IData/NotificationSetupUpdate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NotificationSetupDelete">
+      <soap:operation soapAction="http://tempuri.org/IData/NotificationSetupDelete" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NotificationSetupGetFieldInfo">
+      <soap:operation soapAction="http://tempuri.org/IData/NotificationSetupGetFieldInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NotificationSetupGetFieldOptions">
+      <soap:operation soapAction="http://tempuri.org/IData/NotificationSetupGetFieldOptions" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AlertRead">
+      <soap:operation soapAction="http://tempuri.org/IData/AlertRead" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EventRead">
+      <soap:operation soapAction="http://tempuri.org/IData/EventRead" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NotificationMessageCreate">
+      <soap:operation soapAction="http://tempuri.org/IData/NotificationMessageCreate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NotificationMessageRead">
+      <soap:operation soapAction="http://tempuri.org/IData/NotificationMessageRead" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NotificationMessageUpdate">
+      <soap:operation soapAction="http://tempuri.org/IData/NotificationMessageUpdate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NotificationMessageDelete">
+      <soap:operation soapAction="http://tempuri.org/IData/NotificationMessageDelete" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Authenticate">
+      <soap:operation soapAction="http://tempuri.org/IData/Authenticate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TokenValid">
+      <soap:operation soapAction="http://tempuri.org/IData/TokenValid" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSystemInfo">
+      <soap:operation soapAction="http://tempuri.org/IData/GetSystemInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSessionInfo">
+      <soap:operation soapAction="http://tempuri.org/IData/GetSessionInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DatabaseTemplateImport">
+      <soap:operation soapAction="http://tempuri.org/IData/DatabaseTemplateImport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Read">
+      <soap:operation soapAction="http://tempuri.org/IData/Read" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AbEntryCreate">
+      <soap:operation soapAction="http://tempuri.org/IData/AbEntryCreate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AbEntryRead">
+      <soap:operation soapAction="http://tempuri.org/IData/AbEntryRead" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AbEntryUpdate">
+      <soap:operation soapAction="http://tempuri.org/IData/AbEntryUpdate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AbEntryDelete">
+      <soap:operation soapAction="http://tempuri.org/IData/AbEntryDelete" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AbEntryGetFieldInfo">
+      <soap:operation soapAction="http://tempuri.org/IData/AbEntryGetFieldInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AbEntryGetFieldOptions">
+      <soap:operation soapAction="http://tempuri.org/IData/AbEntryGetFieldOptions" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddressCreate">
+      <soap:operation soapAction="http://tempuri.org/IData/AddressCreate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddressRead">
+      <soap:operation soapAction="http://tempuri.org/IData/AddressRead" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddressUpdate">
+      <soap:operation soapAction="http://tempuri.org/IData/AddressUpdate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddressDelete">
+      <soap:operation soapAction="http://tempuri.org/IData/AddressDelete" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddressGetFieldInfo">
+      <soap:operation soapAction="http://tempuri.org/IData/AddressGetFieldInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddressGetFieldOptions">
+      <soap:operation soapAction="http://tempuri.org/IData/AddressGetFieldOptions" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NoteCreate">
+      <soap:operation soapAction="http://tempuri.org/IData/NoteCreate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NoteRead">
+      <soap:operation soapAction="http://tempuri.org/IData/NoteRead" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NoteUpdate">
+      <soap:operation soapAction="http://tempuri.org/IData/NoteUpdate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NoteDelete">
+      <soap:operation soapAction="http://tempuri.org/IData/NoteDelete" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NoteGetFieldInfo">
+      <soap:operation soapAction="http://tempuri.org/IData/NoteGetFieldInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NoteGetFieldOptions">
+      <soap:operation soapAction="http://tempuri.org/IData/NoteGetFieldOptions" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DocumentCreate">
+      <soap:operation soapAction="http://tempuri.org/IData/DocumentCreate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DocumentRead">
+      <soap:operation soapAction="http://tempuri.org/IData/DocumentRead" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DocumentUpdate">
+      <soap:operation soapAction="http://tempuri.org/IData/DocumentUpdate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DocumentDelete">
+      <soap:operation soapAction="http://tempuri.org/IData/DocumentDelete" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DocumentGetFieldInfo">
+      <soap:operation soapAction="http://tempuri.org/IData/DocumentGetFieldInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DocumentGetFieldOptions">
+      <soap:operation soapAction="http://tempuri.org/IData/DocumentGetFieldOptions" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadFile">
+      <soap:operation soapAction="http://tempuri.org/IData/UploadFile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OpportunityCreate">
+      <soap:operation soapAction="http://tempuri.org/IData/OpportunityCreate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OpportunityRead">
+      <soap:operation soapAction="http://tempuri.org/IData/OpportunityRead" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OpportunityUpdate">
+      <soap:operation soapAction="http://tempuri.org/IData/OpportunityUpdate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OpportunityDelete">
+      <soap:operation soapAction="http://tempuri.org/IData/OpportunityDelete" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OpportunityGetFieldInfo">
+      <soap:operation soapAction="http://tempuri.org/IData/OpportunityGetFieldInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OpportunityGetFieldOptions">
+      <soap:operation soapAction="http://tempuri.org/IData/OpportunityGetFieldOptions" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CaseCreate">
+      <soap:operation soapAction="http://tempuri.org/IData/CaseCreate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CaseRead">
+      <soap:operation soapAction="http://tempuri.org/IData/CaseRead" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CaseUpdate">
+      <soap:operation soapAction="http://tempuri.org/IData/CaseUpdate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CaseDelete">
+      <soap:operation soapAction="http://tempuri.org/IData/CaseDelete" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CaseGetFieldInfo">
+      <soap:operation soapAction="http://tempuri.org/IData/CaseGetFieldInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CaseGetFieldOptions">
+      <soap:operation soapAction="http://tempuri.org/IData/CaseGetFieldOptions" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AppointmentCreate">
+      <soap:operation soapAction="http://tempuri.org/IData/AppointmentCreate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AppointmentRead">
+      <soap:operation soapAction="http://tempuri.org/IData/AppointmentRead" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AppointmentUpdate">
+      <soap:operation soapAction="http://tempuri.org/IData/AppointmentUpdate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AppointmentDelete">
+      <soap:operation soapAction="http://tempuri.org/IData/AppointmentDelete" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AppointmentGetFieldInfo">
+      <soap:operation soapAction="http://tempuri.org/IData/AppointmentGetFieldInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AppointmentGetFieldOptions">
+      <soap:operation soapAction="http://tempuri.org/IData/AppointmentGetFieldOptions" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FreeTimeRead">
+      <soap:operation soapAction="http://tempuri.org/IData/FreeTimeRead" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FreeTimeGetFieldInfo">
+      <soap:operation soapAction="http://tempuri.org/IData/FreeTimeGetFieldInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FreeTimeGetFieldOptions">
+      <soap:operation soapAction="http://tempuri.org/IData/FreeTimeGetFieldOptions" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TaskCreate">
+      <soap:operation soapAction="http://tempuri.org/IData/TaskCreate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TaskRead">
+      <soap:operation soapAction="http://tempuri.org/IData/TaskRead" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TaskUpdate">
+      <soap:operation soapAction="http://tempuri.org/IData/TaskUpdate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TaskDelete">
+      <soap:operation soapAction="http://tempuri.org/IData/TaskDelete" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TaskGetFieldInfo">
+      <soap:operation soapAction="http://tempuri.org/IData/TaskGetFieldInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TaskGetFieldOptions">
+      <soap:operation soapAction="http://tempuri.org/IData/TaskGetFieldOptions" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CustomCreate">
+      <soap:operation soapAction="http://tempuri.org/IData/CustomCreate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CustomRead">
+      <soap:operation soapAction="http://tempuri.org/IData/CustomRead" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CustomUpdate">
+      <soap:operation soapAction="http://tempuri.org/IData/CustomUpdate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CustomDelete">
+      <soap:operation soapAction="http://tempuri.org/IData/CustomDelete" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CustomGetFieldInfo">
+      <soap:operation soapAction="http://tempuri.org/IData/CustomGetFieldInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CustomGetFieldOptions">
+      <soap:operation soapAction="http://tempuri.org/IData/CustomGetFieldOptions" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CustomChildCreate">
+      <soap:operation soapAction="http://tempuri.org/IData/CustomChildCreate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CustomChildRead">
+      <soap:operation soapAction="http://tempuri.org/IData/CustomChildRead" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CustomChildUpdate">
+      <soap:operation soapAction="http://tempuri.org/IData/CustomChildUpdate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CustomChildDelete">
+      <soap:operation soapAction="http://tempuri.org/IData/CustomChildDelete" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CustomChildGetFieldInfo">
+      <soap:operation soapAction="http://tempuri.org/IData/CustomChildGetFieldInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CustomChildGetFieldOptions">
+      <soap:operation soapAction="http://tempuri.org/IData/CustomChildGetFieldOptions" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EmailProfileCreate">
+      <soap:operation soapAction="http://tempuri.org/IData/EmailProfileCreate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EmailProfileRead">
+      <soap:operation soapAction="http://tempuri.org/IData/EmailProfileRead" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EmailProfileUpdate">
+      <soap:operation soapAction="http://tempuri.org/IData/EmailProfileUpdate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EmailProfileDelete">
+      <soap:operation soapAction="http://tempuri.org/IData/EmailProfileDelete" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EmailProfileGetFieldInfo">
+      <soap:operation soapAction="http://tempuri.org/IData/EmailProfileGetFieldInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EmailProfileGetFieldOptions">
+      <soap:operation soapAction="http://tempuri.org/IData/EmailProfileGetFieldOptions" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AuditLogCreate">
+      <soap:operation soapAction="http://tempuri.org/IData/AuditLogCreate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AuditLogRead">
+      <soap:operation soapAction="http://tempuri.org/IData/AuditLogRead" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AuditLogUpdate">
+      <soap:operation soapAction="http://tempuri.org/IData/AuditLogUpdate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AuditLogDelete">
+      <soap:operation soapAction="http://tempuri.org/IData/AuditLogDelete" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AuditLogGetFieldInfo">
+      <soap:operation soapAction="http://tempuri.org/IData/AuditLogGetFieldInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AuditLogGetFieldOptions">
+      <soap:operation soapAction="http://tempuri.org/IData/AuditLogGetFieldOptions" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SchemaCreate">
+      <soap:operation soapAction="http://tempuri.org/IData/SchemaCreate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SchemaRead">
+      <soap:operation soapAction="http://tempuri.org/IData/SchemaRead" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SchemaUpdate">
+      <soap:operation soapAction="http://tempuri.org/IData/SchemaUpdate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Data">
+    <wsdl:port name="BasicHttpBinding_IData" binding="tns:BasicHttpBinding_IData">
+      <soap:address location="https://cessnock.crmhd.com/MaximizerWebData/Data.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

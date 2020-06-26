@@ -1,0 +1,116 @@
+﻿@model EnquiryInsertToCRM.Models.EnquiryModel
+@{
+    ViewBag.Title = "Home Page";
+}
+<div class="container body-content">
+    <div class="form-submit">
+        @using (Ajax.BeginForm("EnquirySubmit", "Home", new AjaxOptions { OnBegin = "OnBeginInq", OnSuccess = "OnSuccessInq", OnFailure = "OnFailureInq", LoadingElementId = "iLoading" }, new { @id = "InquiryForm" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m=>m.SalesPerson)
+            <div class="contact-form">
+                <div class="row">
+                    <div class="col-lg-11 col-lg-11 col-lg-offset-4 col-lg-offset-0">
+                        <div class="row">
+                            <div class="col-lg-12 form-group ">
+                                <div class="text-center">
+                                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @placeholder = "First Names *" })
+                                </div>
+                                @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 form-group ">
+                                <div class="text-center">
+                                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @placeholder = "Last Names *" })
+                                </div>
+                                @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 form-group ">
+                                <div class="text-center">
+                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email *" })
+                                </div>
+                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 form-group">
+                                <div class="text-center">
+                                    @Html.TextBoxFor(m => m.Mobile, new { @class = "form-control", @placeholder = "Mobile No. *" })
+                                </div>
+                                @Html.ValidationMessageFor(m => m.Mobile, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 form-group">
+                                <div class="text-center">
+                                    @Html.TextBoxFor(m => m.AddressLine1, new { @class = "form-control", @placeholder = "Street Address " })
+                                </div>
+                                @Html.ValidationMessageFor(m => m.AddressLine1, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 form-group">
+                                <div class="text-center">
+                                    @Html.TextBoxFor(m => m.City, new { @class = "form-control", @placeholder = "Suburb " })
+                                </div>
+                                @Html.ValidationMessageFor(m => m.City, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 form-group">
+                                <div class="text-center">
+                                    @Html.TextBoxFor(m => m.StateProvince, new { @class = "form-control", @placeholder = "State " })
+                                </div>
+                                @Html.ValidationMessageFor(m => m.StateProvince, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 form-group">
+                                <div class="text-center">
+                                    @Html.TextBoxFor(m => m.ZipCode, new { @class = "form-control", @placeholder = "Postcode " })
+                                </div>
+                                @Html.ValidationMessageFor(m => m.ZipCode, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 form-group">
+                                <div class="text-center">
+                                    @Html.DropDownList("ReferenceBy", new SelectList(ViewBag.referencemodelList, "key", "value"), "How did you hear about Brookwater *", new { @id = "ReferenceBy", @class = "form-control" })
+                                </div>
+                                @Html.ValidationMessageFor(m => m.ReferenceBy, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 form-group">
+                                <div class="text-center">
+                                    @Html.DropDownList("PreferredInvestmentLevel", new SelectList(ViewBag.preferredinvestmentlevelList, "key", "value"), "Preferred Investment Level for H & L *", new { @id = "PreferredInvestmentLevel", @class = "form-control" })
+                                </div>
+                                @Html.ValidationMessageFor(m => m.PreferredInvestmentLevel, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 form-group text-center">
+                                <button id="btnsubmit" type="submit" class="btn btn-sm btn-success rounded-0" style="width:60%;">Submit</button>
+                                <span id="spnImgProcessing" style="display: none; padding-top: 13px; text-transform: none; font-size:13px;" class="send-btn">
+                                    <img src="/images/loader.gif" />&nbsp;&nbsp;Processing ...
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        }
+
+    </div>
+</div>
+<div class="">
+    <div class="col-lg-12 form-group text-center">
+        <label id="lblmsg"></label>
+    </div>
+</div>

@@ -1,0 +1,38 @@
+
+
+[
+  {
+    "Id": "d64e5b25-0551-4e2d-a279-1cd6d4f7e6f1",
+    "Name": "Pro-Knit Industries Pty Ltd",
+    "LibraryPath": "Pro-Knit Industries Pty Ltd",
+    "ProductVersion": "2019.4",
+    "ProductLevel": {
+      "Code": 30,
+      "Name": "Plus"
+    },
+    "CheckedOutDate": null,
+    "CheckedOutBy": null,
+    "Uri": "https://ar1.api.myob.com/accountright/d64e5b25-0551-4e2d-a279-1cd6d4f7e6f1",
+    "Country": "AU",
+    "LauncherId": "0e6eb8eb-be17-4cc5-a289-4f93aaf3ff96",
+    "SerialNumber": "614400958004",
+    "UIAccessFlags": 1
+  },
+  {
+    "Id": "c837d9ec-c796-4243-9bd9-bf9b8d5657b8",
+    "Name": "PRORANGE WHOLESALE",
+    "LibraryPath": "PRORANGE WHOLESALE",
+    "ProductVersion": "2020.1",
+    "ProductLevel": {
+      "Code": 30,
+      "Name": "Plus"
+    },
+    "CheckedOutDate": null,
+    "CheckedOutBy": null,
+    "Uri": "https://ar1.api.myob.com/accountright/c837d9ec-c796-4243-9bd9-bf9b8d5657b8",
+    "Country": "AU",
+    "LauncherId": "8387b4f8-e28c-468d-a29b-dc6e488a33ec",
+    "SerialNumber": "614400958004",
+    "UIAccessFlags": 1
+  }
+]

@@ -1,0 +1,272 @@
+﻿@model IEnumerable<EnquiryInsertToCRM.Models.SaleInvoice>
+@{
+    ViewBag.Title = "";
+    Layout = null;
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+<link href="/assets/css/application.css" rel="stylesheet" />
+<link href="/assets/css/vendor.css" rel="stylesheet" />
+<div class="overlay_bg" style="display:none;"></div>
+<div class="loadingSpinner" style="display: none;"></div>
+
+<div id="wrapper">
+    @*<input type="hidden" id="client_key" value="@ViewBag.key" />*@
+    @*<input type="hidden" id="myobCompany" value="@ViewBag.myobCompany" />*@
+    <input type="hidden" id="myobid" value="@ViewBag.myobid" />
+    <div id="pageContents" class="container">
+        <div id="transactionHistory">
+            <div id="page" style="display: block;">
+                <div id="pageContentHeader" class="page-head">
+                    <div class="page-head__title">
+                        <h1>Sales history</h1>
+                    </div>
+                </div>
+                <div id="itemListContainer">
+                    <div id="toolbar" class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-xs-8">
+                                <div class="form-group">
+                                    <input type="button" id="btnUpdateMYOBIDintoCRM" value="Update MYOB to CRM" class="btn btn-primary" />
+                                </div>
+                            </div>
+                            <div class="col-xs-8">
+                            </div>
+                            <div class="col-xs-8">
+                                <div class="form-group">
+                                    <label class="col-xs-8 control-label" for="search">Search:</label>
+                                    <div class="col-xs-16 form-control-wrapper" data-id="" data-widget="TextInput" data-name="search">
+                                        <input id="search" name="search" type="text" class="form-control" value="" autocomplete="off" delay="off">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="table">
+                        <table id="datatable-fixed-col" class="table table-responsive">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th class="sorting_asc" width="5%">Date</th>
+                                    <th>Invoice No.</th>
+                                    <th>Customer</th>
+                                    <th>Amount</th>
+                                    <th>Amt Due</th>
+                                    <th>Promised</th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbody">
+                                @if (Model != null && Model.Count() > 0)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        string strAddClassForChildRow = "";
+                                        if (item.CustomerPaymentModel != null && item.CustomerPaymentModel.Count > 0)
+                                        {
+                                            strAddClassForChildRow = "details-control";
+                                        }
+                                        <tr class="parent">
+                                            <td class="@strAddClassForChildRow" data-child="@((strAddClassForChildRow != ""? "table_"+item.Number:""))"></td>
+                                            <td>
+                                                @item.strDate
+                                            </td>
+                                            <td>@item.Number</td>
+                                            <td>
+                                                @if (item.Customer != null)
+                                                {
+                                                    @Html.Raw(item.Customer.Name);
+                                                }
+                                            </td>
+                                            <td class="text-right">
+                                                @if (!string.IsNullOrEmpty(item.Subtotal))
+                                                {
+                                                    @("$" + item.Subtotal)
+                                                }
+                                            </td>
+                                            <td class="text-right">
+                                                @if (!string.IsNullOrEmpty(item.BalanceDueAmount))
+                                                {
+                                                    @("$" + item.BalanceDueAmount)
+                                                }
+                                            </td>
+                                            <td>
+                                                @item.strPromisedDate
+                                            </td>
+
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr><td colspan="7" class="center">There are no transactions.</td></tr>
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr class="totalLine">
+                                    <td colspan="4"></td>
+                                    <td id="totalAmt" class="text-right">0.00</td>
+                                    <td id="totalAmtDue" class="text-right">0.00</td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        @if (Model != null && Model.Count() > 0)
+                        {
+                            foreach (var item in Model.Where(s => s.CustomerPaymentModel != null).ToList())
+                            {
+                                <div id="@("table_"+item.Number)"  style="display:none" >
+                                    <table class="table table-responsive childrow">
+                                        <thead>
+                                            <tr>
+                                                <th>ID No.</th>
+                                                <th>Src</th>
+                                                <th>Date</th>
+                                                <th>Acct</th>
+                                                <th>Memo</th>
+                                                <th>Payments</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var lstCR in item.CustomerPaymentModel)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @lstCR.ReceiptNumber
+                                                    </td>
+                                                    <td>CR</td>
+                                                    <td>
+                                                        @lstCR.strDate
+                                                    </td>
+                                                    <td>
+                                                        @lstCR.Account.DisplayId
+                                                    </td>
+                                                    <td>
+                                                        @if (lstCR.Customer != null)
+                                                        {
+                                                            @("Payments; " + lstCR.Customer.Name);
+                                                        }
+                                                    </td>
+                                                    <td class="text-right">
+                                                        @if (!string.IsNullOrEmpty(lstCR.AmountReceived))
+                                                        {
+                                                            @("$" + lstCR.AmountReceived)
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            }
+                        }
+                    </div>
+                    <div id="pagination" class="pagination"><div></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<script>
+
+    //var strUrl = 'https://btc.modelbuzz.in/home/myobAccRight2max?key=' + $("#client_key").val() + '&myobid=' + $("#myobid").val() + '&myobCompany=' + $("#myobCompany").val();
+    var strUrl = 'https://btc.modelbuzz.in/home/myobAccRight2max?myobid=' + $("#myobid").val() ;
+    window.history.pushState("", "", strUrl);
+    $(document).ready(function () {
+        var details = [];
+        var table = $('#datatable-fixed-col').DataTable({
+            "stripeClasses": [],
+            paging: false,
+            "lengthChange": false,
+            "info": false,
+            "columnDefs": [{
+                "targets": 0,
+                "orderable": false
+            }],            
+            "order": [[1, 'asc']]
+            ,
+            "footerCallback": function (row, data, start, end, display) {
+                var api = this.api(), data;
+                // Remove the formatting to get integer data for summation
+                var intVal = function (i) {
+                    return typeof i === 'string' ?
+                        i.replace(/[\$,]/g, '') * 1 :
+                        typeof i === 'number' ?
+                            i : 0;
+                };
+
+                // Total over this page
+                pageTotal = api
+                    .column(4, { page: 'current' })
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+                // Total over this page
+                PageAmtDueTotal = api
+                    .column(5, { page: 'current' })
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+                // Update footer
+                $(api.column(4).footer()).html(
+                    "$" + parseFloat(pageTotal).toFixed(2)
+                );
+                $(api.column(5).footer()).html(
+                    "$" + parseFloat(PageAmtDueTotal).toFixed(2)
+                );
+            }
+        });
+
+        $("#datatable-fixed-col_filter").hide();
+        $('#search').keyup(function () {
+            table.search($(this).val()).draw();            
+        })
+        function format(d) {
+            var strHtml = $("#" + d + "").html();
+            $("#" + d + "").html("");
+            return strHtml;
+        }
+        $("#datatable-fixed-col tbody").on("click", "td.details-control", function (e) {
+            var tr = $(this).closest('tr');
+            var row = table.row(tr);                        
+            if ($(this).closest("tr").nextUntil(".parent").hasClass('open')) {
+                tr.removeClass('shown');
+                $("#" + $(this).attr("data-child") + "").html(row.child().find("td").html());
+                row.child.remove();
+            } else {
+                tr.addClass('shown');                
+                row.child(format($(this).attr("data-child"))).show();                
+            }
+            $(this).closest("tr").nextUntil(".parent").toggleClass("open");
+        });
+
+        $("#btnUpdateMYOBIDintoCRM").on('click', function myfunction(e) {
+            $(".overlay_bg").show();
+            $(".loadingSpinner").show();
+            $.ajax({
+                type: "POST",
+                url: "/home/UpdateIntoCRM",
+                //data: "companyName=" + $("#client_key").val() + "&myobid=" + $("#myobid").val() + "&myobCompany=" + $("#myobCompany").val() + "",
+                data: "myobid=" + $("#myobid").val() + "",
+                success: function (result) {
+                    $(".overlay_bg").hide();
+                    $(".loadingSpinner").hide();
+                    if (result === 'sessionout') {
+                        alert("The session has expired.")
+                    } else if (result === 'alreadyupdated') {
+                        alert("You have already synchronized to CRM.")
+                    } else if (result === 'sucess') {
+                        //$('#btnUpdateMYOBIDintoCRM').val('Synchronized');
+                        alert("You have successfully synchronized to CRM.")
+                    }
+                },
+                error: function (result) {
+                    alert("Some internal server error!");
+                }
+            });
+
+        });
+    });
+</script>

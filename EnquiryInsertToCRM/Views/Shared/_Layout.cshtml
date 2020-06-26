@@ -1,0 +1,143 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.pageheader</title>
+    @Styles.Render("~/Content/css")
+    <link href="/Content/chosen.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" /
+</head>
+<body>
+    @if (ViewBag.pageheader != "" && ViewBag.pageheader != null)
+    {
+    <div class="" style="background:#111;">
+        <br />
+        <div class="text-center ">
+            <h1>@ViewBag.pageheader</h1>
+        </div>
+        <br />
+    </div>
+    <br />
+    }
+    <div>
+        @RenderBody()
+    </div>
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="/Scripts/chosen.jquery.min.js"></script>
+    <!--Validation js-->
+    <script src="/Scripts/jquery-migrate-1.2.1.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.0/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="/Scripts/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/mvc/3.0/jquery.unobtrusive-ajax.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+        function OnBeginInq() {
+            $("#lblmsg").empty();
+            $('#btnsubmit').hide();
+            $('#spnImgProcessing').show();
+        }
+        function OnSuccessInq(res) {
+            $("#lblmsg").css("display", "none");
+            $("#lblmsg").empty();
+            $('#spnImgProcessing').hide();
+            $('#btnsubmit').show();
+            if (res == "noteinsertsuccess") {
+                $("#lblmsg").css("display", "block");
+                $("#lblmsg").html("<span style='color:green;font-size: 14px;display:block;'>Record successfully inserted in CRM.</span>");
+                $('#InquiryForm')[0].reset();
+            } else if (res == "noteupdatesuccess") {
+                $("#lblmsg").css("display", "block");
+                $("#lblmsg").html("<span style='color:green;font-size: 14px;display:block;'>Record already existing with this email id and updated successfully in CRM.</span>");
+                $('#InquiryForm')[0].reset();
+            } else if (res == "sendingmailfailed") {
+                $("#lblmsg").css("display", "block");
+                $("#lblmsg").html("<span style='color:green;font-size: 14px;display:block;'>Record already existing with this email id and updated successfully in CRM.</span>  <span style='color: red; font-size: 14px;display:block;margin-top: 5px;'>Sending mail failed.</span>");
+                $('#InquiryForm')[0].reset();
+            } else {
+                $("#lblmsg").css("display", "block");
+                $("#lblmsg").html("<span style='color: red; font-size: 14px;display:block;'>Some internal error occurred.</span>");
+            }
+        }
+        function OnFailureInq() {
+            $('#btnsubmit').show();
+            $('#spnImgProcessing').hide();
+            $("#lblmsg").html("<span style='color: red; font-size: 14px;display:block;'>Some internal error occurred.</span>");
+        }
+    </script>
+    <script type="text/javascript">
+
+        function OnJotFormBeginInq() {
+            $("#lblmsg").empty();
+            $('#btnsubmit').hide();
+            $('#spnImgProcessing').show();
+        }
+        function OnJotFormSuccessInq(res) {
+            $("#lblmsg").css("display", "none");
+            $("#lblmsg").empty();
+            $('#spnImgProcessing').hide();
+            $('#btnsubmit').show();
+            var strAppend = "";
+            if (parseInt(res.data.ResponseModel.countofGetSubmission) > 0) {
+                $("#lblmsg").css("display", "block");
+                if (parseInt(res.data.ResponseModel.countofGetSubmission) > 0) {
+                    strAppend = "<li> Total Fetch Submission Data: " + parseInt(res.data.ResponseModel.countofGetSubmission) + "</li>";
+                }
+                if (parseInt(res.data.ResponseModel.countofNewEntry) > 0) {
+                    strAppend += "<li> Total Add New Entry In CRM: " + parseInt(res.data.ResponseModel.countofNewEntry) + "</li>";
+                }
+                if (parseInt(res.data.ResponseModel.countofUpdateEntry) > 0) {
+                    strAppend += "<li> Total Update Entry In CRM: " + parseInt(res.data.ResponseModel.countofUpdateEntry) + "</li>";
+                }
+                if (parseInt(res.data.ResponseModel.countofSkipSubmissionIdForm) > 0) {
+                    strAppend += "<li> Total Skipped Submission(s): " + parseInt(res.data.ResponseModel.countofSkipSubmissionIdForm) + "</li>";
+                }
+                if (parseInt(res.data.ResponseModel.countofInvalidForm) > 0) {
+                    strAppend += "<li> Total Invalid Form(Mandatory Field Required): " + parseInt(res.data.ResponseModel.countofInvalidForm) + "</li>";
+                }
+                if (parseInt(res.data.ResponseModel.countofbadRequest) > 0) {
+                    strAppend += "<li> Some Internal Error: " + parseInt(res.data.ResponseModel.countofbadRequest) + "</li>";
+                }
+                if (parseInt(res.data.ResponseModel.countofbadrequestfornote) > 0) {
+                    strAppend += "<li> Some Internal Error(For Note): " + parseInt(res.data.ResponseModel.countofbadrequestfornote) + "</li>";
+                }
+                if (parseInt(res.data.ResponseModel.countofInvalidSchema) > 0) {
+                    if (res.data.ResponseModel.ListofInvalidSchema != null) {                        
+                        var invalidschema = [];
+                        invalidschema = res.data.ResponseModel.ListofInvalidSchema.split(";");
+                        if (invalidschema != null && invalidschema.length > 0) {
+                            strAppend += "<br><li style='color: red;'> Below is the list of error record with submission date and respected error.</li>";
+                            for (let i = 0; i < invalidschema.length; i++) {
+                                strAppend += "<li> " + invalidschema[i] + "</li>";
+                            }
+                        }
+                    }                    
+                }
+                $("#lblmsg").html(strAppend);
+                $('.chosen-single').find('span').html("-- Select Form --");
+                $('#jotform2crm')[0].reset();
+                $('#dateRange').val('');
+            } else {
+                strAppend = "";
+                if (parseInt(res.data.ResponseModel.countofGetSubmission) === 0) {
+                    strAppend = "<li> No Submission Data Found. </li>";
+                    $("#lblmsg").css("display", "block");
+                }
+                $("#lblmsg").html(strAppend);
+                $('.chosen-single').find('span').html("-- Select Form --");
+                $('#jotform2crm')[0].reset();
+                $('#dateRange').val('');
+            }
+        }
+        function OnJotFormFailureInq() {
+            $('#btnsubmit').show();
+            $('#spnImgProcessing').hide();
+            $("#lblmsg").html("<span style='color: red; font-size: 14px;display:block;'>Some internal error occurred.</span>");
+        }
+    </script>
+</body>
+</html>

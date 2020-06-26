@@ -1,0 +1,728 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8EE51791-B4DE-4210-B21C-5A040B31A252}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EnquiryInsertToCRM</RootNamespace>
+    <AssemblyName>EnquiryInsertToCRM</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=6.2.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.6.2.2\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MYOB.AccountRight.SDK, Version=2018.1.144.0, Culture=neutral, PublicKeyToken=2e515d7fddc28a4e, processorArchitecture=MSIL">
+      <HintPath>..\packages\MYOB.AccountRight.API.SDK.2018.1.144\lib\net45\MYOB.AccountRight.SDK.dll</HintPath>
+    </Reference>
+    <Reference Include="Quartz, Version=3.0.7.0, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Quartz.3.0.7\lib\net452\Quartz.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.4\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.4\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\AutoMapperConfig.cs" />
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Connected Services\CessnockAdminWebData\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\EsconaTutorialServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\GptqWebData\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\Maximizerwebdata\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\PKServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\RigonServiceReferenceData\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\USServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\WebhookController.cs" />
+    <Compile Include="DataService\APIClient.cs" />
+    <Compile Include="DataService\AuthenticationDetails.cs" />
+    <Compile Include="DataService\Client.cs" />
+    <Compile Include="DataService\PKCRMReference.cs" />
+    <Compile Include="DataService\USCRMReference.cs" />
+    <Compile Include="DataService\RigonCRMReference.cs" />
+    <Compile Include="DataService\EsconaTutorialCRMReference.cs" />
+    <Compile Include="DataService\MyObJsonDeserialization.cs" />
+    <Compile Include="Models\BrookwaterGolfCourseAndCountryClubEnquiryModel.cs" />
+    <Compile Include="Models\GeneralLedgerJournalTransaction.cs" />
+    <Compile Include="Models\CustomerSaleInvoiceItem.cs" />
+    <Compile Include="Models\CustomerSaleInvoice.cs" />
+    <Compile Include="Models\CustomerInfo.cs" />
+    <Compile Include="Models\CustomerPaymentModel.cs" />
+    <Compile Include="Models\FinancialYearModel.cs" />
+    <Compile Include="Models\UnionMemberModel.cs" />
+    <Compile Include="Models\RigonMYOBSyncUDFFields.cs" />
+    <Compile Include="Models\List.cs" />
+    <Compile Include="Models\MyObServiceSaleModel.cs" />
+    <Compile Include="Models\OAuthKeyService.cs" />
+    <Compile Include="Models\ConsentToTrack.cs" />
+    <Compile Include="DataService\CreateSendBase.cs" />
+    <Compile Include="DataService\CreateSendOptions.cs" />
+    <Compile Include="DataService\eNewsCRMReference.cs" />
+    <Compile Include="DataService\GPTQCRMReference.cs" />
+    <Compile Include="DataService\CessnockAdminCRMReference.cs" />
+    <Compile Include="DataService\CRMReference.cs" />
+    <Compile Include="DataService\HttpHelper.cs" />
+    <Compile Include="DataService\JotFormReference.cs" />
+    <Compile Include="DataService\JotFormReference_LatestBackup.cs" />
+    <Compile Include="DataService\JSONDeserialization.cs" />
+    <Compile Include="DataService\Subscriber.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CreatesendException.cs" />
+    <Compile Include="Models\CreateSendOptionsWrapper.cs" />
+    <Compile Include="Models\eNewsModel.cs" />
+    <Compile Include="Models\CommonMethod.cs" />
+    <Compile Include="Models\FormSubmissionsModel.cs" />
+    <Compile Include="Models\EventListModel.cs" />
+    <Compile Include="Models\ICreateSendOptions.cs" />
+    <Compile Include="Models\Result.cs" />
+    <Compile Include="Models\SessionManager.cs" />
+    <Compile Include="Models\Subscriber.cs" />
+    <Compile Include="Models\WebHookResponse.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\CessnockAdminWebData\Data.wsdl" />
+    <None Include="Connected Services\CessnockAdminWebData\Data.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CessnockAdminWebData\Data1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CessnockAdminWebData\Data2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CessnockAdminWebData\Data3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CessnockAdminWebData\Data4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CessnockAdminWebData\Data5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CessnockAdminWebData\Data6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="assets\css\application.css" />
+    <Content Include="assets\css\bootstrap.min.css" />
+    <Content Include="assets\css\components.css" />
+    <Content Include="assets\css\glyphicon.css" />
+    <Content Include="assets\css\vendor.css" />
+    <Content Include="assets\datatables\core.css" />
+    <Content Include="assets\datatables\datatables.min.css" />
+    <Content Include="assets\datatables\datatables.min.js" />
+    <Content Include="assets\datatables\jquery.min.js" />
+    <Content Include="assets\plugins\datatables\buttons.bootstrap.min.css" />
+    <Content Include="assets\plugins\datatables\buttons.bootstrap.min.js" />
+    <Content Include="assets\plugins\datatables\buttons.html5.min.js" />
+    <Content Include="assets\plugins\datatables\buttons.print.min.js" />
+    <Content Include="assets\plugins\datatables\dataTables.bootstrap.js" />
+    <Content Include="assets\plugins\datatables\dataTables.bootstrap.min.css" />
+    <Content Include="assets\plugins\datatables\dataTables.buttons.min.js" />
+    <Content Include="assets\plugins\datatables\dataTables.colVis.css" />
+    <Content Include="assets\plugins\datatables\dataTables.colVis.js" />
+    <Content Include="assets\plugins\datatables\dataTables.fixedColumns.min.js" />
+    <Content Include="assets\plugins\datatables\dataTables.fixedHeader.min.js" />
+    <Content Include="assets\plugins\datatables\dataTables.keyTable.min.js" />
+    <Content Include="assets\plugins\datatables\dataTables.responsive.min.js" />
+    <Content Include="assets\plugins\datatables\dataTables.scroller.min.js" />
+    <Content Include="assets\plugins\datatables\fixedColumns.dataTables.min.css" />
+    <Content Include="assets\plugins\datatables\fixedHeader.bootstrap.min.css" />
+    <Content Include="assets\plugins\datatables\jquery.datatables.init.js" />
+    <Content Include="assets\plugins\datatables\jquery.dataTables.min.css" />
+    <Content Include="assets\plugins\datatables\jquery.dataTables.min.js" />
+    <Content Include="assets\plugins\datatables\jszip.min.js" />
+    <Content Include="assets\plugins\datatables\pdfmake.min.js" />
+    <Content Include="assets\plugins\datatables\responsive.bootstrap.min.css" />
+    <Content Include="assets\plugins\datatables\responsive.bootstrap.min.js" />
+    <Content Include="assets\plugins\datatables\scroller.bootstrap.min.css" />
+    <Content Include="assets\plugins\datatables\vfs_fonts.js" />
+    <Content Include="Connected Services\CessnockAdminWebData\EnquiryInsertToCRM.CessnockAdminWebData.ImportResults.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Connected Services\EsconaTutorialServiceReference\Data.wsdl" />
+    <None Include="Connected Services\EsconaTutorialServiceReference\Data.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EsconaTutorialServiceReference\Data1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EsconaTutorialServiceReference\Data2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EsconaTutorialServiceReference\Data3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EsconaTutorialServiceReference\Data4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EsconaTutorialServiceReference\Data5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EsconaTutorialServiceReference\Data6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Connected Services\EsconaTutorialServiceReference\EnquiryInsertToCRM.EsconaTutorialServiceReference.CheckCompatibilityResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\EsconaTutorialServiceReference\EnquiryInsertToCRM.EsconaTutorialServiceReference.ImportResults.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Connected Services\GptqWebData\Data.wsdl" />
+    <None Include="Connected Services\GptqWebData\Data.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GptqWebData\Data1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GptqWebData\Data2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GptqWebData\Data3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GptqWebData\Data4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GptqWebData\Data5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GptqWebData\Data6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EsconaTutorialServiceReference\Data.disco" />
+    <None Include="Connected Services\EsconaTutorialServiceReference\configuration91.svcinfo" />
+    <None Include="Connected Services\EsconaTutorialServiceReference\configuration.svcinfo" />
+    <None Include="Connected Services\EsconaTutorialServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="Connected Services\GptqWebData\EnquiryInsertToCRM.GptqWebData.CheckCompatibilityResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GptqWebData\EnquiryInsertToCRM.GptqWebData.ImportResults.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Connected Services\Maximizerwebdata\Data.disco" />
+    <None Include="Connected Services\Maximizerwebdata\configuration91.svcinfo" />
+    <None Include="Connected Services\Maximizerwebdata\configuration.svcinfo" />
+    <None Include="Connected Services\CessnockAdminWebData\Data.disco" />
+    <None Include="Connected Services\CessnockAdminWebData\configuration91.svcinfo" />
+    <None Include="Connected Services\CessnockAdminWebData\configuration.svcinfo" />
+    <None Include="Connected Services\CessnockAdminWebData\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Connected Services\GptqWebData\Data.disco" />
+    <None Include="Connected Services\GptqWebData\configuration91.svcinfo" />
+    <None Include="Connected Services\GptqWebData\configuration.svcinfo" />
+    <None Include="Connected Services\GptqWebData\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="Connected Services\Maximizerwebdata\EnquiryInsertToCRM.Maximizerwebdata.ImportResults.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Maximizerwebdata\EnquiryInsertToCRM.Maximizerwebdata.CheckCompatibilityResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Connected Services\Maximizerwebdata\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Connected Services\PKServiceReference\Data.wsdl" />
+    <None Include="Connected Services\PKServiceReference\Data.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\PKServiceReference\Data1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\PKServiceReference\Data2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\PKServiceReference\Data3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\PKServiceReference\Data4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\PKServiceReference\Data5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\PKServiceReference\Data6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Connected Services\PKServiceReference\EnquiryInsertToCRM.PKServiceReference.CheckCompatibilityResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\PKServiceReference\EnquiryInsertToCRM.PKServiceReference.ImportResults.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Connected Services\RigonServiceReferenceData\Data.disco" />
+    <None Include="Connected Services\RigonServiceReferenceData\configuration91.svcinfo" />
+    <None Include="Connected Services\RigonServiceReferenceData\configuration.svcinfo" />
+    <None Include="Connected Services\PKServiceReference\Data.disco" />
+    <None Include="Connected Services\PKServiceReference\configuration91.svcinfo" />
+    <None Include="Connected Services\PKServiceReference\configuration.svcinfo" />
+    <None Include="Connected Services\PKServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="Connected Services\RigonServiceReferenceData\EnquiryInsertToCRM.RigonServiceReferenceData.CheckCompatibilityResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\RigonServiceReferenceData\EnquiryInsertToCRM.RigonServiceReferenceData.ImportResults.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Connected Services\RigonServiceReferenceData\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Connected Services\USServiceReference\Data.disco" />
+    <None Include="Connected Services\USServiceReference\configuration91.svcinfo" />
+    <None Include="Connected Services\USServiceReference\configuration.svcinfo" />
+    <Content Include="Connected Services\USServiceReference\EnquiryInsertToCRM.USServiceReference.CheckCompatibilityResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\USServiceReference\EnquiryInsertToCRM.USServiceReference.ImportResults.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Connected Services\USServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\chosen.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="images\check-icon.png" />
+    <Content Include="images\chosen-sprite.png" />
+    <Content Include="images\details_close.png" />
+    <Content Include="images\details_open.png" />
+    <Content Include="images\EmailTemplate\BrookwaterGolfCourseAndCountryClubToAdmin.html" />
+    <Content Include="images\EmailTemplate\eNewsFormToAdmin.html" />
+    <Content Include="images\EmailTemplate\InquiryToAdmin.html" />
+    <Content Include="images\error-icon.png" />
+    <Content Include="images\icon-search.png" />
+    <Content Include="images\loader.gif" />
+    <Content Include="images\background.png" />
+    <Content Include="ip.html" />
+    <Content Include="js\jquery.min.js" />
+    <Content Include="Marketing_CRM_feedback_form.html" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Connected Services\Maximizerwebdata\Data.wsdl" />
+    <None Include="Connected Services\Maximizerwebdata\Data.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\Maximizerwebdata\Data1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\Maximizerwebdata\Data2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\Maximizerwebdata\Data3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\Maximizerwebdata\Data4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\Maximizerwebdata\Data5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\Maximizerwebdata\Data6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="LA\frontend\myob-142ccba089e2b3b81d5867caef6ffedb.woff" />
+    <None Include="Connected Services\RigonServiceReferenceData\Data.wsdl" />
+    <None Include="Connected Services\RigonServiceReferenceData\Data.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\RigonServiceReferenceData\Data1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\RigonServiceReferenceData\Data2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\RigonServiceReferenceData\Data3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\RigonServiceReferenceData\Data4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\RigonServiceReferenceData\Data5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\RigonServiceReferenceData\Data6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\USServiceReference\Data.wsdl" />
+    <None Include="Connected Services\USServiceReference\Data.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\USServiceReference\Data1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\USServiceReference\Data2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\USServiceReference\Data3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\USServiceReference\Data4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\USServiceReference\Data5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\USServiceReference\Data6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\chosen.jquery.min.js" />
+    <Content Include="Scripts\jquery-3.3.1.js" />
+    <Content Include="Scripts\jquery-3.3.1.min.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-migrate-1.2.1.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min_2706.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="UnionShopperFiles\all-theme-scripts.min.js" />
+    <Content Include="UnionShopperFiles\analytics.js" />
+    <Content Include="UnionShopperFiles\frontend.js" />
+    <Content Include="UnionShopperFiles\jquery-migrate.min.js" />
+    <Content Include="UnionShopperFiles\jquery.js" />
+    <Content Include="UnionShopperFiles\modernizr.custom.min.js" />
+    <Content Include="UnionShopperFiles\select2.min.css" />
+    <Content Include="UnionShopperFiles\select2.min.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\css\select2.css" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\css\select2.min.css" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\af.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\ar.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\az.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\bg.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\bs.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\ca.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\cs.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\da.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\de.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\dsb.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\el.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\en.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\es.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\et.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\eu.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\fa.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\fi.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\fr.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\gl.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\he.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\hi.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\hr.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\hsb.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\hu.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\hy.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\id.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\is.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\it.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\ja.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\km.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\ko.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\lt.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\lv.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\mk.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\ms.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\nb.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\nl.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\pl.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\ps.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\pt-BR.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\pt.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\ro.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\ru.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\sk.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\sl.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\sr-Cyrl.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\sr.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\sv.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\th.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\tr.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\uk.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\vi.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\zh-CN.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\i18n\zh-TW.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\select2.full.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\select2.full.min.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\select2.js" />
+    <Content Include="UnionShopperFiles\Dropdown\dist\js\select2.min.js" />
+    <Content Include="UnionShopperFiles\style.css" />
+    <Content Include="UnionShopperFiles\style.min%281%29.css" />
+    <Content Include="UnionShopperFiles\style.min.css" />
+    <Content Include="UnionShopperFiles\theme-my-login.min.css" />
+    <Content Include="UnionShopperFiles\us-logo-white.png" />
+    <Content Include="UnionShopperFiles\wp-embed.min.js" />
+    <Content Include="UnionShopperFiles\wp-emoji-release.min.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\demobusinessform.cshtml" />
+    <Content Include="Views\Home\enews.cshtml" />
+    <Content Include="Views\Shared\_LayouteNews.cshtml" />
+    <Content Include="Views\Home\eNewsPost.cshtml" />
+    <Content Include="Views\Home\myob2max.cshtml" />
+    <Content Include="Views\Home\myobAccRight2max.cshtml" />
+    <Content Include="Views\Home\SyncMyOb2CRM.cshtml" />
+    <Content Include="Views\Home\GetPartialCustomerInfo.cshtml" />
+    <Content Include="Views\Home\getIP.cshtml" />
+    <Content Include="Views\Home\testData.cshtml" />
+    <Content Include="Views\Home\UnionMemberUpdateDetails.cshtml" />
+    <Content Include="UnionShopperFiles\theme-my-login.min.js.download" />
+    <Content Include="Views\Shared\_LayouteUnionMember.cshtml" />
+    <Content Include="Views\Home\eNewsPostCampMonitor.cshtml" />
+    <Content Include="Views\Home\SyncMyOb2NicknCRM.cshtml" />
+    <Content Include="Views\Home\GetPkPartialCustomerInfo.cshtml" />
+    <Content Include="Views\Home\SyncMyOb2CrmDateFilter.cshtml" />
+    <Content Include="Views\Home\GetPartialCustomerInfoDateFilter.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Services\" />
+    <Folder Include="Views\Webhook\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\CessnockAdminWebData\" />
+    <WCFMetadataStorage Include="Connected Services\EsconaTutorialServiceReference\" />
+    <WCFMetadataStorage Include="Connected Services\GptqWebData\" />
+    <WCFMetadataStorage Include="Connected Services\Maximizerwebdata\" />
+    <WCFMetadataStorage Include="Connected Services\PKServiceReference\" />
+    <WCFMetadataStorage Include="Connected Services\RigonServiceReferenceData\" />
+    <WCFMetadataStorage Include="Connected Services\USServiceReference\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>7631</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:15004/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost:15004/</IISAppRootUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

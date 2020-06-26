@@ -1,0 +1,269 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <link rel="icon" type="image/png" href="https://www.unionshopper.com.au/wp-content/themes/unionshopper-2019/library/img/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://www.unionshopper.com.au/wp-content/themes/unionshopper-2019/library/img/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" href="https://www.unionshopper.com.au/wp-content/themes/unionshopper-2019/library/img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/UnionShopperFiles/style.css" type="text/css" media="screen">
+    @Styles.Render("~/Content/css")
+
+    <link rel="stylesheet" id="wp-block-library-css" href="/UnionShopperFiles/style.min.css" type="text/css" media="all">
+    <link rel="stylesheet" id="gravityforms-autocomplete-css" href="/UnionShopperFiles/select2.min.css" type="text/css" media="all">
+    <link rel="stylesheet" id="branch-stylesheet-css" href="/UnionShopperFiles/style.min(1).css" type="text/css" media="all">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/webfonts/fa-solid-900.ttf">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/webfonts/fa-solid-900.woff">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/webfonts/fa-solid-900.woff2">
+
+    @*<script type="text/javascript" src="/UnionShopperFiles/frontend.js"></script>*@
+    @*<script type="text/javascript" src="/UnionShopperFiles/jquery.js"></script>
+        <script type="text/javascript" src="/UnionShopperFiles/jquery-migrate.min.js"></script>*@
+    @*<script type="text/javascript" src="/UnionShopperFiles/select2.min.js"></script>*@
+    @*<script type="text/javascript" src="/UnionShopperFiles/modernizr.custom.min.js"></script>*@
+    <style>
+        .chk-DirectOffers label {
+            position: relative;
+            display: inline-block;
+            padding-left: 5px;
+        }
+
+        .rdo-label {
+            font-weight: normal;
+        }
+
+        .chk-DirectOffers input {
+            margin-top: 8px;
+        }
+
+        .chk-DirectOffers {
+            padding-left: 30px;
+            margin-bottom: 0;
+            cursor: pointer;
+        }
+
+        .post-content--body label, .field-validation-error span {
+            font-size: 14px;
+        }
+
+        .form-submit-button {
+            border: 1px solid #ccc;
+            padding: 6px 12px;
+            color: #666;
+            text-shadow: 0 1px #fff;
+            cursor: pointer;
+            border-radius: 3px 3px;
+            box-shadow: 0 1px #fff inset, 0 1px #ddd;
+            background: #f5f5f5;
+            background: -moz-linear-gradient(top, #f5f5f5 0%, #eeeeee 100%);
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f5f5f5), color-stop(100%,#eeeeee));
+            background: -webkit-linear-gradient(top, #f5f5f5 0%,#eeeeee 100%);
+            background: -o-linear-gradient(top, #f5f5f5 0%,#eeeeee 100%);
+            background: -ms-linear-gradient(top, #f5f5f5 0%,#eeeeee 100%);
+            background: linear-gradient(to top, #f5f5f5 0%, #eeeeee 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f5f5', endColorstr='#eeeeee',GradientType=0 )
+        }
+
+        .form-submit-button {
+            color: #333;
+            font-size: 1em;
+            margin-top: 12px;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .warnig-note {
+            background-repeat: no-repeat;
+            color: #000;
+            font-size: 13px;
+            position: fixed;
+            border-top: 0px;
+            left: 0;
+            right: 0;
+            z-index: 999;
+            padding: 8px 14%;
+            background-size: cover;
+            background-color: #f1c343;
+            top: 0;
+            text-align: center;
+        }
+
+        .form-submit-button:active {
+            background: #eeeeee;
+            background: -moz-linear-gradient(top, #eeeeee 0%, #f5f5f5 100%);
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(100%,#f5f5f5));
+            background: -webkit-linear-gradient(top, #eeeeee 0%,#f5f5f5 100%);
+            background: -o-linear-gradient(top, #eeeeee 0%,#f5f5f5 100%);
+            background: -ms-linear-gradient(top, #eeeeee 0%,#f5f5f5 100%);
+            background: linear-gradient(top, #eeeeee 0%,#f5f5f5 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#f5f5f5',GradientType=0 );
+            -moz-box-shadow: 0 1px #fff inset;
+            -webkit-box-shadow: 0 1px #fff inset;
+            box-shadow: 0 1px #fff inset;
+        }
+
+        .form-submit-button:hover {
+            background: #ffffff;
+            background: -moz-linear-gradient(top, #ffffff 0%, #f5f5f5 100%);
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#f5f5f5));
+            background: -webkit-linear-gradient(top, #ffffff 0%,#f5f5f5 100%);
+            background: -o-linear-gradient(top, #ffffff 0%,#f5f5f5 100%);
+            background: -ms-linear-gradient(top, #ffffff 0%,#f5f5f5 100%);
+            background: linear-gradient(top, #ffffff 0%,#f5f5f5 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f5f5f5',GradientType=0 );
+        }
+
+        .post-content h1 {
+            color: #000 !important;
+            font-size: 22px !important;
+            letter-spacing: 0px !important;
+        }
+
+        .font-normal {
+            font-weight: 400;
+            cursor: pointer;
+            color: #696868;
+        }
+        .page-width__content .post-content a {
+        text-decoration:none !important;
+        }
+    </style>
+    <link href="/Content/chosen.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+</head>
+<body>
+    <div>
+        @RenderBody()
+    </div>
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="/Scripts/chosen.jquery.min.js"></script>
+    <!--Validation js-->
+    <script src="/Scripts/jquery-migrate-1.2.1.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.0/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="/Scripts/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/mvc/3.0/jquery.unobtrusive-ajax.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script>
+        $(document).ready(function () {   
+
+            $(document).ready(function () {
+                $('.chosen-select').chosen({ 'width': '100%', 'white-space': 'nowrap' });
+                $("#UnionID").css("display", "block");
+                $("#UnionID").css("height", "0");
+                $("#UnionID").css("padding", "0");
+                $("#UnionID").css("visibility", "hidden");
+            });
+            if ($("#IsInvalidClientId").val() === "True") {
+                $(".warnig-note").show();
+            }  
+            $('.chosen-search input[type=\"text\"]').keyup(function (e) {
+                if ($(".chosen-search input[type=\"text\"]").val().length < 3) {
+                    $('.chosen-results').hide();
+                    $('.chosen-results').show();
+                    $('.chosen-results').html('');
+                    $('.chosen-results').html('<li class="no-results">No results match "<span>' + $(".chosen-search input[type=\"text\"]").val() + '</span></li>')
+                } else {
+                    $('.chosen-results').show();
+                }
+            }); 
+            $("#ckbCheckAll").click(function () {
+                $(".chk-all").prop('checked', $(this).prop('checked'));
+                $(".chk-DirectOffers").trigger("click");
+            });
+            $(".chk-DirectOffers").click(function () {  
+                if ($('.chk-all:checked').length == $('.chk-all').length) {
+                    $("#ckbCheckAll")[0].checked = true; //change "select all" checked status to true
+                } else {
+                    $("#ckbCheckAll")[0].checked = false; 
+                }
+                var arrayDirectOffersId = []
+                var arrayDirectOffersName = []
+                $("input:checkbox[name=chkDirectOffers]:checked").each(function () {
+                    arrayDirectOffersId.push($(this).val());
+                    arrayDirectOffersName.push($("label[for='" + $(this).val() + "']").text());
+                });
+                $("#DirectOffers").val(arrayDirectOffersId.join(','));
+                $("#strDirectOffersName").val(arrayDirectOffersName.join(','));
+            });
+            $("#UnionID").change(function () {
+                $("#UnionName").val("");
+                if ($('option:selected', this).text() !== "-- Select --") {
+                    $("#UnionName").val(($('option:selected', this).text()));
+                }
+            });
+            $("#btnBack").click(function () {
+                $('#UnionMemberForm').show();
+                $('#divResponse').hide();
+                $("#lblmsg").empty();
+                $("#btnBack").hide();
+            });
+        });
+        $(window).on("load", function () {
+            $('#UnionID').trigger('change');
+            $(".chk-DirectOffers").trigger('click');
+        });
+        $('.scpace-notallow').on('keypress', function (e) {
+            if (e.which == 32)
+                return false;
+        });
+        function OnBeginUnionMemberForm() {            
+            $("#divResponse").hide();
+            $("#lblmsg").empty();
+            $('#btnsubmit').hide();
+            $('#spnImgProcessing').show();
+        }
+        function OnSuccessUnionMemberForm(res) {
+            $("#UnionMemberForm").hide();
+            $("#divResponse").show();
+            $("#lblmsg").empty();
+            $('#spnImgProcessing').hide();
+            $("#h1Response").empty();
+            $("#h1Response").text("Thank You!");
+            $('#btnsubmit').show();
+            $("#btnBack").hide();
+            if (res == "success") {
+                $("#ImgSrcResponse").attr("src", "/images/check-icon.png");
+                $("#lblmsg").text("Your data has been successfully submitted in CRM.");
+                $('#UnionMemberForm')[0].reset();
+            } else if (res == "successupdated") {
+                $("#ImgSrcResponse").attr("src", "/images/check-icon.png");
+                $("#lblmsg").text("Your data has been successfully updated in CRM");
+                $('#UnionMemberForm')[0].reset();
+            } else if (res == "abentryError") {
+                $("#h1Response").empty();
+                $("#ImgSrcResponse").attr("src", "/images/error-icon.png");
+                $("#lblmsg").text("Some internal error occurred! During CRM process.");
+                $('#UnionMemberForm')[0].reset();
+            } else if (res == "noteError") {                
+                $("#h1Response").empty();
+                $("#ImgSrcResponse").attr("src", "/images/error-icon.png");
+                $("#lblmsg").text("Some internal error occurred! During note process.");
+                $('#UnionMemberForm')[0].reset();
+            } else if (res == "invalidformdata") {                
+                $("#btnBack").show();
+                $("#h1Response").empty();
+                $("#ImgSrcResponse").attr("src", "/images/error-icon.png");
+                $("#lblmsg").text("Paased invalid form data.");
+                //$('#UnionMemberForm')[0].reset();
+            } else {  
+                $("#h1Response").empty();
+                $("#ImgSrcResponse").attr("src", "/images/error-icon.png");
+                $("#lblmsg").text("Some internal error occurred.");
+                $('#UnionMemberForm')[0].reset();                
+            }
+        }
+        function OnFailureUnionMemberForm() {
+            $("#ImgSrcResponse").attr("src", "/images/error-icon.png");
+            $("#h1Response").empty();
+            $("#UnionMemberForm").hide();
+            $('#btnsubmit').show();
+            $('#spnImgProcessing').hide();
+            $("#divResponse").show();
+            $("#lblmsg").text("Some internal error occurred.");
+        }
+
+    </script>
+</body>
+</html>
