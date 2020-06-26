@@ -22,6 +22,7 @@ namespace EnquiryInsertToCRM.DataService
 {
     public static class RigonCRMReference
     {
+
         public static IOAuthKeyService _oAuthKeyService;
         public const string iOAuthKeyService = "MyOAuthKeyService";
         public static string strLastSaleDate = "";
