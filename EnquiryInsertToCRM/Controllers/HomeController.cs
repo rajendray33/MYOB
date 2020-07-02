@@ -18,6 +18,7 @@ using MYOB.AccountRight.SDK.Contracts;
 using GeneralLedgerJournalTransaction;
 using System.Net.Mail;
 using System.Net;
+using System.Globalization;
 
 namespace EnquiryInsertToCRM.Controllers
 {
@@ -27,6 +28,9 @@ namespace EnquiryInsertToCRM.Controllers
         public static bool IsPreviousSynInProcess = false;
         public ActionResult Index(string SalesPerson)
         {
+
+            //List<AbEntryFieldInfo> lstFyOrdersList = RigonCRMReference.getFY_OrdersUdfList();
+            //RigonCRMReference.GetFieldList();
             //if (SalesPerson.Contains("\\n"))
             //{
             //    SalesPerson = SalesPerson.Replace(@"""", @"\""").Replace(@"\""", @"").Replace("\\n", "\n");
@@ -2367,8 +2371,8 @@ namespace EnquiryInsertToCRM.Controllers
 
             //Run Only This Start
             string client_id = ConfigurationManager.AppSettings["DeveloperKey"];
-            string strUrl = "https://ar1.api.myob.com/accountright/6185379c-2a07-4d75-bcd5-ca2ede7a5717/Contact/Customer/e3158e89-4a42-4860-9170-61d5a1c01f5f";
-            string strToken = "AAEAACgB9GS-TGhn9IfpZ6apgGEgmc1VL2UwYcDV0buyOIOqVUUBpSPAkxv7sgjUFplPWZvlhJNArFfuZIGesJJTT9c4U2CfcaXPh_DPRvqRyPi69Oozee0xTLlTOjEPUutJwbe347vQs5DnItDVXDSlF95_qdYSO_FS7i8TCDZkLL7zoCQ_5oc-Lw_S0_GXK0fwRNvpbkldulzbo5RFSngMvVZcjaRBK-t8Z_TbLYtm7wCWLZHyt51Yp-M_nnX8LzcDBMnJJKfO4CBG9MtUBQiT3DKhMqeyV5gwNPNcqZVdZOc8wlIogOL8b56OXhWwqvqQwPysmnLuo-WVqPM2kTvFblekAQAAAAEAAJGX36QbkICaCuq6HDnlCepZbGXqiLzaVpns9Lr21LXe_gl0R0rL_XFLMo9ie3XkThNmQL8tOIfIRTcOplqxQyIS3zuMpakz6k-qCLmVftb3N7cP9AkkpQwIssDzIKHJcokUF4unkZJPZV6doyvuTu_eakylzqELsSZ3sLeVA0rrWV4z9eMlDRkynUsct8rIO7KcS71qP2PXsL61DWkuPROL8f14B7ir2eMOwoz7qeUrp_yBNO5vZaC0H2JEvy3CLmO5GIrbP_CHtY9Q4QgBr6eu6AjT1bXL8lsS8is7eiLTjY-34BJJA_57YWbm58oV89Zm9oGAULaenjJSFnWEa907yz5iLBfubwChdPAvG0Kvuwh7YYqK9Vf1jhHmziqc0YFFTOJX0t-B7a62tQw2u19JBr___vDtuwVNZbuxW5tyYLgTqTKIlFa3uZFkjAcBXhOFM2p95gxJbt-wC-mKW-KCb89ZpDnlAyp1FvP0QreNUlvpO8nxdzy8mBPnAQDi_6kVu6jjXN65SeGliJE4RcKOAeDO1xU3Wp11U0OMF8SA";
+            string strUrl = "https://ar1.api.myob.com/accountright/6185379c-2a07-4d75-bcd5-ca2ede7a5717/Contact/Customer/652596c7-8449-43ac-8e18-be31e3b6cb2c";
+            string strToken = "AAEAAKAzTDSCv9SGCuqHgj71baUq85Ci8vtOkpgEGG1QXDMqv5T0he9i_yr9L9W1WyFJtlYaLuSTvct56Y5M2FMZXtRta7FOjM7hdtHQT10PvFjam4OQWIPdQDHPHcL0jecU05mkLGQ861w4DGn6hLx-L5LRlcl3ITwYqOcbRUigYObQnCm8q3m5diemfopGeIiZxQNth6vw04GI44hf27LYm4dcqiEJSa9qY6-9sYClTrwDNFL6VHxsf9QK9xa2cNz9dttk9ZFtCklHialrooSUPlVQ9Mai2J8d-NDhhMNrZgo19foNAcJCAc7lXSkxD1fPwYtWwaiggXVEqB4I9qDY7_ikAQAAAAEAALecbZQfkZPyyD9BGpjlurPM-K2Xa_6FIn1yuA2KreoMkVLc0cCeGxe4hVLDr5rGbgTjly-fcwmpWhyiXO0Q6s2BAO3hU-r16dJy5I7bfrjrdnJi-NhbgT7bDgN-G-v7WTEzLT9EgtqcpqKQdLIkjmBGfq3bSMl2NhY3kaac15ScnAnQXJTh5nnT1_b1rEBdtPF-z67dIlXBs7dUwSQNfJwifRdd3K8robpG3f4ksnt4CYjLeoUTCHso8t_DWR4SxBkCsKNi_OO-P_sJobms5axHXAxyGmfaMC5VykwhRtOtG3cC_gdDUWuFiDYJe9NbbZqcBmaTpscpr5cPyaErav7xAG6SsKOZ6pijNdBlWr5LFbsoafNSCXGedNFrYY4iai_Os5ZtX88lYxM-C4FArT1L1kCL0D-if19agjeHjXK5fbSn3RZYnsyYa5rD5NAOE8mA8qKXM_YqP_gBxnJCeZFK3OdwyI1lcmm75veXbWKha2V13Ogg1ecuxFMC82dQWUZms9B5Q7dzp2wuloovRUyg0qJuQgtFU3p9F76gmzEX";
             string strKey = ConfigurationManager.AppSettings["DeveloperKey"];
             CustomerInfo listCustomerInfoModel = new CustomerInfo();
             var jt = CommonMethod.MakeAccountRightAPICall_SingleItemReturn(strUrl, strToken, strKey, "");

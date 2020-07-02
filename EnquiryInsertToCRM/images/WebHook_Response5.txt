@@ -95,3 +95,196 @@ System.NullReferenceException: Object reference not set to an instance of an obj
 #4 MakeAccountRightAPICall_SingleItemReturn Step Error The remote server returned an error: (401) Unauthorized.
 #4 MakeAccountRightAPICall_SingleItemReturn Step Error The remote server returned an error: (401) Unauthorized.
 #4 MakeAccountRightAPICall_SingleItemReturn Step Error The remote server returned an error: (401) Unauthorized.
+#4 MakeAccountRightAPICall_SingleItemReturn Step Error The remote server returned an error: (400) Bad Request.
+UpdateCompanyUDFBasedOnMYOBCustomerID fn error!
+--------------
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at EnquiryInsertToCRM.DataService.RigonCRMReference.UpdateCompanyUDFBasedOnMYOBCustomerID(CustomerInfo objCustomerInfo, String cf_uri, String AccessToken, String client_id, String cftoken) in D:\Manoj\Projects\MYOB\EnquiryInsertToCRM\DataService\RigonCRMReference.cs:line 1203
+
+#4 MakeAccountRightAPICall_SingleItemReturn Step Error The remote server returned an error: (401) Unauthorized.
+UpdateCompanyUDFBasedOnMYOBCustomerID fn error!
+--------------
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at EnquiryInsertToCRM.DataService.RigonCRMReference.UpdateCompanyUDFBasedOnMYOBCustomerID(CustomerInfo objCustomerInfo, String cf_uri, String AccessToken, String client_id, String cftoken) in D:\Manoj\Projects\MYOB\EnquiryInsertToCRM\DataService\RigonCRMReference.cs:line 770
+
+#4 MakeAccountRightAPICall_SingleItemReturn Step Error The remote server returned an error: (401) Unauthorized.
+#4 MakeAccountRightAPICall_SingleItemReturn Step Error The remote server returned an error: (401) Unauthorized.
+=================================================================
+allowProcess:True
+FilterCustomerName:Willunga LPO
+Date:01/07/2020 16:03:28
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+#4 MakeAccountRightAPICall_SingleItemReturn Step Error The remote server returned an error: (401) Unauthorized.
+UpdateCompanyUDFBasedOnMYOBCustomerID fn error!
+--------------
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at EnquiryInsertToCRM.DataService.RigonCRMReference.UpdateCompanyUDFBasedOnMYOBCustomerID(CustomerInfo objCustomerInfo, String cf_uri, String AccessToken, String client_id, String cftoken) in D:\Manoj\Projects\MYOB\EnquiryInsertToCRM\DataService\RigonCRMReference.cs:line 770
+
+=================================================================
+allowProcess:True
+FilterCustomerName:Willunga LPO
+Date:01/07/2020 16:11:10
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+#4 MakeAccountRightAPICall_SingleItemReturn Step Error The remote server returned an error: (401) Unauthorized.
+=================================================================
+allowProcess:True
+FilterCustomerName:Mon Parfumerie
+Date:01/07/2020 22:41:23
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+=================================================================
+allowProcess:True
+FilterCustomerName:Mon Parfumerie
+Date:01/07/2020 22:42:33
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+#4 MakeAccountRightAPICall_SingleItemReturn Step Error The remote server returned an error: (401) Unauthorized.
+UpdateCompanyUDFBasedOnMYOBCustomerID fn error!
+--------------
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at EnquiryInsertToCRM.DataService.RigonCRMReference.UpdateCompanyUDFBasedOnMYOBCustomerID(CustomerInfo objCustomerInfo, String cf_uri, String AccessToken, String client_id, String cftoken) in D:\Manoj\Projects\MYOB\EnquiryInsertToCRM\DataService\RigonCRMReference.cs:line 770
+
+=================================================================
+allowProcess:True
+FilterCustomerName:Mon Parfumerie
+Date:01/07/2020 22:45:55
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+#4 MakeAccountRightAPICall_SingleItemReturn Step Error The remote server returned an error: (401) Unauthorized.
+=================================================================
+allowProcess:True
+FilterCustomerName:Mon Parfumerie
+Date:01/07/2020 22:48:23
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+#4 MakeAccountRightAPICall_SingleItemReturn Step Error The remote server returned an error: (401) Unauthorized.
+#4 MakeAccountRightAPICall_SingleItemReturn Step Error The remote server returned an error: (401) Unauthorized.
+=================================================================
+allowProcess:True
+FilterCustomerName:Mon Parfumerie
+Date:01/07/2020 22:50:58
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+#4 MakeAccountRightAPICall_SingleItemReturn Step Error The remote server returned an error: (401) Unauthorized.
+#4 MakeAccountRightAPICall_SingleItemReturn Step Error The remote server returned an error: (401) Unauthorized.
+#4 MakeAccountRightAPICall Step Error The remote server returned an error: (401) Unauthorized.
+#4 MakeAccountRightAPICall_SingleItemReturn Step Error The remote server returned an error: (401) Unauthorized.
+=================================================================
+allowProcess:True
+FilterCustomerName:Mon Parfumerie
+Date:01/07/2020 22:56:41
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+#4 MakeAccountRightAPICall Step Error The remote server returned an error: (401) Unauthorized.
+#4 MakeAccountRightAPICall Step Error The remote server returned an error: (401) Unauthorized.
+=================================================================
+allowProcess:True
+FilterCustomerName:Mon Parfumerie
+Date:01/07/2020 22:59:51
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+#4 MakeAccountRightAPICall_SingleItemReturn Step Error The remote server returned an error: (401) Unauthorized.
+#4 MakeAccountRightAPICall_SingleItemReturn Step Error The remote server returned an error: (401) Unauthorized.
+#4 MakeAccountRightAPICall Step Error The remote server returned an error: (401) Unauthorized.
+#4 MakeAccountRightAPICall_SingleItemReturn Step Error The remote server returned an error: (401) Unauthorized.
+#4 MakeAccountRightAPICall_SingleItemReturn Step Error The remote server returned an error: (401) Unauthorized.
+=================================================================
+allowProcess:True
+FilterCustomerName:Mon Parfumerie
+Date:01/07/2020 23:07:22
+
+=================================================================
+allowProcess:True
+FilterCustomerName:Mon Parfumerie
+Date:01/07/2020 23:07:23
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+#4 MakeAccountRightAPICall_SingleItemReturn Step Error The remote server returned an error: (401) Unauthorized.
+#4 MakeAccountRightAPICall_SingleItemReturn Step Error The remote server returned an error: (401) Unauthorized.
+#4 MakeAccountRightAPICall_SingleItemReturn Step Error The remote server returned an error: (401) Unauthorized.
+#4 MakeAccountRightAPICall Step Error The remote server returned an error: (401) Unauthorized.
+#4 MakeAccountRightAPICall_SingleItemReturn Step Error The remote server returned an error: (401) Unauthorized.
+#4 MakeAccountRightAPICall_SingleItemReturn Step Error The remote server returned an error: (401) Unauthorized.
+#4 MakeAccountRightAPICall Step Error The remote server returned an error: (401) Unauthorized.
+#4 MakeAccountRightAPICall_SingleItemReturn Step Error The remote server returned an error: (401) Unauthorized.
+=================================================================
+allowProcess:True
+FilterCustomerName:Mon Parfumerie
+Date:01/07/2020 23:13:24
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+#4 MakeAccountRightAPICall_SingleItemReturn Step Error The remote server returned an error: (401) Unauthorized.
+#4 MakeAccountRightAPICall_SingleItemReturn Step Error The remote server returned an error: (401) Unauthorized.
+#4 MakeAccountRightAPICall Step Error The remote server returned an error: (401) Unauthorized.
+#4 MakeAccountRightAPICall_SingleItemReturn Step Error The remote server returned an error: (401) Unauthorized.
+#4 MakeAccountRightAPICall_SingleItemReturn Step Error The remote server returned an error: (401) Unauthorized.
+=================================================================
+allowProcess:True
+FilterCustomerName:Mon Parfumerie
+Date:01/07/2020 23:15:46
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+#4 MakeAccountRightAPICall_SingleItemReturn Step Error The remote server returned an error: (401) Unauthorized.
+#4 MakeAccountRightAPICall_SingleItemReturn Step Error The remote server returned an error: (401) Unauthorized.
+#4 MakeAccountRightAPICall Step Error The remote server returned an error: (401) Unauthorized.
+#4 MakeAccountRightAPICall_SingleItemReturn Step Error The remote server returned an error: (401) Unauthorized.

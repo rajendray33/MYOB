@@ -765,18 +765,24 @@ namespace EnquiryInsertToCRM.DataService
                                         }
                                         //JToken jt1 = CommonMethod.MakeAccountRightAPICall_SingleItemReturn(strUrl, AccessToken, client_id, "");
                                         JToken jt1 = CommonMethod.MakeAccountRightAPICall_SingleItemReturn(strUrl, CommonMethod.GetAccessToken_Pk(), client_id, cftoken);
-                                        CustomerSaleInvoice tempCustInv = jt1.ToObject<CustomerSaleInvoice>();
-                                        invoiceListItem.AddRange(tempCustInv.Items);
-                                        if (!string.IsNullOrEmpty(tempCustInv.NextPageLink))
+                                        if (jt1 != null)
                                         {
-                                            strUrl = tempCustInv.NextPageLink;
+                                            CustomerSaleInvoice tempCustInv = jt1.ToObject<CustomerSaleInvoice>();
+                                            invoiceListItem.AddRange(tempCustInv.Items);
+                                            if (!string.IsNullOrEmpty(tempCustInv.NextPageLink))
+                                            {
+                                                strUrl = tempCustInv.NextPageLink;
+                                            }
+                                            else
+                                            {
+                                                strUrl = "";
+                                                custSaleInvObj.Items = invoiceListItem;
+                                            }
                                         }
                                         else
                                         {
                                             strUrl = "";
-                                            custSaleInvObj.Items = invoiceListItem;
                                         }
-
                                     } while (!string.IsNullOrEmpty(strUrl));
                                     if (custSaleInvObj != null && custSaleInvObj.Items != null)
                                     {
@@ -956,18 +962,24 @@ namespace EnquiryInsertToCRM.DataService
                                         }
                                         //JToken jt1 = CommonMethod.MakeAccountRightAPICall_SingleItemReturn(strUrl, AccessToken, client_id, "");
                                         JToken jt1 = CommonMethod.MakeAccountRightAPICall_SingleItemReturn(strUrl, CommonMethod.GetAccessToken_Pk(), client_id, cftoken);
-                                        CustomerSaleInvoice tempCustInv = jt1.ToObject<CustomerSaleInvoice>();
-                                        invoiceListItemforFy.AddRange(tempCustInv.Items);
-                                        if (!string.IsNullOrEmpty(tempCustInv.NextPageLink))
+                                        if (jt1 != null)
                                         {
-                                            strUrl = tempCustInv.NextPageLink;
+                                            CustomerSaleInvoice tempCustInv = jt1.ToObject<CustomerSaleInvoice>();
+                                            invoiceListItemforFy.AddRange(tempCustInv.Items);
+                                            if (!string.IsNullOrEmpty(tempCustInv.NextPageLink))
+                                            {
+                                                strUrl = tempCustInv.NextPageLink;
+                                            }
+                                            else
+                                            {
+                                                strUrl = "";
+                                                custSaleInvObjforFy.Items = invoiceListItemforFy;
+                                            }
                                         }
                                         else
                                         {
                                             strUrl = "";
-                                            custSaleInvObjforFy.Items = invoiceListItemforFy;
                                         }
-
                                     } while (!string.IsNullOrEmpty(strUrl));
                                     if (custSaleInvObjforFy != null && custSaleInvObjforFy.Items != null)
                                     {
@@ -1028,7 +1040,7 @@ namespace EnquiryInsertToCRM.DataService
                                                             lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
                                                             NextMonthStartDate = new DateTime(((lastDayOfMonth.Month == 12) ? lastDayOfMonth.Year + 1 : lastDayOfMonth.Year), ((lastDayOfMonth.Month == 12) ? 1 : lastDayOfMonth.Month + 1), 1);
                                                             var objMonthWiseUDF = (from c in udfFieldList
-                                                                                   where c.Month == firstDayOfMonth.Month
+                                                                                   where c.Month == firstDayOfMonth.Month && (c.udfFor ?? "") == ""
                                                                                    select c).FirstOrDefault();
                                                             if (objMonthWiseUDF != null)
                                                             {
@@ -1039,7 +1051,7 @@ namespace EnquiryInsertToCRM.DataService
                                                                 {
                                                                     objMonthWiseUDF.Value = Math.Round((from c in currentMonthInvoiceList
                                                                                                         where c.Date >= firstDayOfMonth && c.Date <= lastDayOfMonth
-                                                                                                        select c.Subtotal).Sum(), 2);
+                                                                                                        select c.TotalAmount).Sum(), 2);
                                                                 }
                                                                 else
                                                                 {
@@ -1136,17 +1148,25 @@ namespace EnquiryInsertToCRM.DataService
                                             //}
                                         }
                                         //JToken jt1 = CommonMethod.MakeAccountRightAPICall_SingleItemReturn(strUrl, AccessToken, client_id, "");
+
                                         JToken jt1 = CommonMethod.MakeAccountRightAPICall_SingleItemReturn(strUrl, CommonMethod.GetAccessToken_Pk(), client_id, cftoken);
-                                        CustomerSaleInvoice objCustInv = jt1.ToObject<CustomerSaleInvoice>();
-                                        invoiceListItemForAgeingRpt.AddRange(objCustInv.Items);
-                                        if (!string.IsNullOrEmpty(objCustInv.NextPageLink))
+                                        if (jt1 != null)
                                         {
-                                            strUrl = objCustInv.NextPageLink;
+                                            CustomerSaleInvoice objCustInv = jt1.ToObject<CustomerSaleInvoice>();
+                                            invoiceListItemForAgeingRpt.AddRange(objCustInv.Items);
+                                            if (!string.IsNullOrEmpty(objCustInv.NextPageLink))
+                                            {
+                                                strUrl = objCustInv.NextPageLink;
+                                            }
+                                            else
+                                            {
+                                                strUrl = "";
+                                                custSaleInvObjForAgeingRpt.Items = invoiceListItemForAgeingRpt;
+                                            }
                                         }
                                         else
                                         {
                                             strUrl = "";
-                                            custSaleInvObjForAgeingRpt.Items = invoiceListItemForAgeingRpt;
                                         }
 
                                     } while (!string.IsNullOrEmpty(strUrl));
@@ -1169,6 +1189,75 @@ namespace EnquiryInsertToCRM.DataService
                                             {
                                                 db60Plus += Math.Round(agI.TotalAmount, 2);
                                             }
+                                        }
+                                    }
+                                    #endregion
+                                    #region Orders
+
+                                    CustomerSaleInvoice CustomerSaleOrder = new CustomerSaleInvoice();
+                                    List<Item> orderListItem = new List<Item>();
+                                    strUrl = "";
+                                    DateTime dtDate = DateTime.Now;
+                                    DateTime stStartDate = new DateTime(dtDate.Year, dtDate.Month, 1);
+                                    DateTime stEndDate = stStartDate.AddMonths(1).AddDays(-1);
+                                    double dbTotalAmount = 0;
+                                    string strStartMonth = stStartDate.Month >= 9 ? stStartDate.Month.ToString() : "0" + stStartDate.Month.ToString();
+                                    string strStartDay = stStartDate.Day >= 9 ? stStartDate.Day.ToString() : "0" + stStartDate.Day.ToString();
+
+                                    string strEndMonth = stEndDate.Month >= 9 ? stEndDate.Month.ToString() : "0" + stEndDate.Month.ToString();
+                                    string strEndDay = stEndDate.Day >= 9 ? stEndDate.Day.ToString() : "0" + stEndDate.Day.ToString();
+
+                                    strUrl = cf_uri + "/Sale/Order?$filter=Date ge datetime'" + stStartDate.Year + "-" + strStartMonth + "-" + strStartDay + "T00:00:00' and Date le datetime'" + stEndDate.Year + "-" + strEndMonth + "-" + strEndDay + "T00:00:00' and Status eq 'Open' and Customer/UID eq guid'" + objCustomerInfo.Uid + "'&$top=1000";
+                                    do
+                                    {
+                                        if (HttpContext.Current.Request.Url.ToString().ToLower().Contains("localhost"))
+                                        {
+                                            _oAuthKeyService = new OAuthKeyService();
+                                            _oAuthKeyService.OAuthResponse = new MYOB.AccountRight.SDK.Contracts.OAuthTokens();
+                                            _oAuthKeyService.OAuthResponse.AccessToken = AccessToken;
+                                        }
+                                        else
+                                        {
+                                            if (CommonMethod.IsExpiredToken_BasedOnCookies())
+                                            {
+                                                _oAuthKeyService = CommonMethod.RefreshTokenForPk_BasedOnCookies();
+                                            }
+                                        }
+                                        JToken jt1 = CommonMethod.MakeAccountRightAPICall_SingleItemReturn(strUrl, CommonMethod.GetAccessToken_Pk(), client_id, "");
+                                        if (jt1 != null)
+                                        {
+                                            CustomerSaleInvoice tempCustOrder = jt1.ToObject<CustomerSaleInvoice>();
+                                            orderListItem.AddRange(tempCustOrder.Items);
+                                            if (!string.IsNullOrEmpty(tempCustOrder.NextPageLink))
+                                            {
+                                                strUrl = tempCustOrder.NextPageLink;
+                                            }
+                                            else
+                                            {
+                                                strUrl = "";
+                                                CustomerSaleOrder.Items = orderListItem;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            strUrl = "";
+                                        }
+                                    } while (!string.IsNullOrEmpty(strUrl));
+                                    if (CustomerSaleOrder != null && CustomerSaleOrder.Items != null)
+                                    {
+                                        foreach (var od in CustomerSaleOrder.Items)
+                                        {
+                                            dbTotalAmount += od.TotalAmount;
+                                        }
+                                    }
+                                    if (dbTotalAmount > 0)
+                                    {
+                                        var objUdf = (from c in udfFieldList
+                                                      where c.Month == stStartDate.Month && c.udfFor == "orders"
+                                                      select c).FirstOrDefault();
+                                        if (objUdf != null)
+                                        {
+                                            objUdf.Value = dbTotalAmount;
                                         }
                                     }
                                     #endregion
@@ -1205,7 +1294,31 @@ namespace EnquiryInsertToCRM.DataService
                                                     strbNotetext.AppendLine("<div style='margin-bottom:5px;'><b>" + item.Name + ": </b>" + objCustomerInfo.Notes + "</div>");
                                                 }
                                             }
-                                            else if (item.Month != null && item.Month > 0)
+                                            //else if (item.Month != null && item.Month > 0)
+                                            //{
+                                            //    if (item.Value != null)
+                                            //    {
+                                            //        decimal dcValue = CommonMethod.TryParseDecimal(Convert.ToString(item.Value));
+                                            //        if (dcValue > 0)
+                                            //        {
+                                            //            lstJProperty.Add(new JProperty(item.UniqueKey, item.Value));
+                                            //            strbNotetext.AppendLine("<div style='margin-bottom:5px;'><b>" + item.Name + ": </b>" + ("$" + item.Value) + "</div>");
+                                            //        }
+                                            //    }
+                                            //}
+                                            else if (item.Month != null && item.Month > 0 && (item.udfFor ?? "") == "")
+                                            {
+                                                if (item.Value != null)
+                                                {
+                                                    decimal dcValue = CommonMethod.TryParseDecimal(Convert.ToString(item.Value));
+                                                    if (dcValue > 0)
+                                                    {
+                                                        lstJProperty.Add(new JProperty(item.UniqueKey, item.Value));
+                                                        strbNotetext.AppendLine("<div style='margin-bottom:5px;'><b>" + item.Name + ": </b>" + ("$" + item.Value) + "</div>");
+                                                    }
+                                                }
+                                            }
+                                            else if (item.Month != null && item.Month > 0 && (item.udfFor ?? "") == "orders")
                                             {
                                                 if (item.Value != null)
                                                 {
@@ -1981,7 +2094,52 @@ namespace EnquiryInsertToCRM.DataService
                 return "";
             }
         }
+        public static List<AbEntryFieldInfo> getFY_OrdersUdfList()
+        {
+            var lstFyear = CommonMethod.GetFinancialYearList();
+            List<string> lstMonthlySaleUDFName = new List<string>();
+            List<AbEntryFieldInfo> lstAbEntryFieldInfo = new List<AbEntryFieldInfo>();
+            string currentYear = "";
+            string MonthlySalesCRMFolder = "";
+            if (lstFyear != null && lstFyear.Count > 0)
+            {
+                var objCurrentFY = (from c in lstFyear
+                                    where c.IsCurrentFY == true
+                                    select c).FirstOrDefault();
+                if (objCurrentFY != null)
+                {
+                    currentYear = objCurrentFY.year.ToString();
+                }
 
+                string strPath = ConfigurationManager.AppSettings["FYOrdersCRMFolder"];
+                strPath = strPath.Replace("[REPLACEYEAR]", (objCurrentFY.year - 1).ToString());
+                MonthlySalesCRMFolder = strPath + "\\";
+
+                DateTime dtStartDate = objCurrentFY.fyStartDate;
+                int j = 1;
+                for (int i = 1; i <= 12; i++)
+                {
+                    if (dtStartDate.Month == 12)
+                    {
+                        dtStartDate = dtStartDate.AddMonths(-11).AddYears(1);
+                        j = 1;
+                    }
+                    if (j > 1)
+                    {
+                        dtStartDate = dtStartDate.AddMonths(1);
+                    }
+                    AbEntryFieldInfo objModel = new AbEntryFieldInfo();
+                    //var str = MonthlySalesCRMFolder + currentYear + " " + System.Globalization.DateTimeFormatInfo.CurrentInfo.GetMonthName(i).Substring(0, 3).ToUpper();
+                    objModel.Name = MonthlySalesCRMFolder + dtStartDate.Year + " " + System.Globalization.DateTimeFormatInfo.CurrentInfo.GetMonthName(dtStartDate.Month).Substring(0, 3).ToUpper();
+                    objModel.Month = dtStartDate.Month;
+                    objModel.Year = dtStartDate.Year;
+                    objModel.udfFor = "orders";
+                    lstAbEntryFieldInfo.Add(objModel);
+                    j++;
+                }
+            }
+            return lstAbEntryFieldInfo;
+        }
         public static List<AbEntryFieldInfo> GetFieldList()
         {
             List<AbEntryFieldInfo> lstAbEntryFieldInfo = new List<AbEntryFieldInfo>();
@@ -1989,7 +2147,7 @@ namespace EnquiryInsertToCRM.DataService
             var json_serializer = new JavaScriptSerializer();
             var field_list = (IDictionary<string, object>)json_serializer.DeserializeObject(json);
             List<AbEntryFieldInfo> lstMonthlySaleList = getMonthUdfList();
-            List<AbEntryFieldInfo> lstMonthlySaleUDFName = getMonthUdfList();
+            List<AbEntryFieldInfo> lstFyOrdersList = getFY_OrdersUdfList();
             List<string> lstUDFFieldsName = UDFFieldsName.Split(',').ToList();
             if (field_list != null && field_list.Count > 0)
             {
@@ -2039,6 +2197,22 @@ namespace EnquiryInsertToCRM.DataService
                                                  select c).FirstOrDefault();
                             if (objModelMonth != null)
                             {
+                                objModelMonth.udfFor = "";
+                                objModelMonth.Month = lmst.Month;
+                                lstAbEntryFieldInfo.Add(objModelMonth);
+                            }
+                        }
+                    }
+                    if (lstFyOrdersList != null && lstFyOrdersList.Count > 0)
+                    {
+                        foreach (var lmst in lstFyOrdersList)
+                        {
+                            var objModelMonth = (from c in allUDfList
+                                                 where c.Name == lmst.Name
+                                                 select c).FirstOrDefault();
+                            if (objModelMonth != null)
+                            {
+                                objModelMonth.udfFor = lmst.udfFor;
                                 objModelMonth.Month = lmst.Month;
                                 lstAbEntryFieldInfo.Add(objModelMonth);
                             }
@@ -2065,12 +2239,12 @@ namespace EnquiryInsertToCRM.DataService
                 {
                     currentYear = objCurrentFY.year.ToString();
                 }
-                if (Convert.ToInt32(currentYear) >= 2020)
-                {
+                //if (Convert.ToInt32(currentYear) >= 2020)
+                //{
                     string strPath = ConfigurationManager.AppSettings["FYMonthlySalesCRMFolder"];
-                    strPath = strPath.Replace("[REPLACEYEAR]", currentYear);
+                    strPath = strPath.Replace("[REPLACEYEAR]", (objCurrentFY.year - 1).ToString());
                     MonthlySalesCRMFolder = strPath + "\\";
-                }
+                //}
                 DateTime dtStartDate = objCurrentFY.fyStartDate;
                 int j = 1;
                 for (int i = 1; i <= 12; i++)

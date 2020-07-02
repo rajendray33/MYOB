@@ -152,6 +152,7 @@ namespace EnquiryInsertToCRM.Models
         public dynamic Value { get; set; } = "";
         public int Month { get; set; }
         public int Year { get; set; }
+        public string udfFor { get; set; }
         public string created_at { get; set; }        
         public void Dispose()
         {

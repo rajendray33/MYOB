@@ -73,7 +73,7 @@ namespace EnquiryInsertToCRM.DataService
             string MYOBUID_UDF = getMyOBUid_UDFKey();
             List<JProperty> lstFilterJProperty = new List<JProperty>();
             List<JProperty> lstRequestJProperty = new List<JProperty>();
-            
+
             if (!string.IsNullOrEmpty(companyname))
             {
                 lstFilterJProperty.Add(new JProperty("CompanyName", (companyname.Trim() ?? "")));
@@ -83,7 +83,7 @@ namespace EnquiryInsertToCRM.DataService
             {
                 lstFilterJProperty.Add(new JProperty(MYOBUID_UDF, (myobID.Trim() ?? "")));
                 lstRequestJProperty.Add(new JProperty("CompanyName", 1));
-              
+
             }
             AbEntryKeyModel model = new AbEntryKeyModel();
             string createRequest = new JObject(
@@ -174,7 +174,7 @@ namespace EnquiryInsertToCRM.DataService
                 string dtUtcNow = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:MM:ssZ");
                 List<string> strMyObID = new List<string>();
                 List<JProperty> lstRequestJProperty = new List<JProperty>();
-               
+
                 if (!string.IsNullOrEmpty(myobUID))
                 {
                     model = ReadExistingCompanyNameOrMYOBID("", myobUID);
@@ -288,7 +288,7 @@ namespace EnquiryInsertToCRM.DataService
             }
             catch (Exception ex)
             {
-                
+
                 sb.Clear();
                 sb.AppendLine("");
                 sb.AppendLine("#CRM Step error:" + ex.Message);
@@ -615,12 +615,12 @@ namespace EnquiryInsertToCRM.DataService
                 {
                     if (CommonMethod.IsExpiredToken_BasedOnCookies())
                     {
-                       
+
                         _oAuthKeyService = CommonMethod.RefreshToken_BasedOnCookies();
                     }
                     else
                     {
-                       
+
                     }
                     //if (HttpContext.Current.Session[iOAuthKeyService] != null)
                     //{
@@ -639,7 +639,7 @@ namespace EnquiryInsertToCRM.DataService
                     //    return res = "sessionexpired";
                     //}
                 }
-              
+
                 if (string.IsNullOrEmpty(objCustomerInfo.Uid))
                 {
                     return res = "";
@@ -717,7 +717,7 @@ namespace EnquiryInsertToCRM.DataService
                     Stream response = client.AbEntryRead(new MemoryStream(Encoding.UTF8.GetBytes(createRequest)));
                     JToken createResponse = JToken.Parse(new StreamReader(response).ReadToEnd());
                     //check the return value of the response
-                   
+
                     if (createResponse.Value<int>("Code") == 0)
                     {
                         JObject AppointmentData = (JObject)createResponse["AbEntry"];
@@ -737,7 +737,7 @@ namespace EnquiryInsertToCRM.DataService
                                     string strUrl = "";
                                     strUrl = cf_uri + "/Sale/Invoice/?$filter=Customer/UID eq guid'" + objCustomerInfo.Uid + "'&$top=1000";
                                     //strUrl = cf_uri + "/Sale/Invoice/?$filter=Customer/UID eq guid'" + objCustomerInfo.Uid + "' and (CustomerPurchaseOrderNumber eq null or CustomerPurchaseOrderNumber eq '')&$top=1000";
-                                   
+
                                     do
                                     {
                                         if (HttpContext.Current.Request.Url.ToString().ToLower().Contains("localhost"))
@@ -767,16 +767,23 @@ namespace EnquiryInsertToCRM.DataService
                                         }
                                         //JToken jt1 = CommonMethod.MakeAccountRightAPICall_SingleItemReturn(strUrl, AccessToken, client_id, "");
                                         JToken jt1 = CommonMethod.MakeAccountRightAPICall_SingleItemReturn(strUrl, CommonMethod.GetAccessToken(), client_id, "");
-                                        CustomerSaleInvoice tempCustInv = jt1.ToObject<CustomerSaleInvoice>();
-                                        invoiceListItem.AddRange(tempCustInv.Items);
-                                        if (!string.IsNullOrEmpty(tempCustInv.NextPageLink))
+                                        if (jt1 != null)
                                         {
-                                            strUrl = tempCustInv.NextPageLink;
+                                            CustomerSaleInvoice tempCustInv = jt1.ToObject<CustomerSaleInvoice>();
+                                            invoiceListItem.AddRange(tempCustInv.Items);
+                                            if (!string.IsNullOrEmpty(tempCustInv.NextPageLink))
+                                            {
+                                                strUrl = tempCustInv.NextPageLink;
+                                            }
+                                            else
+                                            {
+                                                strUrl = "";
+                                                custSaleInvObj.Items = invoiceListItem;
+                                            }
                                         }
                                         else
                                         {
                                             strUrl = "";
-                                            custSaleInvObj.Items = invoiceListItem;
                                         }
 
                                     } while (!string.IsNullOrEmpty(strUrl));
@@ -786,7 +793,7 @@ namespace EnquiryInsertToCRM.DataService
                                         foreach (var item in custSaleInvObj.Items.Where(s => s.Status == "Open").OrderByDescending(s => s.Date))
                                         {
                                             counterI++;
-                                         
+
                                             if (HttpContext.Current.Request.Url.ToString().ToLower().Contains("localhost"))
                                             {
                                                 _oAuthKeyService = new OAuthKeyService();
@@ -927,7 +934,7 @@ namespace EnquiryInsertToCRM.DataService
                                     }
                                     #endregion
                                     #region Current FY Related UDF Like 2020, 2019, YTD
-                                    
+
                                     strUrl = cf_uri + "/Sale/Invoice/?$filter=Customer/UID eq guid'" + objCustomerInfo.Uid + "'&$top=1000";
                                     do
                                     {
@@ -941,7 +948,7 @@ namespace EnquiryInsertToCRM.DataService
                                         {
                                             if (CommonMethod.IsExpiredToken_BasedOnCookies())
                                             {
-                                               _oAuthKeyService = CommonMethod.RefreshToken_BasedOnCookies();
+                                                _oAuthKeyService = CommonMethod.RefreshToken_BasedOnCookies();
                                             }
                                             //if (HttpContext.Current.Session[iOAuthKeyService] != null)
                                             //{
@@ -958,18 +965,24 @@ namespace EnquiryInsertToCRM.DataService
                                         }
                                         //JToken jt1 = CommonMethod.MakeAccountRightAPICall_SingleItemReturn(strUrl, AccessToken, client_id, "");
                                         JToken jt1 = CommonMethod.MakeAccountRightAPICall_SingleItemReturn(strUrl, CommonMethod.GetAccessToken(), client_id, "");
-                                        CustomerSaleInvoice tempCustInv = jt1.ToObject<CustomerSaleInvoice>();
-                                        invoiceListItemforFy.AddRange(tempCustInv.Items);
-                                        if (!string.IsNullOrEmpty(tempCustInv.NextPageLink))
+                                        if (jt1 != null)
                                         {
-                                            strUrl = tempCustInv.NextPageLink;
+                                            CustomerSaleInvoice tempCustInv = jt1.ToObject<CustomerSaleInvoice>();
+                                            invoiceListItemforFy.AddRange(tempCustInv.Items);
+                                            if (!string.IsNullOrEmpty(tempCustInv.NextPageLink))
+                                            {
+                                                strUrl = tempCustInv.NextPageLink;
+                                            }
+                                            else
+                                            {
+                                                strUrl = "";
+                                                custSaleInvObjforFy.Items = invoiceListItemforFy;
+                                            }
                                         }
                                         else
                                         {
                                             strUrl = "";
-                                            custSaleInvObjforFy.Items = invoiceListItemforFy;
                                         }
-
                                     } while (!string.IsNullOrEmpty(strUrl));
                                     if (custSaleInvObjforFy != null && custSaleInvObjforFy.Items != null)
                                     {
@@ -995,8 +1008,9 @@ namespace EnquiryInsertToCRM.DataService
                                                             double dbTotal = 0;
                                                             foreach (var iv in fyInvList)
                                                             {
-                                                                if (iv.InvoiceType == "Service") {
-                                                                    if (iv.TotalTax != null && iv.Subtotal !=null && iv.Subtotal < 0)
+                                                                if (iv.InvoiceType == "Service")
+                                                                {
+                                                                    if (iv.TotalTax != null && iv.Subtotal != null && iv.Subtotal < 0)
                                                                     {
                                                                         double TotalTax = Convert.ToDouble(iv.TotalTax);
                                                                         double Subtotal = Convert.ToDouble(iv.Subtotal);
@@ -1029,7 +1043,7 @@ namespace EnquiryInsertToCRM.DataService
                                                             lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
                                                             NextMonthStartDate = new DateTime(((lastDayOfMonth.Month == 12) ? lastDayOfMonth.Year + 1 : lastDayOfMonth.Year), ((lastDayOfMonth.Month == 12) ? 1 : lastDayOfMonth.Month + 1), 1);
                                                             var objMonthWiseUDF = (from c in udfFieldList
-                                                                                   where c.Month == firstDayOfMonth.Month
+                                                                                   where c.Month == firstDayOfMonth.Month && (c.udfFor??"") == ""
                                                                                    select c).FirstOrDefault();
                                                             if (objMonthWiseUDF != null)
                                                             {
@@ -1040,7 +1054,7 @@ namespace EnquiryInsertToCRM.DataService
                                                                 {
                                                                     objMonthWiseUDF.Value = Math.Round((from c in currentMonthInvoiceList
                                                                                                         where c.Date >= firstDayOfMonth && c.Date <= lastDayOfMonth
-                                                                                                        select c.Subtotal).Sum(), 2);
+                                                                                                        select c.TotalAmount).Sum(), 2);
                                                                 }
                                                                 else
                                                                 {
@@ -1056,7 +1070,7 @@ namespace EnquiryInsertToCRM.DataService
                                     }
                                     #endregion
                                     #region Find Customer Payment Last Date 
-                                  
+
                                     strUrl = "";
                                     strUrl = cf_uri + "/Sale/CustomerPayment?$filter=Customer/UID eq guid'" + objCustomerInfo.Uid + "'&$top=1000";
                                     if (HttpContext.Current.Request.Url.ToString().ToLower().Contains("localhost"))
@@ -1138,18 +1152,24 @@ namespace EnquiryInsertToCRM.DataService
                                         }
                                         //JToken jt1 = CommonMethod.MakeAccountRightAPICall_SingleItemReturn(strUrl, AccessToken, client_id, "");
                                         JToken jt1 = CommonMethod.MakeAccountRightAPICall_SingleItemReturn(strUrl, CommonMethod.GetAccessToken(), client_id, "");
-                                        CustomerSaleInvoice objCustInv = jt1.ToObject<CustomerSaleInvoice>();
-                                        invoiceListItemForAgeingRpt.AddRange(objCustInv.Items);
-                                        if (!string.IsNullOrEmpty(objCustInv.NextPageLink))
+                                        if (jt1 != null)
                                         {
-                                            strUrl = objCustInv.NextPageLink;
+                                            CustomerSaleInvoice objCustInv = jt1.ToObject<CustomerSaleInvoice>();
+                                            invoiceListItemForAgeingRpt.AddRange(objCustInv.Items);
+                                            if (!string.IsNullOrEmpty(objCustInv.NextPageLink))
+                                            {
+                                                strUrl = objCustInv.NextPageLink;
+                                            }
+                                            else
+                                            {
+                                                strUrl = "";
+                                                custSaleInvObjForAgeingRpt.Items = invoiceListItemForAgeingRpt;
+                                            }
                                         }
                                         else
                                         {
                                             strUrl = "";
-                                            custSaleInvObjForAgeingRpt.Items = invoiceListItemForAgeingRpt;
                                         }
-
                                     } while (!string.IsNullOrEmpty(strUrl));
                                     if (custSaleInvObjForAgeingRpt != null && custSaleInvObjForAgeingRpt.Items != null)
                                     {
@@ -1173,6 +1193,76 @@ namespace EnquiryInsertToCRM.DataService
                                         }
                                     }
                                     #endregion
+                                    #region Orders
+                                    
+                                    CustomerSaleInvoice CustomerSaleOrder = new CustomerSaleInvoice();
+                                    List<Item> orderListItem = new List<Item>();
+                                    strUrl = "";
+                                    DateTime dtDate = DateTime.Now;
+                                    DateTime stStartDate = new DateTime(dtDate.Year, dtDate.Month, 1);
+                                    DateTime stEndDate = stStartDate.AddMonths(1).AddDays(-1);
+                                    double dbTotalAmount = 0;
+                                    string strStartMonth = stStartDate.Month>=9? stStartDate.Month.ToString(): "0"+stStartDate.Month.ToString();
+                                    string strStartDay = stStartDate.Day >= 9 ? stStartDate.Day.ToString() : "0" + stStartDate.Day.ToString();
+
+                                    string strEndMonth = stEndDate.Month >= 9 ? stEndDate.Month.ToString() : "0" + stEndDate.Month.ToString();
+                                    string strEndDay = stEndDate.Day >= 9 ? stEndDate.Day.ToString() : "0" + stEndDate.Day.ToString();
+
+                                    strUrl = cf_uri + "/Sale/Order?$filter=Date ge datetime'"+ stStartDate.Year + "-"+ strStartMonth + "-"+ strStartDay + "T00:00:00' and Date le datetime'" + stEndDate.Year + "-" + strEndMonth + "-" + strEndDay + "T00:00:00' and Status eq 'Open' and Customer/UID eq guid'" + objCustomerInfo.Uid + "'&$top=1000";
+                                    do
+                                    {
+                                        if (HttpContext.Current.Request.Url.ToString().ToLower().Contains("localhost"))
+                                        {
+                                            _oAuthKeyService = new OAuthKeyService();
+                                            _oAuthKeyService.OAuthResponse = new MYOB.AccountRight.SDK.Contracts.OAuthTokens();
+                                            _oAuthKeyService.OAuthResponse.AccessToken = AccessToken;
+                                        }
+                                        else
+                                        {
+                                            if (CommonMethod.IsExpiredToken_BasedOnCookies())
+                                            {
+                                                _oAuthKeyService = CommonMethod.RefreshToken_BasedOnCookies();
+                                            }
+                                        }
+                                        JToken jt1 = CommonMethod.MakeAccountRightAPICall_SingleItemReturn(strUrl, CommonMethod.GetAccessToken(), client_id, "");
+                                        if (jt1 != null)
+                                        {
+                                            CustomerSaleInvoice tempCustOrder = jt1.ToObject<CustomerSaleInvoice>();
+                                            orderListItem.AddRange(tempCustOrder.Items);
+                                            if (!string.IsNullOrEmpty(tempCustOrder.NextPageLink))
+                                            {
+                                                strUrl = tempCustOrder.NextPageLink;
+                                            }
+                                            else
+                                            {
+                                                strUrl = "";
+                                                CustomerSaleOrder.Items = orderListItem;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            strUrl = "";
+                                        }
+                                    } while (!string.IsNullOrEmpty(strUrl));
+                                    if (CustomerSaleOrder != null && CustomerSaleOrder.Items != null)
+                                    {   
+                                        foreach (var od in CustomerSaleOrder.Items)
+                                        {
+                                            dbTotalAmount += od.TotalAmount;
+                                        }
+                                    }
+                                    if (dbTotalAmount > 0)
+                                    {
+                                        var objUdf = (from c in udfFieldList
+                                                      where c.Month == stStartDate.Month && c.udfFor == "orders"
+                                                      select c).FirstOrDefault();
+                                        if (objUdf != null)
+                                        {
+                                            objUdf.Value = dbTotalAmount;
+                                        }
+                                    }
+                                    #endregion
+
                                     //CommonMethod.LogFile(sb, false);
 
                                     if (linesItem != null && linesItem.Count > 0)
@@ -1206,7 +1296,19 @@ namespace EnquiryInsertToCRM.DataService
                                                     strbNotetext.AppendLine("<div style='margin-bottom:5px;'><b>" + item.Name + ": </b>" + objCustomerInfo.Notes + "</div>");
                                                 }
                                             }
-                                            else if (item.Month != null && item.Month > 0)
+                                            else if (item.Month != null && item.Month > 0 && (item.udfFor ?? "") == "")
+                                            {
+                                                if (item.Value != null)
+                                                {
+                                                    decimal dcValue = CommonMethod.TryParseDecimal(Convert.ToString(item.Value));
+                                                    if (dcValue > 0)
+                                                    {
+                                                        lstJProperty.Add(new JProperty(item.UniqueKey, item.Value));
+                                                        strbNotetext.AppendLine("<div style='margin-bottom:5px;'><b>" + item.Name + ": </b>" + ("$" + item.Value) + "</div>");
+                                                    }
+                                                }
+                                            }
+                                            else if (item.Month != null && item.Month > 0 && (item.udfFor ?? "") == "orders")
                                             {
                                                 if (item.Value != null)
                                                 {
@@ -1228,7 +1330,8 @@ namespace EnquiryInsertToCRM.DataService
                                                         strbNotetext.AppendLine("<div style='margin-bottom:5px;'><b>" + item.Name + ": </b>" + objCustomerInfo.Addresses[0].ContactName + "</div>");
                                                     }
                                                 }
-                                            }else if (item.Name == "MYOB Phone")
+                                            }
+                                            else if (item.Name == "MYOB Phone")
                                             {
                                                 if (objCustomerInfo.Addresses != null && objCustomerInfo.Addresses.Count > 0)
                                                 {
@@ -1793,7 +1896,7 @@ namespace EnquiryInsertToCRM.DataService
 
         public static string fnCompanyUDFBasedOnMYOBCustomerID(List<JProperty> lstJProperty, string key, StringBuilder strbNotetext)
         {
-            
+
             string res = "";
             string ParentKey = "";
             NotesModel objNoteModel = new NotesModel();
@@ -1823,7 +1926,7 @@ namespace EnquiryInsertToCRM.DataService
                 {
                     StringBuilder sb = new StringBuilder();
                     sb.AppendLine("-----------------------------Error----------------------------------------");
-                    sb.AppendLine("Error: "+ strCompanyName);
+                    sb.AppendLine("Error: " + strCompanyName);
                     sb.AppendLine(Convert.ToString(responseJSON["Msg"][0]["Message"]));
                     CommonMethod.LogFile(sb, false);
                     sb.AppendLine("---------------------------------------------------------------------");
@@ -2069,6 +2172,7 @@ namespace EnquiryInsertToCRM.DataService
             var json_serializer = new JavaScriptSerializer();
             var field_list = (IDictionary<string, object>)json_serializer.DeserializeObject(json);
             List<AbEntryFieldInfo> lstMonthlySaleList = getMonthUdfList();
+            List<AbEntryFieldInfo> lstFyOrdersList = getFY_OrdersUdfList();
             //List<AbEntryFieldInfo> lstMonthlySaleUDFName = getMonthUdfList();
             List<string> lstUDFFieldsName = UDFFieldsName.Split(',').ToList();
             if (field_list != null && field_list.Count > 0)
@@ -2119,6 +2223,23 @@ namespace EnquiryInsertToCRM.DataService
                                                  select c).FirstOrDefault();
                             if (objModelMonth != null)
                             {
+                                objModelMonth.udfFor = "";
+                                objModelMonth.Month = lmst.Month;
+                                lstAbEntryFieldInfo.Add(objModelMonth);
+                            }
+                        }
+                    }
+
+                    if (lstFyOrdersList != null && lstFyOrdersList.Count > 0)
+                    {
+                        foreach (var lmst in lstFyOrdersList)
+                        {
+                            var objModelMonth = (from c in allUDfList
+                                                 where c.Name == lmst.Name
+                                                 select c).FirstOrDefault();
+                            if (objModelMonth != null)
+                            {
+                                objModelMonth.udfFor = lmst.udfFor;
                                 objModelMonth.Month = lmst.Month;
                                 lstAbEntryFieldInfo.Add(objModelMonth);
                             }
@@ -2145,12 +2266,12 @@ namespace EnquiryInsertToCRM.DataService
                 {
                     currentYear = objCurrentFY.year.ToString();
                 }
-                if (Convert.ToInt32(currentYear) >= 2020)
-                {
+                //if (Convert.ToInt32(currentYear) >= 2020)
+                //{
                     string strPath = ConfigurationManager.AppSettings["FYMonthlySalesCRMFolder"];
-                    strPath = strPath.Replace("[REPLACEYEAR]", currentYear);
+                    strPath = strPath.Replace("[REPLACEYEAR]", (objCurrentFY.year - 1).ToString());
                     MonthlySalesCRMFolder = strPath + "\\";
-                }
+                //}
                 DateTime dtStartDate = objCurrentFY.fyStartDate;
                 int j = 1;
                 for (int i = 1; i <= 12; i++)
@@ -2160,7 +2281,8 @@ namespace EnquiryInsertToCRM.DataService
                         dtStartDate = dtStartDate.AddMonths(-11).AddYears(1);
                         j = 1;
                     }
-                    if (j > 1) {
+                    if (j > 1)
+                    {
                         dtStartDate = dtStartDate.AddMonths(1);
                     }
                     AbEntryFieldInfo objModel = new AbEntryFieldInfo();
@@ -2168,6 +2290,52 @@ namespace EnquiryInsertToCRM.DataService
                     objModel.Name = MonthlySalesCRMFolder + dtStartDate.Year + " " + System.Globalization.DateTimeFormatInfo.CurrentInfo.GetMonthName(dtStartDate.Month).Substring(0, 3).ToUpper();
                     objModel.Month = dtStartDate.Month;
                     objModel.Year = dtStartDate.Year;
+                    lstAbEntryFieldInfo.Add(objModel);
+                    j++;
+                }
+            }
+            return lstAbEntryFieldInfo;
+        }
+        public static List<AbEntryFieldInfo> getFY_OrdersUdfList()
+        {
+            var lstFyear = CommonMethod.GetFinancialYearList();
+            List<string> lstMonthlySaleUDFName = new List<string>();
+            List<AbEntryFieldInfo> lstAbEntryFieldInfo = new List<AbEntryFieldInfo>();
+            string currentYear = "";
+            string MonthlySalesCRMFolder = "";
+            if (lstFyear != null && lstFyear.Count > 0)
+            {
+                var objCurrentFY = (from c in lstFyear
+                                    where c.IsCurrentFY == true
+                                    select c).FirstOrDefault();
+                if (objCurrentFY != null)
+                {
+                    currentYear = objCurrentFY.year.ToString();
+                }
+
+                string strPath = ConfigurationManager.AppSettings["FYOrdersCRMFolder"];
+                strPath = strPath.Replace("[REPLACEYEAR]", (objCurrentFY.year - 1).ToString());
+                MonthlySalesCRMFolder = strPath + "\\";
+
+                DateTime dtStartDate = objCurrentFY.fyStartDate;
+                int j = 1;
+                for (int i = 1; i <= 12; i++)
+                {
+                    if (dtStartDate.Month == 12)
+                    {
+                        dtStartDate = dtStartDate.AddMonths(-11).AddYears(1);
+                        j = 1;
+                    }
+                    if (j > 1)
+                    {
+                        dtStartDate = dtStartDate.AddMonths(1);
+                    }
+                    AbEntryFieldInfo objModel = new AbEntryFieldInfo();
+                    //var str = MonthlySalesCRMFolder + currentYear + " " + System.Globalization.DateTimeFormatInfo.CurrentInfo.GetMonthName(i).Substring(0, 3).ToUpper();
+                    objModel.Name = MonthlySalesCRMFolder + dtStartDate.Year + " " + System.Globalization.DateTimeFormatInfo.CurrentInfo.GetMonthName(dtStartDate.Month).Substring(0, 3).ToUpper();
+                    objModel.Month = dtStartDate.Month;
+                    objModel.Year = dtStartDate.Year;
+                    objModel.udfFor = "orders";
                     lstAbEntryFieldInfo.Add(objModel);
                     j++;
                 }
@@ -2286,7 +2454,7 @@ namespace EnquiryInsertToCRM.DataService
         {
 
             StringBuilder divNoteText = new StringBuilder();
-            
+
             divNoteText.Clear();
             string MYOBUID_UDF = getMyOBUid_UDFKey();
             List<JProperty> lstJProperty = new List<JProperty>();
