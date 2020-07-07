@@ -288,3 +288,19 @@ Refresh Token Error:Object reference not set to an instance of an object.
 #4 MakeAccountRightAPICall_SingleItemReturn Step Error The remote server returned an error: (401) Unauthorized.
 #4 MakeAccountRightAPICall Step Error The remote server returned an error: (401) Unauthorized.
 #4 MakeAccountRightAPICall_SingleItemReturn Step Error The remote server returned an error: (401) Unauthorized.
+=================================================================
+allowProcess:True
+FilterCustomerName:Not Just Bras
+Date:06/07/2020 14:14:38
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+#4 MakeAccountRightAPICall_SingleItemReturn Step Error The remote server returned an error: (401) Unauthorized.
+#4 MakeAccountRightAPICall_SingleItemReturn Step Error The remote server returned an error: (401) Unauthorized.
+#4 MakeAccountRightAPICall Step Error The remote server returned an error: (401) Unauthorized.
+#4 MakeAccountRightAPICall_SingleItemReturn Step Error The remote server returned an error: (401) Unauthorized.
+#4 MakeAccountRightAPICall_SingleItemReturn Step Error The remote server returned an error: (401) Unauthorized.
