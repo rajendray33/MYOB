@@ -304,3 +304,70 @@ Refresh Token Error:Object reference not set to an instance of an object.
 #4 MakeAccountRightAPICall Step Error The remote server returned an error: (401) Unauthorized.
 #4 MakeAccountRightAPICall_SingleItemReturn Step Error The remote server returned an error: (401) Unauthorized.
 #4 MakeAccountRightAPICall_SingleItemReturn Step Error The remote server returned an error: (401) Unauthorized.
+=================================================================
+allowProcess:True
+FilterCustomerName:
+Date:08/07/2020 18:49:58
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+#4 MakeAccountRightAPICall_SingleItemReturn Step Error The operation has timed out
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+Refresh Token Error:Object reference not set to an instance of an object.
+
+#4 MakeAccountRightAPICall_SingleItemReturn Step Error The remote server returned an error: (403) Forbidden.

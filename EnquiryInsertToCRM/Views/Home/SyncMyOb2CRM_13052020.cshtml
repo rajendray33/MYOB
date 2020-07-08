@@ -34,14 +34,13 @@
                                 </div>
                                 <div class="col-xs-6 text-right">
                                     <div class="form-group">
-                                        <button type="button" id="btnSyncDataFieldsBasedOnToday" class="btn btn-primary">&nbsp;SYNC DATA FIELDS BASED ON TODAY</button>
                                         @*@if (ViewBag.synPreviousDayProcessStatus == "False")
-                                            {
-                                                <button type="button" id="btnGetList" class="btn btn-success">Sync Previous Day</button>
-                                            }*@
+                                        {
+                                            <button type="button" id="btnGetList" class="btn btn-success">Sync Previous Day</button>
+                                        }*@
                                         @*else {
-                                                <button type="button" id="btnProcessPrevDaySyn" class="btn btn-success"> <span class="glyphicon glyphicon-repeat fast-right-spinner"></span>Sync Previous Day</button>
-                                            }*@
+                                            <button type="button" id="btnProcessPrevDaySyn" class="btn btn-success"> <span class="glyphicon glyphicon-repeat fast-right-spinner"></span>Sync Previous Day</button>
+                                        }*@
                                     </div>
                                 </div>
                                 <div class="col-xs-12">
@@ -111,7 +110,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <button type="button" id="btnSyncDataFieldsBasedOnMyObIdMatch" data-type="basedonmyobid" class="btn btn-primary sync-btn"><span class="spn-spinner"></span>&nbsp;SYNC DATA FIELDS BASED ON MYOBID MATCH</button>
+                                    <button type="button" id="btnSyncDataFieldsBasedOnMyObIdMatch" data-type="basedonmyobid" class="btn btn-primary sync-btn"><span class="spn-spinner"></span>&nbsp;SYNC DATA FIELDS BASED ON MYOBID MATCH</button>                                    
                                 </div>
                             </div>
                         </div>
@@ -131,9 +130,8 @@
     .text-danger {
         color: #ff0013 !important;
     }
-
     .cursor-stop {
-        cursor: not-allowed !important;
+        cursor:not-allowed !important;
     }
 
     .content-page .content {
@@ -156,8 +154,8 @@
     var totalTaskSupplies = 0;
     var processedTaskSupplies = 0;
 
-
-    function fnDisplayDynamicResponse() {
+    
+    function fnDisplayDynamicResponse() {        
         var strMsg = '';
         console.log(compList.length);
         $('#divResponse').show();
@@ -195,20 +193,19 @@
         $('html, body').animate({
             scrollTop: $('#divResponse').offset().top
         }, 'slow');
-        completedRec = 0;
-        CustomerInfocnt = 0;
-        companycreate = 0;
-        companynameupdate = 0;
-        myobalreadyexist = 0;
-        myobupdate = 0;
-        companynotfound = 0;
-        myobnotfound = 0;
-        udfdatafieldsupdate = 0;
-        compList = [];
+         completedRec = 0;
+         CustomerInfocnt = 0;
+         companycreate = 0;
+         companynameupdate = 0;
+         myobalreadyexist = 0;
+         myobupdate = 0;
+         companynotfound = 0;
+         myobnotfound = 0;
+         udfdatafieldsupdate = 0;
+         compList = [];
         loadingEnd();
     }
     function getRequestForSingle(strdata, i) {
-        
         i = i + 1;
         $.ajax({
             type: "POST",
@@ -271,20 +268,18 @@
 
     $(document).ready(function () {
         var strUrl = 'https://btc.modelbuzz.in/home/SyncMyOb2CRM';
-        window.history.pushState("", "", strUrl);
-        $(".sync-btn").on('click', function myfunction(e) {
+        window.history.pushState("", "", strUrl);      
+        $(".sync-btn").on('click', function myfunction(e) {            
             var strdata = "";
-
             $('#strMsgtext').html('');
             $('#divResponse').hide();
             var stringFilterCompany = "";
-
+            
             var count = $("#datatable-fixed-col").dataTable().fnSettings().aoData.length;
             if (count == 0) {
                 alert("No data available!");
             } else {
-                
-                compList = [];
+                compList = [];                
                 var stringFilterCompanynameList = "";
                 if ($('#txtSearchBasedOnComp').val().length > 0) {
                     stringFilterCompany = $('#txtSearchBasedOnComp').val();
@@ -300,60 +295,26 @@
                     strdata += "IsBasedOnCompanyNameMatch=true";
                 } else if ($(this).attr("data-type") === "basedonmyobid") {
                     strdata += "IsBasedOnMyObIdMatch=true";
-                } else if ($(this).attr("data-type") === "basedonmytoday") {
-                    strdata += "IsBasedOnMyObIdMatch=true";
                 }
-
-                if (stringFilterCompany.length > 0) {                    
+                if (stringFilterCompany.length > 0) {
                     loadingStart();
-                    strdata += "&FilterDate=" + $('#dateRange').val() + "&FilterCustomerName=" + stringFilterCompany + "&allowProcess=true";
-                    getRequestForSingle(strdata, 0);
-
-                } else if (compList.length > 0) {     
+                    strdata += "&FilterDate=" + $('#dateRange').val() + "&FilterCustomerName=" + stringFilterCompany +"&allowProcess=true";
+                    getRequestForSingle(strdata, 0);                    
                     
+                } else if (compList.length > 0) {
                     loadingStart();
-                    strdata += "&FilterCustomerNameList=" + stringFilterCompanynameList + "&allowProcess=true";
-                    getRequestForList(strdata);
-
-
-                    //Commented on 08072020
-                    //totalTaskSupplies = compList.length;
-                    //var custFilt = "";
-                    //var custFilt1 = "";
-                    //$.each(compList, function (i, val) {
-                    //    custFilt = "";
-                    //    custFilt = "&FilterCustomerName=" + val + "&allowProcess=true";
-                    //    custFilt1 = strdata + custFilt //"&FilterDate=" + $('#dateRange').val() + "&FilterCustomerName=" + compList[i];
-                    //    console.log(custFilt1);
-                    //    getRequestForList(custFilt1);
-                    //});
-                    //End Commented On 08072020
-                } else if ($(this).attr("data-type") === "basedonmytoday") {
-                    
-                    var strTodayCompanyNamecnt = $("#TodayCompanyNamecnt").val();                    
-                    loadingStart();
-                    strdata += "&FilterCustomerNameList=" + strTodayCompanyNamecnt + "&allowProcess=true";
-                    getRequestForList(strdata);
-                    //Commented on 08072020
-                    //var arryTodayCompanyName = strTodayCompanyNamecnt.split("[BREAK]");
-                    //if (arryTodayCompanyName != null && arryTodayCompanyName.length > 0) {
-                    //    compList = arryTodayCompanyName
-                    //    loadingStart();
-                    //    //$('.btn').addClass("cursor-stop");
-                    //    //$(this).find('span').addClass("glyphicon glyphicon-repeat fast-right-spinner");
-                    //    totalTaskSupplies = compList.length;
-                    //    var custFilt = "";
-                    //    var custFilt1 = "";
-                    //    console.log("Sync URL for Today");
-                    //    $.each(compList, function (i, val) {
-                    //        custFilt = "";
-                    //        custFilt = "&FilterCustomerName=" + val + "&allowProcess=true";
-                    //        custFilt1 = strdata + custFilt //"&FilterDate=" + $('#dateRange').val() + "&FilterCustomerName=" + compList[i];
-                    //        console.log(custFilt1);
-                    //        getRequestForList(custFilt1);
-                    //    });
-                    //}
-                    //End Commented On 08072020
+                    //$('.btn').addClass("cursor-stop");
+                    //$(this).find('span').addClass("glyphicon glyphicon-repeat fast-right-spinner");
+                    totalTaskSupplies = compList.length;
+                    var custFilt = "";
+                    var custFilt1 = "";
+                    $.each(compList, function (i, val) {
+                        custFilt = "";
+                        custFilt = "&FilterDate=" + $('#dateRange').val() + "&FilterCustomerName=" + val + "&allowProcess=true";
+                        custFilt1 = strdata + custFilt //"&FilterDate=" + $('#dateRange').val() + "&FilterCustomerName=" + compList[i];                        
+                        console.log(custFilt1);
+                        getRequestForList(custFilt1);
+                    });
                 }
             }
 
@@ -365,8 +326,6 @@
             //if (!validFilter()) {
             //    return false;
             //}
-            $("#btnSyncDataFieldsBasedOnMyObIdMatch").removeAttr("data-type");
-            $("#btnSyncDataFieldsBasedOnMyObIdMatch").attr("data-type", "basedonmyobid");
             var stringFilterCompany = "";
             var stringFilterCompanynameList = "";
             if ($('#txtSearchBasedOnComp').val().length > 0) {
@@ -405,32 +364,6 @@
             //} else {
             //    $("#daterangeval").show();
             //}
-        });
-        $("#btnSyncDataFieldsBasedOnToday").click(function () {
-            var strdata = "FilterData=true&SyncdForToday=true";
-            loadingStart();
-            $.ajax({
-                type: "POST",
-                url: "/home/GetPartialCustomerInfo?" + strdata,
-                success: function (data) {
-                    loadingEnd();
-                    $("#divEventList").show();
-                    $("#divContainer").show();
-                    $("#divfilterrecord").html("");
-                    $("#divfilterrecord").append(data);
-                    $("#btnSyncDataFieldsBasedOnMyObIdMatch").removeAttr("data-type");
-                    $("#btnSyncDataFieldsBasedOnMyObIdMatch").attr("data-type", "basedonmytoday");
-                    $('html, body').animate({
-                        scrollTop: $('#divContainer').offset().top
-                    }, 'slow');
-                },
-                error: function (data) {
-                    $("#divEventList").hide();
-                    $("#divContainer").hide();
-                    loadingEnd();
-                    alert("Session Expired! reload url.");
-                }
-            });
         });
         $('#dateRange').daterangepicker({
             autoUpdateInput: false,
@@ -486,49 +419,43 @@
         $(".overlay_bg").hide();
         $(".loadingSpinner").hide();
     }
-    function getRequestForList(strdata) {
+    function getRequestForList(strdata) {        
         $.ajax({
             type: "POST",
             url: "/home/GetPartialCustomerInfo?" + strdata,
             timeout: 0,
             success: function (data) {                
-                var strMsg = '';
-                $('#divResponse').show();
+                ++processedTaskSupplies;                                
                 if (parseInt(data.CustomerInfocnt) > 0) {
-                    strMsg = '<strong>You successfully processed.</strong> ';
+                    CustomerInfocnt = parseInt(CustomerInfocnt) + 1;                    
                     if (parseInt(data.companycreate) > 0) {
-                        strMsg += '<span class="alert-box alert-success"><strong>' + parseInt(data.companycreate) + '</strong> company(s) created in CRM</span>,';
+                        companycreate = parseInt(companycreate) + 1;                        
                     }
                     if (parseInt(data.companynameupdate) > 0) {
-                        strMsg += '<span class="alert-box alert-primary"><strong>' + parseInt(data.companynameupdate) + '</strong> company name update</span>,';
+                        companynameupdate = parseInt(companynameupdate) + 1;
                     }
                     if (parseInt(data.myobalreadyexist) > 0) {
-                        strMsg += ' <span class="alert-box alert-secondary"><strong>' + parseInt(data.myobalreadyexist) + '</strong> company(s) UID and name already sync</span>,';
+                        myobalreadyexist = parseInt(myobalreadyexist) + 1;
                     }
                     if (parseInt(data.myobupdate) > 0) {
-                        strMsg += ' <span class="alert-box alert-success"><strong>' + parseInt(data.myobupdate) + '</strong> company(s) MYOB UID update</span>,';
+                        myobupdate = parseInt(myobupdate) + 1;
                     }
                     if (parseInt(data.companynotfound) > 0) {
-                        strMsg += ' <span class="alert-box alert-danger"><strong>' + parseInt(data.companynotfound) + '</strong> company(s) not found</span>,';
+                        companynotfound = parseInt(companynotfound) + 1;
                     }
                     if (parseInt(data.myobnotfound) > 0) {
-                        strMsg += ' <span class="alert-box alert-warning"><strong>' + parseInt(data.myobnotfound) + '</strong> MYOB UID not found</span>,';
+                        myobnotfound = parseInt(myobnotfound) + 1;
                     }
                     if (parseInt(data.udfdatafieldsupdate) > 0) {
-                        strMsg += ' <span class="alert-box alert-info"><strong>' + parseInt(data.udfdatafieldsupdate) + '</strong> company(s) data fields updated</span> ';
-                    } else {
-                        strMsg = strMsg.slice(0, -1);
-                        //strMsg += ').';
-                    }
-                } else {
-                    //strMsg += ').';
-                    strMsg = '<strong><span class="alert-box alert-danger">No data available in customer.</span></strong>';
+                        udfdatafieldsupdate = parseInt(udfdatafieldsupdate) + 1;                        
+                    } 
                 }
-                $('#strMsgtext').html(strMsg);
-                $('html, body').animate({
-                    scrollTop: $('#divResponse').offset().top
-                }, 'slow');
-                loadingEnd();
+                if (processedTaskSupplies == totalTaskSupplies) {
+                    fnDisplayDynamicResponse();
+                    loadingEnd();
+                    //$('.spn-spinner').removeClass("glyphicon glyphicon-repeat fast-right-spinner");
+                    //$('.btn').removeClass("cursor-stop");
+                }
             },
 
             error: function (data) {

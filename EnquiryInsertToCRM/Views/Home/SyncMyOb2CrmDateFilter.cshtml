@@ -269,24 +269,28 @@
                 }
                 if ($(this).attr("data-type") === "basedonmytoday") {
                     var strTodayCompanyNamecnt = $("#TodayCompanyNamecnt").val();
-                    var arryTodayCompanyName = strTodayCompanyNamecnt.split("[BREAK]");
-                    if (arryTodayCompanyName != null && arryTodayCompanyName.length > 0) {
-                        compList = arryTodayCompanyName
-                        loadingStart();
-                        //$('.btn').addClass("cursor-stop");
-                        //$(this).find('span').addClass("glyphicon glyphicon-repeat fast-right-spinner");
-                        totalTaskSupplies = compList.length;
-                        var custFilt = "";
-                        var custFilt1 = "";
-                        console.log("Sync URL for Today");
-                        $.each(compList, function (i, val) {
-                            custFilt = "";
-                            custFilt = "&FilterCustomerName=" + val + "&allowProcess=true&SyncdForToday=false";
-                            custFilt1 = strdata + custFilt //"&FilterDate=" + $('#dateRange').val() + "&FilterCustomerName=" + compList[i];
-                            console.log(custFilt1);
-                            getRequestForList(custFilt1);
-                        });
-                    }
+                    loadingStart();
+                    strdata += "&FilterCustomerNameList=" + strTodayCompanyNamecnt + "&allowProcess=true";
+                    getRequestForList(strdata);
+                    //var strTodayCompanyNamecnt = $("#TodayCompanyNamecnt").val();
+                    //var arryTodayCompanyName = strTodayCompanyNamecnt.split("[BREAK]");
+                    //if (arryTodayCompanyName != null && arryTodayCompanyName.length > 0) {
+                    //    compList = arryTodayCompanyName
+                    //    loadingStart();
+                    //    //$('.btn').addClass("cursor-stop");
+                    //    //$(this).find('span').addClass("glyphicon glyphicon-repeat fast-right-spinner");
+                    //    totalTaskSupplies = compList.length;
+                    //    var custFilt = "";
+                    //    var custFilt1 = "";
+                    //    console.log("Sync URL for Today");
+                    //    $.each(compList, function (i, val) {
+                    //        custFilt = "";
+                    //        custFilt = "&FilterCustomerName=" + val + "&allowProcess=true&SyncdForToday=false";
+                    //        custFilt1 = strdata + custFilt //"&FilterDate=" + $('#dateRange').val() + "&FilterCustomerName=" + compList[i];
+                    //        console.log(custFilt1);
+                    //        getRequestForList(custFilt1);
+                    //    });
+                    //}
                 }
             }
 
@@ -369,37 +373,43 @@
             url: "/home/GetPartialCustomerInfoDateFilter?" + strdata,
             timeout: 0,
             success: function (data) {
-                ++processedTaskSupplies;
+                var strMsg = '';
+                $('#divResponse').show();
                 if (parseInt(data.CustomerInfocnt) > 0) {
-                    CustomerInfocnt = parseInt(CustomerInfocnt) + 1;
+                    strMsg = '<strong>You successfully processed.</strong> ';
                     if (parseInt(data.companycreate) > 0) {
-                        companycreate = parseInt(companycreate) + 1;
+                        strMsg += '<span class="alert-box alert-success"><strong>' + parseInt(data.companycreate) + '</strong> company(s) created in CRM</span>,';
                     }
                     if (parseInt(data.companynameupdate) > 0) {
-                        companynameupdate = parseInt(companynameupdate) + 1;
+                        strMsg += '<span class="alert-box alert-primary"><strong>' + parseInt(data.companynameupdate) + '</strong> company name update</span>,';
                     }
                     if (parseInt(data.myobalreadyexist) > 0) {
-                        myobalreadyexist = parseInt(myobalreadyexist) + 1;
+                        strMsg += ' <span class="alert-box alert-secondary"><strong>' + parseInt(data.myobalreadyexist) + '</strong> company(s) UID and name already sync</span>,';
                     }
                     if (parseInt(data.myobupdate) > 0) {
-                        myobupdate = parseInt(myobupdate) + 1;
+                        strMsg += ' <span class="alert-box alert-success"><strong>' + parseInt(data.myobupdate) + '</strong> company(s) MYOB UID update</span>,';
                     }
                     if (parseInt(data.companynotfound) > 0) {
-                        companynotfound = parseInt(companynotfound) + 1;
+                        strMsg += ' <span class="alert-box alert-danger"><strong>' + parseInt(data.companynotfound) + '</strong> company(s) not found</span>,';
                     }
                     if (parseInt(data.myobnotfound) > 0) {
-                        myobnotfound = parseInt(myobnotfound) + 1;
+                        strMsg += ' <span class="alert-box alert-warning"><strong>' + parseInt(data.myobnotfound) + '</strong> MYOB UID not found</span>,';
                     }
                     if (parseInt(data.udfdatafieldsupdate) > 0) {
-                        udfdatafieldsupdate = parseInt(udfdatafieldsupdate) + 1;
+                        strMsg += ' <span class="alert-box alert-info"><strong>' + parseInt(data.udfdatafieldsupdate) + '</strong> company(s) data fields updated</span> ';
+                    } else {
+                        strMsg = strMsg.slice(0, -1);
+                        //strMsg += ').';
                     }
+                } else {
+                    //strMsg += ').';
+                    strMsg = '<strong><span class="alert-box alert-danger">No data available in customer.</span></strong>';
                 }
-                if (processedTaskSupplies == totalTaskSupplies) {
-                    fnDisplayDynamicResponse();
-                    loadingEnd();
-                    //$('.spn-spinner').removeClass("glyphicon glyphicon-repeat fast-right-spinner");
-                    //$('.btn').removeClass("cursor-stop");
-                }
+                $('#strMsgtext').html(strMsg);
+                $('html, body').animate({
+                    scrollTop: $('#divResponse').offset().top
+                }, 'slow');
+                loadingEnd();
             },
 
             error: function (data) {

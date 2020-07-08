@@ -1224,57 +1224,7 @@ namespace EnquiryInsertToCRM.Controllers
             string cftoken = CommonMethod.GetEncode("Administrator:");
             HttpCookie cookie_AccessToken = Request.Cookies["AccessToken"];
             List<CustomerInfo> listCustomerInfoModel = new List<CustomerInfo>();
-            //_oAuthKeyService = (IOAuthKeyService)Session[iOAuthKeyService];
-            //if (Session[iOAuthKeyService] != null)
-            //{
-            //    if (IsExpiredToken()) {                    
-            //        sb.Clear();
-            //        sb.AppendLine("#1 GetPartialCustomerInfo Call Session Token Expired");
-            //        CommonMethod.LogFile(sb, false);
-            //        RefreshToken();
-            //    }
-            //    //sb.Clear();
-            //    //_oAuthKeyService = (IOAuthKeyService)Session[iOAuthKeyService];
-            //    //sb.AppendLine("#1 SyncMyOb2CRM Call Session MyOAuthKeyService != null");
-            //    //CommonMethod.LogFile(sb, true);
-            //    //if (_oAuthKeyService.OAuthResponse != null && _oAuthKeyService.OAuthResponse.HasExpired == true)
-            //    //{
-            //    //    return PartialView(listCustomerInfoModel);
-            //    //}
-            //}
-            //else
-            //{
-            //    sb.Clear();
-            //    sb.AppendLine("#1 SyncMyOb2CRM Call Session MyOAuthKeyService == null");
-            //    //_oAuthKeyService.OAuthResponse = null;
-
-            //    CommonMethod.LogFile(sb, true);
-            //    return PartialView(listCustomerInfoModel);
-            //    //_oAuthKeyService.OAuthResponse = null;
-            //}
-
-            //#region Get Comapny Guid Id From MyOb Account
-            //_configurationCloud = new ApiConfiguration(client_id, client_secret, redirect_uri);
-            //var cfsCloud = new CompanyFileService(_configurationCloud, null, _oAuthKeyService);
-            //var cf = cfsCloud.GetRange();
-            //if (cf != null && cf.Length > 0)
-            //{
-            //    sb.Clear();
-            //    foreach (var item in cf.ToList())
-            //    {
-            //        if (item.Name.ToLower().Trim() == myobCompany.ToLower().Trim())
-            //        {
-            //            cf_guid = item.Id.ToString();
-            //            cf_uri = item.Uri.ToString();
-            //        }
-            //        sb.AppendLine("----------------");
-            //        sb.AppendLine(item.Name + ":" + item.Id);
-            //        sb.AppendLine(item.Name + ":" + item.Uri);
-            //        sb.AppendLine("----------------");
-            //    }
-            //     CommonMethod.LogFile(sb, false);
-            //}
-            //#endregion            
+                        
             if (!string.IsNullOrEmpty(cf_uri))
             {
                 //Refresh = false;
@@ -1321,6 +1271,7 @@ namespace EnquiryInsertToCRM.Controllers
                     string TodayDate = DateTime.UtcNow.AddHours(10).ToString("yyyy-MM-dd");
                     string strUrl = "https://ar1.api.myob.com/accountright/6185379c-2a07-4d75-bcd5-ca2ede7a5717/GeneralLedger/JournalTransaction/?$filter=DateOccurred ge datetime'" + TodayDate + "' and DateOccurred le datetime'" + TodayDate + "'";
                     List<GeneralLedgerJournalTransaction.Item> listjournaltransactionmodel = new List<GeneralLedgerJournalTransaction.Item>();
+                    //cookie_AccessToken.Value
                     var jt = CommonMethod.MakeAccountRightAPICall(strUrl, cookie_AccessToken.Value, client_id, "");
                     if (jt != null && jt.Count > 0)
                     {
@@ -1402,7 +1353,7 @@ namespace EnquiryInsertToCRM.Controllers
                     }
                     if (strCompanyNameFilter != null && strCompanyNameFilter.Count > 0)
                     {
-                        ViewBag.TodayCompanyName = string.Join("[BREAK]", strCompanyNameFilter);
+                        ViewBag.TodayCompanyName = string.Join(",", strCompanyNameFilter);
                     }
                 }
                 #endregion
@@ -1424,6 +1375,10 @@ namespace EnquiryInsertToCRM.Controllers
 
                                     strCompanyNameFilter = FilterCustomerNameList.Split('\n').ToList();
 
+                                }
+                                else if (FilterCustomerNameList.Contains(","))
+                                {
+                                    strCompanyNameFilter = FilterCustomerNameList.Split(',').ToList();
                                 }
                                 else
                                 {
@@ -1525,7 +1480,6 @@ namespace EnquiryInsertToCRM.Controllers
                                                     res = "myobnotfound";
                                                 }
                                             }
-
                                             if (res == "companynameupdate")
                                             {
                                                 companynameupdatecnt += 1;
@@ -1618,57 +1572,7 @@ namespace EnquiryInsertToCRM.Controllers
             string cftoken = CommonMethod.GetEncode("Administrator:");
             HttpCookie cookie_AccessToken = Request.Cookies["AccessToken"];
             List<CustomerInfo> listCustomerInfoModel = new List<CustomerInfo>();
-            //_oAuthKeyService = (IOAuthKeyService)Session[iOAuthKeyService];
-            //if (Session[iOAuthKeyService] != null)
-            //{
-            //    if (IsExpiredToken()) {                    
-            //        sb.Clear();
-            //        sb.AppendLine("#1 GetPartialCustomerInfo Call Session Token Expired");
-            //        CommonMethod.LogFile(sb, false);
-            //        RefreshToken();
-            //    }
-            //    //sb.Clear();
-            //    //_oAuthKeyService = (IOAuthKeyService)Session[iOAuthKeyService];
-            //    //sb.AppendLine("#1 SyncMyOb2CRM Call Session MyOAuthKeyService != null");
-            //    //CommonMethod.LogFile(sb, true);
-            //    //if (_oAuthKeyService.OAuthResponse != null && _oAuthKeyService.OAuthResponse.HasExpired == true)
-            //    //{
-            //    //    return PartialView(listCustomerInfoModel);
-            //    //}
-            //}
-            //else
-            //{
-            //    sb.Clear();
-            //    sb.AppendLine("#1 SyncMyOb2CRM Call Session MyOAuthKeyService == null");
-            //    //_oAuthKeyService.OAuthResponse = null;
-
-            //    CommonMethod.LogFile(sb, true);
-            //    return PartialView(listCustomerInfoModel);
-            //    //_oAuthKeyService.OAuthResponse = null;
-            //}
-
-            //#region Get Comapny Guid Id From MyOb Account
-            //_configurationCloud = new ApiConfiguration(client_id, client_secret, redirect_uri);
-            //var cfsCloud = new CompanyFileService(_configurationCloud, null, _oAuthKeyService);
-            //var cf = cfsCloud.GetRange();
-            //if (cf != null && cf.Length > 0)
-            //{
-            //    sb.Clear();
-            //    foreach (var item in cf.ToList())
-            //    {
-            //        if (item.Name.ToLower().Trim() == myobCompany.ToLower().Trim())
-            //        {
-            //            cf_guid = item.Id.ToString();
-            //            cf_uri = item.Uri.ToString();
-            //        }
-            //        sb.AppendLine("----------------");
-            //        sb.AppendLine(item.Name + ":" + item.Id);
-            //        sb.AppendLine(item.Name + ":" + item.Uri);
-            //        sb.AppendLine("----------------");
-            //    }
-            //     CommonMethod.LogFile(sb, false);
-            //}
-            //#endregion            
+                    
             if (!string.IsNullOrEmpty(cf_uri))
             {
                 //Refresh = false;
@@ -1803,7 +1707,7 @@ namespace EnquiryInsertToCRM.Controllers
                     }
                     if (strCompanyNameFilter != null && strCompanyNameFilter.Count > 0)
                     {
-                        ViewBag.TodayCompanyName = string.Join("[BREAK]", strCompanyNameFilter);
+                        ViewBag.TodayCompanyName = string.Join(",", strCompanyNameFilter);
                     }
                 }
                 #endregion                
@@ -1825,6 +1729,10 @@ namespace EnquiryInsertToCRM.Controllers
 
                                     strCompanyNameFilter = FilterCustomerNameList.Split('\n').ToList();
 
+                                }
+                                else if (FilterCustomerNameList.Contains(","))
+                                {
+                                    strCompanyNameFilter = FilterCustomerNameList.Split(',').ToList();
                                 }
                                 else
                                 {
@@ -2142,7 +2050,7 @@ namespace EnquiryInsertToCRM.Controllers
             }
             if (strCompanyNameFilter != null && strCompanyNameFilter.Count > 0)
             {
-                ViewBag.TodayCompanyName = string.Join("[BREAK]", strCompanyNameFilter);
+                ViewBag.TodayCompanyName = string.Join(",", strCompanyNameFilter);
             }
             //_oAuthKeyService = (IOAuthKeyService)Session[iOAuthKeyService];
             //if (_oAuthKeyService.OAuthResponse != null && _oAuthKeyService.OAuthResponse.HasExpired == true)
@@ -2675,7 +2583,7 @@ namespace EnquiryInsertToCRM.Controllers
                     filter = "?$filter=" + filterBody + "&$top=1000";
                 }
 
-                var lstCRList = CommonMethod.MakeAccountRightAPICall(cf_uri + "/Contact/Customer/", cookie_AccessToken.Value, client_id, cftoken, filter);
+                var lstCRList = CommonMethod.MakeAccountRightAPICall(cf_uri + "/Contact/Customer/", "AAEAAFl6A2Po5__jAEJXkjZnY4JPwvLZzzOG1TEvHSS0OgXvgPf8pyKNrJn9H_q_dqCrmu-w0RYHs94SJW5U2NVRRZBsy-404Q3v0gKRg-_ksTER3qNPCXx4_R8eTylmFKgglPYlGtyLpL_0Xuk22Tar4BYBLmYIZTmakXB2_mM3sM_465C883Z_Skj3T7dxj-AVpmlWPCUdqB7MwrPe7WkqhFNAFDawVRDFGhn56AGf2JxM_ca6Agy_nXoxTNtQXr0Kd-HELnrm5MZt3-Nq0gFNypzhjiblNnpKBhqXBeeV8_B32EpA9aLvrbsYhX8Tb9Z5fw4nspAD_cC2J0otcPNH-NCkAQAAAAEAAEhkG6eqTPgF4fpae1zlk4IJKXBFktOyq5KchUNY6Qz_tDNVY8IFDD3ntcIyQTArLAUUP-zMw5RoxcRIDeAOPnVYlGeFl2deyjeuP2BbGAEHziTIm44HcH1vQN3W50hDZzOhMILIYRoBbci8xC538X5RpZID4lfr3yqRc8-aBmW-GuRHlhdFgpdmjLYbYt8d7u_cTwGhToxoEnG_hfU9wWlzD4Ku-hKy6PW1UC2wwZ-uB_YQ8kVvvLxqMO4UZvd-erxYBK-hpOQzntJrimgheEUNcoDh06gIwm15HjcE4IEQyIglUJem2v7d5K7okIXRAC8VPLbopUhk5JTaZUB1Y9itcaw6_8MmsZu356yYdcze0QJZbdO6RD1j9r87j5XuXIUfLN4JSI9TynU-JMSS2rtWuK6qtC8EWrrYPtGNOckQH1UTjQW9FrxNaBNHQbG2B5DHIlqTaG_EthG__cXl3Cm_8e2s8KtMfvBoJYSw17_LaDOQjVlbZP20iyvdgxww8k9LlnQBGeCVSGbKrgzpMosQ0sK2HHsZTSJXfyVQ94CF", client_id, cftoken, filter);
 
                 if (lstCRList != null && lstCRList.Count > 0)
                 {
@@ -2696,6 +2604,10 @@ namespace EnquiryInsertToCRM.Controllers
                                 FilterCustomerNameList = FilterCustomerNameList.Replace(@"""", @"\""").Replace(@"\""", @"").Replace("\\n", "\n");
 
                                 strCompanyNameFilter = FilterCustomerNameList.Split('\n').ToList();
+                            }
+                            else if (FilterCustomerNameList.Contains(","))
+                            {
+                                strCompanyNameFilter = FilterCustomerNameList.Split(',').ToList();
                             }
                             else
                             {
@@ -2800,7 +2712,7 @@ namespace EnquiryInsertToCRM.Controllers
                                                     PKCRMReference.UpdateMyObIdInCompany(lci.CompanyName, lci.Uid, MYOBUID_UDF);
                                                 }
                                             }
-                                            res = PKCRMReference.UpdateCompanyUDFBasedOnMYOBCustomerID(lci, cf_uri, cookie_AccessToken.Value, client_id, cftoken);
+                                            res = PKCRMReference.UpdateCompanyUDFBasedOnMYOBCustomerID(lci, cf_uri, "AAEAAFl6A2Po5__jAEJXkjZnY4JPwvLZzzOG1TEvHSS0OgXvgPf8pyKNrJn9H_q_dqCrmu-w0RYHs94SJW5U2NVRRZBsy-404Q3v0gKRg-_ksTER3qNPCXx4_R8eTylmFKgglPYlGtyLpL_0Xuk22Tar4BYBLmYIZTmakXB2_mM3sM_465C883Z_Skj3T7dxj-AVpmlWPCUdqB7MwrPe7WkqhFNAFDawVRDFGhn56AGf2JxM_ca6Agy_nXoxTNtQXr0Kd-HELnrm5MZt3-Nq0gFNypzhjiblNnpKBhqXBeeV8_B32EpA9aLvrbsYhX8Tb9Z5fw4nspAD_cC2J0otcPNH-NCkAQAAAAEAAEhkG6eqTPgF4fpae1zlk4IJKXBFktOyq5KchUNY6Qz_tDNVY8IFDD3ntcIyQTArLAUUP-zMw5RoxcRIDeAOPnVYlGeFl2deyjeuP2BbGAEHziTIm44HcH1vQN3W50hDZzOhMILIYRoBbci8xC538X5RpZID4lfr3yqRc8-aBmW-GuRHlhdFgpdmjLYbYt8d7u_cTwGhToxoEnG_hfU9wWlzD4Ku-hKy6PW1UC2wwZ-uB_YQ8kVvvLxqMO4UZvd-erxYBK-hpOQzntJrimgheEUNcoDh06gIwm15HjcE4IEQyIglUJem2v7d5K7okIXRAC8VPLbopUhk5JTaZUB1Y9itcaw6_8MmsZu356yYdcze0QJZbdO6RD1j9r87j5XuXIUfLN4JSI9TynU-JMSS2rtWuK6qtC8EWrrYPtGNOckQH1UTjQW9FrxNaBNHQbG2B5DHIlqTaG_EthG__cXl3Cm_8e2s8KtMfvBoJYSw17_LaDOQjVlbZP20iyvdgxww8k9LlnQBGeCVSGbKrgzpMosQ0sK2HHsZTSJXfyVQ94CF", client_id, cftoken);
                                             if (res == "success")
                                             {
                                                 res = "udfdatafieldsupdate";
