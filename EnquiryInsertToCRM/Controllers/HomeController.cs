@@ -2533,7 +2533,7 @@ namespace EnquiryInsertToCRM.Controllers
             int Customercnt = 0;
             #endregion           
             string cf_guid = "";
-            string cf_uri = "https://ar1.api.myob.com/accountright/c837d9ec-c796-4243-9bd9-bf9b8d5657b8";
+            string cf_uri = "https://ar1.api.myob.com/accountright/d64e5b25-0551-4e2d-a279-1cd6d4f7e6f1";
             string FromDate = "";
             string ToDate = "";
             StringBuilder sb = new StringBuilder();
@@ -2583,7 +2583,7 @@ namespace EnquiryInsertToCRM.Controllers
                     filter = "?$filter=" + filterBody + "&$top=1000";
                 }
 
-                var lstCRList = CommonMethod.MakeAccountRightAPICall(cf_uri + "/Contact/Customer/", "AAEAAFl6A2Po5__jAEJXkjZnY4JPwvLZzzOG1TEvHSS0OgXvgPf8pyKNrJn9H_q_dqCrmu-w0RYHs94SJW5U2NVRRZBsy-404Q3v0gKRg-_ksTER3qNPCXx4_R8eTylmFKgglPYlGtyLpL_0Xuk22Tar4BYBLmYIZTmakXB2_mM3sM_465C883Z_Skj3T7dxj-AVpmlWPCUdqB7MwrPe7WkqhFNAFDawVRDFGhn56AGf2JxM_ca6Agy_nXoxTNtQXr0Kd-HELnrm5MZt3-Nq0gFNypzhjiblNnpKBhqXBeeV8_B32EpA9aLvrbsYhX8Tb9Z5fw4nspAD_cC2J0otcPNH-NCkAQAAAAEAAEhkG6eqTPgF4fpae1zlk4IJKXBFktOyq5KchUNY6Qz_tDNVY8IFDD3ntcIyQTArLAUUP-zMw5RoxcRIDeAOPnVYlGeFl2deyjeuP2BbGAEHziTIm44HcH1vQN3W50hDZzOhMILIYRoBbci8xC538X5RpZID4lfr3yqRc8-aBmW-GuRHlhdFgpdmjLYbYt8d7u_cTwGhToxoEnG_hfU9wWlzD4Ku-hKy6PW1UC2wwZ-uB_YQ8kVvvLxqMO4UZvd-erxYBK-hpOQzntJrimgheEUNcoDh06gIwm15HjcE4IEQyIglUJem2v7d5K7okIXRAC8VPLbopUhk5JTaZUB1Y9itcaw6_8MmsZu356yYdcze0QJZbdO6RD1j9r87j5XuXIUfLN4JSI9TynU-JMSS2rtWuK6qtC8EWrrYPtGNOckQH1UTjQW9FrxNaBNHQbG2B5DHIlqTaG_EthG__cXl3Cm_8e2s8KtMfvBoJYSw17_LaDOQjVlbZP20iyvdgxww8k9LlnQBGeCVSGbKrgzpMosQ0sK2HHsZTSJXfyVQ94CF", client_id, cftoken, filter);
+                var lstCRList = CommonMethod.MakeAccountRightAPICall(cf_uri + "/Contact/Customer/", cookie_AccessToken.Value, client_id, cftoken, filter);
 
                 if (lstCRList != null && lstCRList.Count > 0)
                 {
@@ -2712,7 +2712,7 @@ namespace EnquiryInsertToCRM.Controllers
                                                     PKCRMReference.UpdateMyObIdInCompany(lci.CompanyName, lci.Uid, MYOBUID_UDF);
                                                 }
                                             }
-                                            res = PKCRMReference.UpdateCompanyUDFBasedOnMYOBCustomerID(lci, cf_uri, "AAEAAFl6A2Po5__jAEJXkjZnY4JPwvLZzzOG1TEvHSS0OgXvgPf8pyKNrJn9H_q_dqCrmu-w0RYHs94SJW5U2NVRRZBsy-404Q3v0gKRg-_ksTER3qNPCXx4_R8eTylmFKgglPYlGtyLpL_0Xuk22Tar4BYBLmYIZTmakXB2_mM3sM_465C883Z_Skj3T7dxj-AVpmlWPCUdqB7MwrPe7WkqhFNAFDawVRDFGhn56AGf2JxM_ca6Agy_nXoxTNtQXr0Kd-HELnrm5MZt3-Nq0gFNypzhjiblNnpKBhqXBeeV8_B32EpA9aLvrbsYhX8Tb9Z5fw4nspAD_cC2J0otcPNH-NCkAQAAAAEAAEhkG6eqTPgF4fpae1zlk4IJKXBFktOyq5KchUNY6Qz_tDNVY8IFDD3ntcIyQTArLAUUP-zMw5RoxcRIDeAOPnVYlGeFl2deyjeuP2BbGAEHziTIm44HcH1vQN3W50hDZzOhMILIYRoBbci8xC538X5RpZID4lfr3yqRc8-aBmW-GuRHlhdFgpdmjLYbYt8d7u_cTwGhToxoEnG_hfU9wWlzD4Ku-hKy6PW1UC2wwZ-uB_YQ8kVvvLxqMO4UZvd-erxYBK-hpOQzntJrimgheEUNcoDh06gIwm15HjcE4IEQyIglUJem2v7d5K7okIXRAC8VPLbopUhk5JTaZUB1Y9itcaw6_8MmsZu356yYdcze0QJZbdO6RD1j9r87j5XuXIUfLN4JSI9TynU-JMSS2rtWuK6qtC8EWrrYPtGNOckQH1UTjQW9FrxNaBNHQbG2B5DHIlqTaG_EthG__cXl3Cm_8e2s8KtMfvBoJYSw17_LaDOQjVlbZP20iyvdgxww8k9LlnQBGeCVSGbKrgzpMosQ0sK2HHsZTSJXfyVQ94CF", client_id, cftoken);
+                                            res = PKCRMReference.UpdateCompanyUDFBasedOnMYOBCustomerID(lci, cf_uri, cookie_AccessToken.Value, client_id, cftoken);
                                             if (res == "success")
                                             {
                                                 res = "udfdatafieldsupdate";
