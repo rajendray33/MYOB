@@ -1867,8 +1867,11 @@ namespace EnquiryInsertToCRM.DataService
                                     }
                                     #endregion
                                     res = fnCompanyUDFBasedOnMYOBCustomerID(lstJProperty, Key, strbNotetext);
-                                    if (res != "badrequestfornote" || res != "badrequestfornote")
+                                    if (res == "badrequestfornote" || res == "badrequestfornote" || res == "badrequestabentry")
                                     {
+                                        res = "error";
+                                    }
+                                    else {
                                         res = "success";
                                     }
                                 }
@@ -1884,6 +1887,7 @@ namespace EnquiryInsertToCRM.DataService
             }
             catch (Exception ex)
             {
+                res = "error";
                 sb.Clear();
                 sb.AppendLine("UpdateCompanyUDFBasedOnMYOBCustomerID fn error!");
                 sb.AppendLine("--------------");

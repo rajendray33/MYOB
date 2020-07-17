@@ -395,6 +395,9 @@
                     if (parseInt(data.myobnotfound) > 0) {
                         strMsg += ' <span class="alert-box alert-warning"><strong>' + parseInt(data.myobnotfound) + '</strong> MYOB UID not found</span>,';
                     }
+                    if (parseInt(data.errorCompcnt) > 0) {
+                        strMsg += ' <span class="alert-box alert-danger">Error in <strong>' + data.errorCompList + '</strong> company(s) not syncd</span>,';
+                    }
                     if (parseInt(data.udfdatafieldsupdate) > 0) {
                         strMsg += ' <span class="alert-box alert-info"><strong>' + parseInt(data.udfdatafieldsupdate) + '</strong> company(s) data fields updated</span> ';
                     } else {

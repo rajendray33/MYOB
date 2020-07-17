@@ -1196,114 +1196,119 @@ namespace EnquiryInsertToCRM.Controllers
 
         public ActionResult GetPartialCustomerInfo(bool allowProcess = false, bool FilterData = false, bool Refresh = false, bool IsBasedOnCompanyNameMatch = false, bool IsBasedOnMyObIdMatch = false, string FilterDate = "", string FilterCustomerName = "", string FilterCustomerNameList = "", bool SyncdForToday = false)
         {
-            //f8ac4516-dbca-4090-9745-9716bfab057c
-            #region Get From WebConfig            
-            //string redirect_uri = ConfigurationManager.AppSettings["SyncMyOb2CRM_RedirectUri"];
-            string client_id = ConfigurationManager.AppSettings["DeveloperKey"];
-            string client_secret = ConfigurationManager.AppSettings["DeveloperSecret"];
-            string TokensFilePath = ConfigurationManager.AppSettings["TokensFilePath"];
-            string XMLFilePath = ConfigurationManager.AppSettings["XMLFilePath"];
-            string myobCompany = ConfigurationManager.AppSettings["MyObCompany"];
-
-
-            int companynameupdatecnt = 0;
-            int companycreatecnt = 0;
-            int myobupdatecnt = 0;
-            int myobalreadyexistcnt = 0;
-            int myobnotfoundcnt = 0;
-            int companynotfoundcnt = 0;
-            int udfdatafieldsupdatecnt = 0;
-            int Customercnt = 0;
-            #endregion           
-            string cf_guid = "";
-            string cf_uri = "https://ar1.api.myob.com/accountright/6185379c-2a07-4d75-bcd5-ca2ede7a5717";
-            string FromDate = "";
-            string ToDate = "";
-            StringBuilder sb = new StringBuilder();
-
-            string cftoken = CommonMethod.GetEncode("Administrator:");
-            HttpCookie cookie_AccessToken = Request.Cookies["AccessToken"];
-            List<CustomerInfo> listCustomerInfoModel = new List<CustomerInfo>();
-                        
-            if (!string.IsNullOrEmpty(cf_uri))
+            try
             {
-                //Refresh = false;
-                //IsBasedOnCompanyNameMatch = false;
-                //IsBasedOnMyObIdMatch = false;
-                cftoken = "";
-                string filter = "";
-                string filterBody = "";
-                if (!string.IsNullOrEmpty(FilterDate))
+
+                //f8ac4516-dbca-4090-9745-9716bfab057c
+                #region Get From WebConfig            
+                //string redirect_uri = ConfigurationManager.AppSettings["SyncMyOb2CRM_RedirectUri"];
+                string client_id = ConfigurationManager.AppSettings["DeveloperKey"];
+                string client_secret = ConfigurationManager.AppSettings["DeveloperSecret"];
+                string TokensFilePath = ConfigurationManager.AppSettings["TokensFilePath"];
+                string XMLFilePath = ConfigurationManager.AppSettings["XMLFilePath"];
+                string myobCompany = ConfigurationManager.AppSettings["MyObCompany"];
+
+
+                int companynameupdatecnt = 0;
+                int companycreatecnt = 0;
+                int myobupdatecnt = 0;
+                int myobalreadyexistcnt = 0;
+                int myobnotfoundcnt = 0;
+                int companynotfoundcnt = 0;
+                int udfdatafieldsupdatecnt = 0;
+                int Customercnt = 0;
+                #endregion
+                string cf_guid = "";
+                string cf_uri = "https://ar1.api.myob.com/accountright/6185379c-2a07-4d75-bcd5-ca2ede7a5717";
+                string FromDate = "";
+                string ToDate = "";
+                StringBuilder sb = new StringBuilder();
+                int errorcnt = 0;
+                List<string> lstErrorComp = new List<string>();
+                string cftoken = CommonMethod.GetEncode("Administrator:");
+                HttpCookie cookie_AccessToken = Request.Cookies["AccessToken"];
+                List<CustomerInfo> listCustomerInfoModel = new List<CustomerInfo>();
+
+                if (!string.IsNullOrEmpty(cf_uri))
                 {
-                    if (FilterDate.Contains("-"))
+                    //Refresh = false;
+                    //IsBasedOnCompanyNameMatch = false;
+                    //IsBasedOnMyObIdMatch = false;
+                    cftoken = "";
+                    string filter = "";
+                    string filterBody = "";
+                    if (!string.IsNullOrEmpty(FilterDate))
                     {
-                        string[] strFilterDateArry = FilterDate.Split('-');
-                        if (strFilterDateArry != null && strFilterDateArry.Length > 0)
+                        if (FilterDate.Contains("-"))
                         {
-                            FromDate = Convert.ToDateTime(strFilterDateArry[0]).ToString("yyyy-MM-dd");
-                            ToDate = Convert.ToDateTime(strFilterDateArry[1]).ToString("yyyy-MM-dd");
-                            filterBody += "LastModified ge datetime'" + FromDate + "' and LastModified le datetime'" + ToDate + "'";
+                            string[] strFilterDateArry = FilterDate.Split('-');
+                            if (strFilterDateArry != null && strFilterDateArry.Length > 0)
+                            {
+                                FromDate = Convert.ToDateTime(strFilterDateArry[0]).ToString("yyyy-MM-dd");
+                                ToDate = Convert.ToDateTime(strFilterDateArry[1]).ToString("yyyy-MM-dd");
+                                filterBody += "LastModified ge datetime'" + FromDate + "' and LastModified le datetime'" + ToDate + "'";
+                            }
                         }
                     }
-                }
 
-                if (!string.IsNullOrEmpty(FilterCustomerName))
-                {
+                    if (!string.IsNullOrEmpty(FilterCustomerName))
+                    {
+                        if (!string.IsNullOrEmpty(filterBody))
+                        {
+                            filterBody += " and ";
+                        }
+                        if (FilterCustomerName.Contains("'"))
+                        {
+                            FilterCustomerName = FilterCustomerName.Replace("'", "''");
+                        }
+                        filterBody += "substringof(tolower('" + HttpUtility.UrlEncode(FilterCustomerName) + "'), tolower(CompanyName)) eq true";
+                    }
                     if (!string.IsNullOrEmpty(filterBody))
                     {
-                        filterBody += " and ";
+                        filter = "?$filter=" + filterBody + "&$top=1000";
                     }
-                    if (FilterCustomerName.Contains("'"))
+                    List<string> strCompanyNameFilter = new List<string>();
+                    ViewBag.TodayCompanyName = "";
+                    #region Today Data Sync ONly
+                    if (SyncdForToday)
                     {
-                        FilterCustomerName = FilterCustomerName.Replace("'", "''");
-                    }
-                    filterBody += "substringof(tolower('" + HttpUtility.UrlEncode(FilterCustomerName) + "'), tolower(CompanyName)) eq true";
-                }
-                if (!string.IsNullOrEmpty(filterBody))
-                {
-                    filter = "?$filter=" + filterBody + "&$top=1000";
-                }
-                List<string> strCompanyNameFilter = new List<string>();
-                ViewBag.TodayCompanyName = "";
-                #region Today Data Sync ONly
-                if (SyncdForToday)
-                {
-                    string TodayDate = DateTime.UtcNow.AddHours(10).ToString("yyyy-MM-dd");
-                    string strUrl = "https://ar1.api.myob.com/accountright/6185379c-2a07-4d75-bcd5-ca2ede7a5717/GeneralLedger/JournalTransaction/?$filter=DateOccurred ge datetime'" + TodayDate + "' and DateOccurred le datetime'" + TodayDate + "'";
-                    List<GeneralLedgerJournalTransaction.Item> listjournaltransactionmodel = new List<GeneralLedgerJournalTransaction.Item>();
-                    //cookie_AccessToken.Value
-                    var jt = CommonMethod.MakeAccountRightAPICall(strUrl, cookie_AccessToken.Value, client_id, "");
-                    if (jt != null && jt.Count > 0)
-                    {
-                        listjournaltransactionmodel = jt.ToObject<List<GeneralLedgerJournalTransaction.Item>>();
-                        if (listjournaltransactionmodel != null && listjournaltransactionmodel.Count > 0)
+                        string TodayDate = DateTime.UtcNow.AddHours(10).ToString("yyyy-MM-dd");
+                        string strUrl = "https://ar1.api.myob.com/accountright/6185379c-2a07-4d75-bcd5-ca2ede7a5717/GeneralLedger/JournalTransaction/?$filter=DateOccurred ge datetime'" + TodayDate + "' and DateOccurred le datetime'" + TodayDate + "'";
+                        List<GeneralLedgerJournalTransaction.Item> listjournaltransactionmodel = new List<GeneralLedgerJournalTransaction.Item>();
+                        //cookie_AccessToken.Value
+                        var jt = CommonMethod.MakeAccountRightAPICall(strUrl, cookie_AccessToken.Value, client_id, "");
+                        if (jt != null && jt.Count > 0)
                         {
-                            foreach (var item in listjournaltransactionmodel)
+                            listjournaltransactionmodel = jt.ToObject<List<GeneralLedgerJournalTransaction.Item>>();
+                            if (listjournaltransactionmodel != null && listjournaltransactionmodel.Count > 0)
                             {
-                                CustomerSaleInvoiceItem objInvModel = new CustomerSaleInvoiceItem();
-                                CustomerInfo objCustinfomodel = new CustomerInfo();
-                                if (item.JournalType != null)
+                                foreach (var item in listjournaltransactionmodel)
                                 {
-                                    if (item.JournalType == "Sale")
+                                    CustomerSaleInvoiceItem objInvModel = new CustomerSaleInvoiceItem();
+                                    CustomerInfo objCustinfomodel = new CustomerInfo();
+                                    if (item.JournalType != null)
                                     {
-                                        strUrl = item.SourceTransaction.Uri.ToString();
-                                        var obj = CommonMethod.MakeAccountRightAPICall_SingleItemReturn(strUrl, cookie_AccessToken.Value, client_id, "");
-                                        if (obj != null)
+                                        if (item.JournalType == "Sale")
                                         {
-                                            objInvModel = obj.ToObject<CustomerSaleInvoiceItem>();
-                                            if (objInvModel.Customer != null)
+                                            strUrl = item.SourceTransaction.Uri.ToString();
+                                            var obj = CommonMethod.MakeAccountRightAPICall_SingleItemReturn(strUrl, cookie_AccessToken.Value, client_id, "");
+                                            if (obj != null)
                                             {
-                                                if (objInvModel.Customer.Name != null)
+                                                objInvModel = obj.ToObject<CustomerSaleInvoiceItem>();
+                                                if (objInvModel.Customer != null)
                                                 {
-                                                    var existName = (from c in strCompanyNameFilter
-                                                                     where c.ToLower().Trim() == objInvModel.Customer.Name.ToLower().Trim()
-                                                                     select c).FirstOrDefault();
-                                                    if (existName == null)
+                                                    if (objInvModel.Customer.Name != null)
                                                     {
-                                                        strCompanyNameFilter.Add(objInvModel.Customer.Name);
-                                                        objCustinfomodel.CompanyName = objInvModel.Customer.Name;
-                                                        objCustinfomodel.Uid = objInvModel.Customer.UID;
-                                                        listCustomerInfoModel.Add(objCustinfomodel);
+                                                        var existName = (from c in strCompanyNameFilter
+                                                                         where c.ToLower().Trim() == objInvModel.Customer.Name.ToLower().Trim()
+                                                                         select c).FirstOrDefault();
+                                                        if (existName == null)
+                                                        {
+                                                            strCompanyNameFilter.Add(objInvModel.Customer.Name);
+                                                            objCustinfomodel.CompanyName = objInvModel.Customer.Name;
+                                                            objCustinfomodel.Uid = objInvModel.Customer.UID;
+                                                            listCustomerInfoModel.Add(objCustinfomodel);
+                                                        }
                                                     }
                                                 }
                                             }
@@ -1312,352 +1317,377 @@ namespace EnquiryInsertToCRM.Controllers
                                 }
                             }
                         }
-                    }
 
-                    ToDate = Convert.ToDateTime(TodayDate).AddDays(1).ToString("yyyy-MM-dd");
-                    strUrl = "https://ar1.api.myob.com/accountright/6185379c-2a07-4d75-bcd5-ca2ede7a5717/Sale/Order?$filter=Date ge datetime'" + TodayDate + "T00:00:00' and Date le datetime'" + ToDate + "T00:00:00'&$top=1000";
+                        ToDate = Convert.ToDateTime(TodayDate).AddDays(1).ToString("yyyy-MM-dd");
+                        strUrl = "https://ar1.api.myob.com/accountright/6185379c-2a07-4d75-bcd5-ca2ede7a5717/Sale/Order?$filter=Date ge datetime'" + TodayDate + "T00:00:00' and Date le datetime'" + ToDate + "T00:00:00'&$top=1000";
 
-                    List<EnquiryInsertToCRM.Models.Item> lstCustomerSaleInvoice = new List<EnquiryInsertToCRM.Models.Item>();
-                    var itemCustSaleInv = CommonMethod.MakeAccountRightAPICall(strUrl, cookie_AccessToken.Value, client_id, "");
-                    if (itemCustSaleInv != null && itemCustSaleInv.Count > 0)
-                    {
-                        lstCustomerSaleInvoice = itemCustSaleInv.ToObject<List<EnquiryInsertToCRM.Models.Item>>();
-                        if (lstCustomerSaleInvoice != null && lstCustomerSaleInvoice.Count > 0)
+                        List<EnquiryInsertToCRM.Models.Item> lstCustomerSaleInvoice = new List<EnquiryInsertToCRM.Models.Item>();
+                        var itemCustSaleInv = CommonMethod.MakeAccountRightAPICall(strUrl, cookie_AccessToken.Value, client_id, "");
+                        if (itemCustSaleInv != null && itemCustSaleInv.Count > 0)
                         {
-                            foreach (var item in lstCustomerSaleInvoice)
+                            lstCustomerSaleInvoice = itemCustSaleInv.ToObject<List<EnquiryInsertToCRM.Models.Item>>();
+                            if (lstCustomerSaleInvoice != null && lstCustomerSaleInvoice.Count > 0)
                             {
-                                CustomerSaleInvoiceItem objInvModel = new CustomerSaleInvoiceItem();
-                                CustomerInfo objCustinfomodel = new CustomerInfo();
-                                if (item != null)
+                                foreach (var item in lstCustomerSaleInvoice)
                                 {
-                                    if (item.Customer != null)
+                                    CustomerSaleInvoiceItem objInvModel = new CustomerSaleInvoiceItem();
+                                    CustomerInfo objCustinfomodel = new CustomerInfo();
+                                    if (item != null)
                                     {
-                                        if (item.Customer.Name != null)
+                                        if (item.Customer != null)
                                         {
-                                            var existName = (from c in strCompanyNameFilter
-                                                             where c.ToLower().Trim() == item.Customer.Name.ToLower().Trim()
-                                                             select c).FirstOrDefault();
-                                            if (existName == null)
+                                            if (item.Customer.Name != null)
                                             {
-                                                strCompanyNameFilter.Add(item.Customer.Name);
-                                                objCustinfomodel.CompanyName = item.Customer.Name;
-                                                objCustinfomodel.Uid = item.Customer.UID;
-                                                listCustomerInfoModel.Add(objCustinfomodel);
+                                                var existName = (from c in strCompanyNameFilter
+                                                                 where c.ToLower().Trim() == item.Customer.Name.ToLower().Trim()
+                                                                 select c).FirstOrDefault();
+                                                if (existName == null)
+                                                {
+                                                    strCompanyNameFilter.Add(item.Customer.Name);
+                                                    objCustinfomodel.CompanyName = item.Customer.Name;
+                                                    objCustinfomodel.Uid = item.Customer.UID;
+                                                    listCustomerInfoModel.Add(objCustinfomodel);
+                                                }
                                             }
                                         }
                                     }
-                                }
 
+                                }
                             }
                         }
-                    }
-                    if (strCompanyNameFilter != null && strCompanyNameFilter.Count > 0)
-                    {
-                        ViewBag.TodayCompanyName = string.Join(",", strCompanyNameFilter);
-                    }
-                }
-                #endregion
-                if (SyncdForToday == false)
-                {
-                    var lstCRList = CommonMethod.MakeAccountRightAPICall(cf_uri + "/Contact/Customer/", cookie_AccessToken.Value, client_id, cftoken, filter);
-                    if (lstCRList != null && lstCRList.Count > 0)
-                    {
-                        listCustomerInfoModel = lstCRList.ToObject<List<CustomerInfo>>();
-                        if (listCustomerInfoModel != null && listCustomerInfoModel.Count > 0)
+                        if (strCompanyNameFilter != null && strCompanyNameFilter.Count > 0)
                         {
-                            if (!string.IsNullOrEmpty(FilterCustomerNameList))
+                            ViewBag.TodayCompanyName = string.Join(",", strCompanyNameFilter);
+                        }
+                    }
+                    #endregion
+                    if (SyncdForToday == false)
+                    {
+                        var lstCRList = CommonMethod.MakeAccountRightAPICall(cf_uri + "/Contact/Customer/", cookie_AccessToken.Value, client_id, cftoken, filter);
+                        if (lstCRList != null && lstCRList.Count > 0)
+                        {
+                            listCustomerInfoModel = lstCRList.ToObject<List<CustomerInfo>>();
+                            if (listCustomerInfoModel != null && listCustomerInfoModel.Count > 0)
                             {
-                                FilterCustomerNameList = FilterCustomerNameList.Replace("[REPLACEANDCHAR]", "&");
-                                if (FilterCustomerNameList.Contains("\\n"))
+                                if (!string.IsNullOrEmpty(FilterCustomerNameList))
                                 {
+                                    FilterCustomerNameList = FilterCustomerNameList.Replace("[REPLACEANDCHAR]", "&");
+                                    if (FilterCustomerNameList.Contains("\\n"))
+                                    {
 
-                                    FilterCustomerNameList = FilterCustomerNameList.Replace(@"""", @"\""").Replace(@"\""", @"").Replace("\\n", "\n");
+                                        FilterCustomerNameList = FilterCustomerNameList.Replace(@"""", @"\""").Replace(@"\""", @"").Replace("\\n", "\n");
 
-                                    strCompanyNameFilter = FilterCustomerNameList.Split('\n').ToList();
+                                        strCompanyNameFilter = FilterCustomerNameList.Split('\n').ToList();
 
+                                    }
+                                    else if (FilterCustomerNameList.Contains(","))
+                                    {
+                                        strCompanyNameFilter = FilterCustomerNameList.Split(',').ToList();
+                                    }
+                                    else
+                                    {
+                                        strCompanyNameFilter.Add(FilterCustomerNameList.Replace(@"""", @"\""").Replace(@"\""", @""));
+                                    }
                                 }
-                                else if (FilterCustomerNameList.Contains(","))
+                                if (strCompanyNameFilter != null && strCompanyNameFilter.Count > 0)
                                 {
-                                    strCompanyNameFilter = FilterCustomerNameList.Split(',').ToList();
+                                    listCustomerInfoModel = (from c in listCustomerInfoModel
+                                                             where strCompanyNameFilter.Contains(c.CompanyName)
+                                                             select c).ToList();
+                                    //var  listCustomerInfoModel1 = listCustomerInfoModel.Where(c => !strCompanyNameFilter.Any(folder => c.CompanyName.ToLower().Trim().Contains(folder))).ToList();
+
                                 }
                                 else
                                 {
-                                    strCompanyNameFilter.Add(FilterCustomerNameList.Replace(@"""", @"\""").Replace(@"\""", @""));
+                                    listCustomerInfoModel = (from c in listCustomerInfoModel
+                                                                 //where (c.CompanyName ?? "") != "" && (c.DisplayId ?? "") != ""
+                                                             select c).ToList();
                                 }
-                            }
-                            if (strCompanyNameFilter != null && strCompanyNameFilter.Count > 0)
-                            {
-                                listCustomerInfoModel = (from c in listCustomerInfoModel
-                                                         where strCompanyNameFilter.Contains(c.CompanyName)
-                                                         select c).ToList();
-                                //var  listCustomerInfoModel1 = listCustomerInfoModel.Where(c => !strCompanyNameFilter.Any(folder => c.CompanyName.ToLower().Trim().Contains(folder))).ToList();
-
-                            }
-                            else
-                            {
-                                listCustomerInfoModel = (from c in listCustomerInfoModel
-                                                             //where (c.CompanyName ?? "") != "" && (c.DisplayId ?? "") != ""
-                                                         select c).ToList();
-                            }
 
 
-                            Customercnt = listCustomerInfoModel.Count;
-                            ViewBag.Customercnt = listCustomerInfoModel.Count;
-                            if (allowProcess)
-                            {
-                                if (Refresh || IsBasedOnCompanyNameMatch || IsBasedOnMyObIdMatch)
+                                Customercnt = listCustomerInfoModel.Count;
+                                ViewBag.Customercnt = listCustomerInfoModel.Count;
+                                if (allowProcess)
                                 {
-                                    sb.Clear();
-                                    sb.AppendLine("=================================================================");
-                                    sb.AppendLine("allowProcess:" + allowProcess);
-                                    sb.AppendLine("FilterCustomerName:" + FilterCustomerName);
-                                    sb.AppendLine("Date:" + DateTime.UtcNow.AddHours(10));
-                                    CommonMethod.LogFile(sb, false);
-                                    //Refresh = false;
-                                    //IsBasedOnCompanyNameMatch = false;
-                                    //IsBasedOnMyObIdMatch = false;
-                                    string MYOBUID_UDF = RigonCRMReference.getMyOBUid_UDFKey();
-                                    int counter = 0;
-                                    foreach (var lci in listCustomerInfoModel)
+                                    if (Refresh || IsBasedOnCompanyNameMatch || IsBasedOnMyObIdMatch)
                                     {
-                                        counter++;
-                                        CommonMethod.RefreshToken_BasedOnCookies();
-                                        #region Update MyObId In CRM Based On Company Name Match
-                                        if (!string.IsNullOrEmpty(lci.CompanyName) && !string.IsNullOrEmpty(lci.Uid))
+                                        sb.Clear();
+                                        sb.AppendLine("=================================================================");
+                                        sb.AppendLine("allowProcess:" + allowProcess);
+                                        sb.AppendLine("FilterCustomerName:" + FilterCustomerName);
+                                        sb.AppendLine("Date:" + DateTime.UtcNow.AddHours(10));
+                                        CommonMethod.LogFile(sb, false);
+                                        //Refresh = false;
+                                        //IsBasedOnCompanyNameMatch = false;
+                                        //IsBasedOnMyObIdMatch = false;
+                                        string MYOBUID_UDF = RigonCRMReference.getMyOBUid_UDFKey();
+                                        int counter = 0;
+                                        foreach (var lci in listCustomerInfoModel)
                                         {
-                                            string res = "";
-                                            if (Refresh)
+                                            counter++;
+                                            CommonMethod.RefreshToken_BasedOnCookies();
+                                            #region Update MyObId In CRM Based On Company Name Match
+                                            if (!string.IsNullOrEmpty(lci.CompanyName) && !string.IsNullOrEmpty(lci.Uid))
                                             {
-                                                string checkCompExistOrNot = CreateCompanyInCRM(lci);
-                                                if (checkCompExistOrNot == "companycreate")
+                                                string res = "";
+                                                if (Refresh)
                                                 {
-                                                    companycreatecnt += 1;
-                                                }
-                                                else
-                                                {
-                                                    res = RigonCRMReference.UpdateCompanyNameOrMyObIdInCRM(lci.CompanyName, lci.Uid);
-                                                }
-                                            }
-                                            else if (IsBasedOnCompanyNameMatch)
-                                            {
-                                                string checkCompExistOrNot = CreateCompanyInCRM(lci);
-                                                if (checkCompExistOrNot == "companycreate")
-                                                {
-                                                    companycreatecnt += 1;
-                                                }
-                                                else
-                                                {
-                                                    res = RigonCRMReference.UpdateMyObIdInCompany(lci.CompanyName, lci.Uid, MYOBUID_UDF);
-                                                }
-                                            }
-                                            else if (IsBasedOnMyObIdMatch)
-                                            {
-                                                string checkCompExistOrNot = CreateCompanyInCRM(lci);
-                                                if (checkCompExistOrNot == "companycreate")
-                                                {
-                                                    companycreatecnt += 1;
-                                                }
-                                                else
-                                                {
-                                                    var str1 = RigonCRMReference.UpdateCompanyNameOrMyObIdInCRM(lci.CompanyName, lci.Uid);
-                                                    if (str1 == "alreadyexistmyobID")
+                                                    string checkCompExistOrNot = CreateCompanyInCRM(lci);
+                                                    if (checkCompExistOrNot == "companycreate")
                                                     {
-                                                        RigonCRMReference.UpdateMyObIdInCompany(lci.CompanyName, lci.Uid, MYOBUID_UDF);
+                                                        companycreatecnt += 1;
                                                     }
-                                                    //RigonCRMReference.UpdateMyObIdInCompany(lci.CompanyName, lci.Uid, MYOBUID_UDF);
+                                                    else
+                                                    {
+                                                        res = RigonCRMReference.UpdateCompanyNameOrMyObIdInCRM(lci.CompanyName, lci.Uid);
+                                                    }
                                                 }
-                                                res = RigonCRMReference.UpdateCompanyUDFBasedOnMYOBCustomerID(lci, cf_uri, cookie_AccessToken.Value, client_id, cftoken);
-                                                if (res == "success")
+                                                else if (IsBasedOnCompanyNameMatch)
                                                 {
-                                                    res = "udfdatafieldsupdate";
+                                                    string checkCompExistOrNot = CreateCompanyInCRM(lci);
+                                                    if (checkCompExistOrNot == "companycreate")
+                                                    {
+                                                        companycreatecnt += 1;
+                                                    }
+                                                    else
+                                                    {
+                                                        res = RigonCRMReference.UpdateMyObIdInCompany(lci.CompanyName, lci.Uid, MYOBUID_UDF);
+                                                    }
                                                 }
-                                                else if (res == "sessionexpired")
+                                                else if (IsBasedOnMyObIdMatch)
                                                 {
-                                                    res = "sessionexpired";
+                                                    string checkCompExistOrNot = CreateCompanyInCRM(lci);
+                                                    if (checkCompExistOrNot == "companycreate")
+                                                    {
+                                                        companycreatecnt += 1;
+                                                    }
+                                                    else
+                                                    {
+                                                        var str1 = RigonCRMReference.UpdateCompanyNameOrMyObIdInCRM(lci.CompanyName, lci.Uid);
+                                                        if (str1 == "alreadyexistmyobID")
+                                                        {
+                                                            RigonCRMReference.UpdateMyObIdInCompany(lci.CompanyName, lci.Uid, MYOBUID_UDF);
+                                                        }
+                                                        //RigonCRMReference.UpdateMyObIdInCompany(lci.CompanyName, lci.Uid, MYOBUID_UDF);
+                                                    }
+                                                    res = RigonCRMReference.UpdateCompanyUDFBasedOnMYOBCustomerID(lci, cf_uri, cookie_AccessToken.Value, client_id, cftoken);
+                                                    if (res == "success")
+                                                    {
+                                                        res = "udfdatafieldsupdate";
+                                                    }
+                                                    else if (res == "sessionexpired")
+                                                    {
+                                                        res = "sessionexpired";
+                                                    }
+                                                    else if (res == "error")
+                                                    {
+                                                        res = "error";
+                                                        errorcnt += 1;
+                                                        lstErrorComp.Add(lci.CompanyName);
+                                                    }
+                                                    else
+                                                    {
+                                                        res = "myobnotfound";
+                                                    }
+                                                }
+                                                if (res == "companynameupdate")
+                                                {
+                                                    companynameupdatecnt += 1;
+                                                }
+                                                else if (res == "myobupdate")
+                                                {
+                                                    myobupdatecnt += 1;
                                                 }
                                                 else
+                                                if (res == "alreadyexistmyobID")
                                                 {
-                                                    res = "myobnotfound";
+                                                    myobalreadyexistcnt += 1;
+                                                }
+                                                else
+                                                if (res == "invalidcompanyname")
+                                                {
+                                                    companynotfoundcnt += 1;
+                                                }
+                                                else
+                                                if (res == "udfdatafieldsupdate")
+                                                {
+                                                    udfdatafieldsupdatecnt += 1;
+                                                }
+                                                else
+                                                if (res == "myobnotfound")
+                                                {
+                                                    myobnotfoundcnt += 1;
                                                 }
                                             }
-                                            if (res == "companynameupdate")
-                                            {
-                                                companynameupdatecnt += 1;
-                                            }
-                                            else if (res == "myobupdate")
-                                            {
-                                                myobupdatecnt += 1;
-                                            }
-                                            else
-                                            if (res == "alreadyexistmyobID")
-                                            {
-                                                myobalreadyexistcnt += 1;
-                                            }
-                                            else
-                                            if (res == "invalidcompanyname")
-                                            {
-                                                companynotfoundcnt += 1;
-                                            }
-                                            else
-                                            if (res == "udfdatafieldsupdate")
-                                            {
-                                                udfdatafieldsupdatecnt += 1;
-                                            }
-                                            else
-                                            if (res == "myobnotfound")
-                                            {
-                                                myobnotfoundcnt += 1;
-                                            }
-                                        }
-                                        #endregion
+                                            #endregion
 
+                                        }
                                     }
                                 }
                             }
                         }
                     }
                 }
-            }
-            if (Request.IsAjaxRequest())
-            {
-                if (FilterData)
+                if (Request.IsAjaxRequest())
                 {
-                    return PartialView(listCustomerInfoModel);
-                }
-                var jsonData = new
-                {
-                    CustomerInfocnt = Customercnt,
-                    companynameupdate = companynameupdatecnt,
-                    companycreate = companycreatecnt,
-                    myobupdate = myobupdatecnt,
-                    myobalreadyexist = myobalreadyexistcnt,
-                    companynotfound = companynotfoundcnt,
-                    myobnotfound = myobnotfoundcnt,
-                    udfdatafieldsupdate = udfdatafieldsupdatecnt
-                };
-
-                return Json(jsonData, JsonRequestBehavior.AllowGet);
-            }
-            return PartialView(listCustomerInfoModel);
-        }
-        public ActionResult GetPartialCustomerInfoDateFilter(bool allowProcess = false, bool FilterData = false, bool Refresh = false, bool IsBasedOnCompanyNameMatch = false, bool IsBasedOnMyObIdMatch = false, string FilterDate = "", string FilterCustomerName = "", string FilterCustomerNameList = "", bool SyncdForToday = false)
-        {
-            //f8ac4516-dbca-4090-9745-9716bfab057c
-            #region Get From WebConfig            
-            //string redirect_uri = ConfigurationManager.AppSettings["SyncMyOb2CRM_RedirectUri"];
-            string client_id = ConfigurationManager.AppSettings["DeveloperKey"];
-            string client_secret = ConfigurationManager.AppSettings["DeveloperSecret"];
-            string TokensFilePath = ConfigurationManager.AppSettings["TokensFilePath"];
-            string XMLFilePath = ConfigurationManager.AppSettings["XMLFilePath"];
-            string myobCompany = ConfigurationManager.AppSettings["MyObCompany"];
-
-
-            int companynameupdatecnt = 0;
-            int companycreatecnt = 0;
-            int myobupdatecnt = 0;
-            int myobalreadyexistcnt = 0;
-            int myobnotfoundcnt = 0;
-            int companynotfoundcnt = 0;
-            int udfdatafieldsupdatecnt = 0;
-            int Customercnt = 0;
-            #endregion           
-            string cf_guid = "";
-            string cf_uri = "https://ar1.api.myob.com/accountright/6185379c-2a07-4d75-bcd5-ca2ede7a5717";
-            string FromDate = "";
-            string ToDate = "";
-            DateTime dtFromDate = DateTime.Now;
-            DateTime dtToDate = DateTime.Now;
-            StringBuilder sb = new StringBuilder();
-
-            string cftoken = CommonMethod.GetEncode("Administrator:");
-            HttpCookie cookie_AccessToken = Request.Cookies["AccessToken"];
-            List<CustomerInfo> listCustomerInfoModel = new List<CustomerInfo>();
-                    
-            if (!string.IsNullOrEmpty(cf_uri))
-            {
-                //Refresh = false;
-                //IsBasedOnCompanyNameMatch = false;
-                //IsBasedOnMyObIdMatch = false;
-                cftoken = "";
-                string filter = "";
-                string filterBody = "";
-                if (!string.IsNullOrEmpty(FilterDate))
-                {
-                    if (FilterDate.Contains("-"))
-                    {
-                        string[] strFilterDateArry = FilterDate.Split('-');
-                        if (strFilterDateArry != null && strFilterDateArry.Length > 0)
-                        {
-                            FromDate = Convert.ToDateTime(strFilterDateArry[0]).ToString("yyyy-MM-dd");
-                            dtFromDate = Convert.ToDateTime(strFilterDateArry[0]);
-                            ToDate = Convert.ToDateTime(strFilterDateArry[1]).ToString("yyyy-MM-dd");
-                            dtToDate = Convert.ToDateTime(strFilterDateArry[1]);
-                        }
-                    }
-                }
-                else
-                {
-                    if (SyncdForToday)
+                    if (FilterData)
                     {
                         return PartialView(listCustomerInfoModel);
                     }
-                }
+                    string strErrorCompList = "";
+                    if (lstErrorComp != null && lstErrorComp.Count > 0)
+                    {
+                        strErrorCompList = string.Join(", ", lstErrorComp);
+                    }
+                    var jsonData = new
+                    {
+                        CustomerInfocnt = Customercnt,
+                        companynameupdate = companynameupdatecnt,
+                        companycreate = companycreatecnt,
+                        myobupdate = myobupdatecnt,
+                        myobalreadyexist = myobalreadyexistcnt,
+                        companynotfound = companynotfoundcnt,
+                        myobnotfound = myobnotfoundcnt,
+                        udfdatafieldsupdate = udfdatafieldsupdatecnt,
+                        errorCompcnt = errorcnt,
+                        errorCompList = strErrorCompList
+                    };
 
-                if (!string.IsNullOrEmpty(FilterCustomerName))
+                    return Json(jsonData, JsonRequestBehavior.AllowGet);
+                }
+                return PartialView(listCustomerInfoModel);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public ActionResult GetPartialCustomerInfoDateFilter(bool allowProcess = false, bool FilterData = false, bool Refresh = false, bool IsBasedOnCompanyNameMatch = false, bool IsBasedOnMyObIdMatch = false, string FilterDate = "", string FilterCustomerName = "", string FilterCustomerNameList = "", bool SyncdForToday = false)
+        {
+            try
+            {
+
+                //f8ac4516-dbca-4090-9745-9716bfab057c
+                #region Get From WebConfig            
+                //string redirect_uri = ConfigurationManager.AppSettings["SyncMyOb2CRM_RedirectUri"];
+                string client_id = ConfigurationManager.AppSettings["DeveloperKey"];
+                string client_secret = ConfigurationManager.AppSettings["DeveloperSecret"];
+                string TokensFilePath = ConfigurationManager.AppSettings["TokensFilePath"];
+                string XMLFilePath = ConfigurationManager.AppSettings["XMLFilePath"];
+                string myobCompany = ConfigurationManager.AppSettings["MyObCompany"];
+
+
+                int companynameupdatecnt = 0;
+                int companycreatecnt = 0;
+                int myobupdatecnt = 0;
+                int myobalreadyexistcnt = 0;
+                int myobnotfoundcnt = 0;
+                int companynotfoundcnt = 0;
+                int udfdatafieldsupdatecnt = 0;
+                
+                int Customercnt = 0;
+                #endregion
+                string cf_guid = "";
+                string cf_uri = "https://ar1.api.myob.com/accountright/6185379c-2a07-4d75-bcd5-ca2ede7a5717";
+                string FromDate = "";
+                string ToDate = "";
+                DateTime dtFromDate = DateTime.Now;
+                DateTime dtToDate = DateTime.Now;
+                StringBuilder sb = new StringBuilder();
+                int errorcnt = 0;
+                List<string> lstErrorComp = new List<string>();
+
+                string cftoken = CommonMethod.GetEncode("Administrator:");
+                HttpCookie cookie_AccessToken = Request.Cookies["AccessToken"];
+                List<CustomerInfo> listCustomerInfoModel = new List<CustomerInfo>();
+
+                if (!string.IsNullOrEmpty(cf_uri))
                 {
+                    //Refresh = false;
+                    //IsBasedOnCompanyNameMatch = false;
+                    //IsBasedOnMyObIdMatch = false;
+                    cftoken = "";
+                    string filter = "";
+                    string filterBody = "";
+                    if (!string.IsNullOrEmpty(FilterDate))
+                    {
+                        if (FilterDate.Contains("-"))
+                        {
+                            string[] strFilterDateArry = FilterDate.Split('-');
+                            if (strFilterDateArry != null && strFilterDateArry.Length > 0)
+                            {
+                                FromDate = Convert.ToDateTime(strFilterDateArry[0]).ToString("yyyy-MM-dd");
+                                dtFromDate = Convert.ToDateTime(strFilterDateArry[0]);
+                                ToDate = Convert.ToDateTime(strFilterDateArry[1]).ToString("yyyy-MM-dd");
+                                dtToDate = Convert.ToDateTime(strFilterDateArry[1]);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (SyncdForToday)
+                        {
+                            return PartialView(listCustomerInfoModel);
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(FilterCustomerName))
+                    {
+                        if (!string.IsNullOrEmpty(filterBody))
+                        {
+                            filterBody += " and ";
+                        }
+                        if (FilterCustomerName.Contains("'"))
+                        {
+                            FilterCustomerName = FilterCustomerName.Replace("'", "''");
+                        }
+                        filterBody += "substringof(tolower('" + HttpUtility.UrlEncode(FilterCustomerName) + "'), tolower(CompanyName)) eq true";
+                    }
                     if (!string.IsNullOrEmpty(filterBody))
                     {
-                        filterBody += " and ";
+                        filter = "?$filter=" + filterBody + "&$top=1000";
                     }
-                    if (FilterCustomerName.Contains("'"))
+                    List<string> strCompanyNameFilter = new List<string>();
+                    ViewBag.TodayCompanyName = "";
+                    #region Today Data Sync ONly
+                    if (SyncdForToday)
                     {
-                        FilterCustomerName = FilterCustomerName.Replace("'", "''");
-                    }
-                    filterBody += "substringof(tolower('" + HttpUtility.UrlEncode(FilterCustomerName) + "'), tolower(CompanyName)) eq true";
-                }
-                if (!string.IsNullOrEmpty(filterBody))
-                {
-                    filter = "?$filter=" + filterBody + "&$top=1000";
-                }
-                List<string> strCompanyNameFilter = new List<string>();
-                ViewBag.TodayCompanyName = "";
-                #region Today Data Sync ONly
-                if (SyncdForToday)
-                {
-                    string strUrl = "https://ar1.api.myob.com/accountright/6185379c-2a07-4d75-bcd5-ca2ede7a5717/GeneralLedger/JournalTransaction/?$filter=DateOccurred ge datetime'" + FromDate + "' and DateOccurred le datetime'" + ToDate + "'";
-                    List<GeneralLedgerJournalTransaction.Item> listjournaltransactionmodel = new List<GeneralLedgerJournalTransaction.Item>();
-                    var jt = CommonMethod.MakeAccountRightAPICall(strUrl, cookie_AccessToken.Value, client_id, "");
-                    if (jt != null && jt.Count > 0)
-                    {
-                        listjournaltransactionmodel = jt.ToObject<List<GeneralLedgerJournalTransaction.Item>>();
-                        if (listjournaltransactionmodel != null && listjournaltransactionmodel.Count > 0)
+                        string strUrl = "https://ar1.api.myob.com/accountright/6185379c-2a07-4d75-bcd5-ca2ede7a5717/GeneralLedger/JournalTransaction/?$filter=DateOccurred ge datetime'" + FromDate + "' and DateOccurred le datetime'" + ToDate + "'";
+                        List<GeneralLedgerJournalTransaction.Item> listjournaltransactionmodel = new List<GeneralLedgerJournalTransaction.Item>();
+                        var jt = CommonMethod.MakeAccountRightAPICall(strUrl, cookie_AccessToken.Value, client_id, "");
+                        if (jt != null && jt.Count > 0)
                         {
-                            foreach (var item in listjournaltransactionmodel)
+                            listjournaltransactionmodel = jt.ToObject<List<GeneralLedgerJournalTransaction.Item>>();
+                            if (listjournaltransactionmodel != null && listjournaltransactionmodel.Count > 0)
                             {
-                                CustomerSaleInvoiceItem objInvModel = new CustomerSaleInvoiceItem();
-                                CustomerInfo objCustinfomodel = new CustomerInfo();
-                                if (item.JournalType != null)
+                                foreach (var item in listjournaltransactionmodel)
                                 {
-                                    if (item.JournalType == "Sale")
+                                    CustomerSaleInvoiceItem objInvModel = new CustomerSaleInvoiceItem();
+                                    CustomerInfo objCustinfomodel = new CustomerInfo();
+                                    if (item.JournalType != null)
                                     {
-                                        strUrl = item.SourceTransaction.Uri.ToString();
-                                        var obj = CommonMethod.MakeAccountRightAPICall_SingleItemReturn(strUrl, cookie_AccessToken.Value, client_id, "");
-                                        if (obj != null)
+                                        if (item.JournalType == "Sale")
                                         {
-                                            objInvModel = obj.ToObject<CustomerSaleInvoiceItem>();
-                                            if (objInvModel.Customer != null)
+                                            strUrl = item.SourceTransaction.Uri.ToString();
+                                            var obj = CommonMethod.MakeAccountRightAPICall_SingleItemReturn(strUrl, cookie_AccessToken.Value, client_id, "");
+                                            if (obj != null)
                                             {
-                                                if (objInvModel.Customer.Name != null)
+                                                objInvModel = obj.ToObject<CustomerSaleInvoiceItem>();
+                                                if (objInvModel.Customer != null)
                                                 {
-                                                    var existName = (from c in strCompanyNameFilter
-                                                                     where c.ToLower().Trim() == objInvModel.Customer.Name.ToLower().Trim()
-                                                                     select c).FirstOrDefault();
-                                                    if (existName == null)
+                                                    if (objInvModel.Customer.Name != null)
                                                     {
-                                                        strCompanyNameFilter.Add(objInvModel.Customer.Name);
-                                                        objCustinfomodel.CompanyName = objInvModel.Customer.Name;
-                                                        objCustinfomodel.Uid = objInvModel.Customer.UID;
-                                                        listCustomerInfoModel.Add(objCustinfomodel);
+                                                        var existName = (from c in strCompanyNameFilter
+                                                                         where c.ToLower().Trim() == objInvModel.Customer.Name.ToLower().Trim()
+                                                                         select c).FirstOrDefault();
+                                                        if (existName == null)
+                                                        {
+                                                            strCompanyNameFilter.Add(objInvModel.Customer.Name);
+                                                            objCustinfomodel.CompanyName = objInvModel.Customer.Name;
+                                                            objCustinfomodel.Uid = objInvModel.Customer.UID;
+                                                            listCustomerInfoModel.Add(objCustinfomodel);
+                                                        }
                                                     }
                                                 }
                                             }
@@ -1666,234 +1696,252 @@ namespace EnquiryInsertToCRM.Controllers
                                 }
                             }
                         }
-                    }
 
-                    ToDate = Convert.ToDateTime(dtToDate).AddDays(1).ToString("yyyy-MM-dd");
-                    strUrl = "https://ar1.api.myob.com/accountright/6185379c-2a07-4d75-bcd5-ca2ede7a5717/Sale/Order?$filter=Date ge datetime'" + FromDate + "T00:00:00' and Date le datetime'" + ToDate + "T00:00:00'&$top=1000";
+                        ToDate = Convert.ToDateTime(dtToDate).AddDays(1).ToString("yyyy-MM-dd");
+                        strUrl = "https://ar1.api.myob.com/accountright/6185379c-2a07-4d75-bcd5-ca2ede7a5717/Sale/Order?$filter=Date ge datetime'" + FromDate + "T00:00:00' and Date le datetime'" + ToDate + "T00:00:00'&$top=1000";
 
-                    List<EnquiryInsertToCRM.Models.Item> lstCustomerSaleInvoice = new List<EnquiryInsertToCRM.Models.Item>();
-                    var itemCustSaleInv = CommonMethod.MakeAccountRightAPICall(strUrl, cookie_AccessToken.Value, client_id, "");
-                    if (itemCustSaleInv != null && itemCustSaleInv.Count > 0)
-                    {
-                        lstCustomerSaleInvoice = itemCustSaleInv.ToObject<List<EnquiryInsertToCRM.Models.Item>>();
-                        if (lstCustomerSaleInvoice != null && lstCustomerSaleInvoice.Count > 0)
+                        List<EnquiryInsertToCRM.Models.Item> lstCustomerSaleInvoice = new List<EnquiryInsertToCRM.Models.Item>();
+                        var itemCustSaleInv = CommonMethod.MakeAccountRightAPICall(strUrl, cookie_AccessToken.Value, client_id, "");
+                        if (itemCustSaleInv != null && itemCustSaleInv.Count > 0)
                         {
-                            foreach (var item in lstCustomerSaleInvoice)
+                            lstCustomerSaleInvoice = itemCustSaleInv.ToObject<List<EnquiryInsertToCRM.Models.Item>>();
+                            if (lstCustomerSaleInvoice != null && lstCustomerSaleInvoice.Count > 0)
                             {
-                                CustomerSaleInvoiceItem objInvModel = new CustomerSaleInvoiceItem();
-                                CustomerInfo objCustinfomodel = new CustomerInfo();
-                                if (item != null)
+                                foreach (var item in lstCustomerSaleInvoice)
                                 {
-                                    if (item.Customer != null)
+                                    CustomerSaleInvoiceItem objInvModel = new CustomerSaleInvoiceItem();
+                                    CustomerInfo objCustinfomodel = new CustomerInfo();
+                                    if (item != null)
                                     {
-                                        if (item.Customer.Name != null)
+                                        if (item.Customer != null)
                                         {
-                                            var existName = (from c in strCompanyNameFilter
-                                                             where c.ToLower().Trim() == item.Customer.Name.ToLower().Trim()
-                                                             select c).FirstOrDefault();
-                                            if (existName == null)
+                                            if (item.Customer.Name != null)
                                             {
-                                                strCompanyNameFilter.Add(item.Customer.Name);
-                                                objCustinfomodel.CompanyName = item.Customer.Name;
-                                                objCustinfomodel.Uid = item.Customer.UID;
-                                                listCustomerInfoModel.Add(objCustinfomodel);
+                                                var existName = (from c in strCompanyNameFilter
+                                                                 where c.ToLower().Trim() == item.Customer.Name.ToLower().Trim()
+                                                                 select c).FirstOrDefault();
+                                                if (existName == null)
+                                                {
+                                                    strCompanyNameFilter.Add(item.Customer.Name);
+                                                    objCustinfomodel.CompanyName = item.Customer.Name;
+                                                    objCustinfomodel.Uid = item.Customer.UID;
+                                                    listCustomerInfoModel.Add(objCustinfomodel);
+                                                }
                                             }
                                         }
                                     }
-                                }
 
+                                }
                             }
                         }
-                    }
-                    if (strCompanyNameFilter != null && strCompanyNameFilter.Count > 0)
-                    {
-                        ViewBag.TodayCompanyName = string.Join(",", strCompanyNameFilter);
-                    }
-                }
-                #endregion                
-                if (SyncdForToday == false)
-                {
-                    var lstCRList = CommonMethod.MakeAccountRightAPICall(cf_uri + "/Contact/Customer/", cookie_AccessToken.Value, client_id, cftoken, filter);
-                    if (lstCRList != null && lstCRList.Count > 0)
-                    {
-                        listCustomerInfoModel = lstCRList.ToObject<List<CustomerInfo>>();
-                        if (listCustomerInfoModel != null && listCustomerInfoModel.Count > 0)
+                        if (strCompanyNameFilter != null && strCompanyNameFilter.Count > 0)
                         {
-                            if (!string.IsNullOrEmpty(FilterCustomerNameList))
+                            ViewBag.TodayCompanyName = string.Join(",", strCompanyNameFilter);
+                        }
+                    }
+                    #endregion
+                    if (SyncdForToday == false)
+                    {
+                        var lstCRList = CommonMethod.MakeAccountRightAPICall(cf_uri + "/Contact/Customer/", cookie_AccessToken.Value, client_id, cftoken, filter);
+                        if (lstCRList != null && lstCRList.Count > 0)
+                        {
+                            listCustomerInfoModel = lstCRList.ToObject<List<CustomerInfo>>();
+                            if (listCustomerInfoModel != null && listCustomerInfoModel.Count > 0)
                             {
-                                FilterCustomerNameList = FilterCustomerNameList.Replace("[REPLACEANDCHAR]", "&");
-                                if (FilterCustomerNameList.Contains("\\n"))
+                                if (!string.IsNullOrEmpty(FilterCustomerNameList))
                                 {
+                                    FilterCustomerNameList = FilterCustomerNameList.Replace("[REPLACEANDCHAR]", "&");
+                                    if (FilterCustomerNameList.Contains("\\n"))
+                                    {
 
-                                    FilterCustomerNameList = FilterCustomerNameList.Replace(@"""", @"\""").Replace(@"\""", @"").Replace("\\n", "\n");
+                                        FilterCustomerNameList = FilterCustomerNameList.Replace(@"""", @"\""").Replace(@"\""", @"").Replace("\\n", "\n");
 
-                                    strCompanyNameFilter = FilterCustomerNameList.Split('\n').ToList();
+                                        strCompanyNameFilter = FilterCustomerNameList.Split('\n').ToList();
 
+                                    }
+                                    else if (FilterCustomerNameList.Contains(","))
+                                    {
+                                        strCompanyNameFilter = FilterCustomerNameList.Split(',').ToList();
+                                    }
+                                    else
+                                    {
+                                        strCompanyNameFilter.Add(FilterCustomerNameList.Replace(@"""", @"\""").Replace(@"\""", @""));
+                                    }
                                 }
-                                else if (FilterCustomerNameList.Contains(","))
+                                if (strCompanyNameFilter != null && strCompanyNameFilter.Count > 0)
                                 {
-                                    strCompanyNameFilter = FilterCustomerNameList.Split(',').ToList();
+                                    listCustomerInfoModel = (from c in listCustomerInfoModel
+                                                             where strCompanyNameFilter.Contains(c.CompanyName)
+                                                             select c).ToList();
+                                    //var  listCustomerInfoModel1 = listCustomerInfoModel.Where(c => !strCompanyNameFilter.Any(folder => c.CompanyName.ToLower().Trim().Contains(folder))).ToList();
+
                                 }
                                 else
                                 {
-                                    strCompanyNameFilter.Add(FilterCustomerNameList.Replace(@"""", @"\""").Replace(@"\""", @""));
+                                    listCustomerInfoModel = (from c in listCustomerInfoModel
+                                                                 //where (c.CompanyName ?? "") != "" && (c.DisplayId ?? "") != ""
+                                                             select c).ToList();
                                 }
-                            }
-                            if (strCompanyNameFilter != null && strCompanyNameFilter.Count > 0)
-                            {
-                                listCustomerInfoModel = (from c in listCustomerInfoModel
-                                                         where strCompanyNameFilter.Contains(c.CompanyName)
-                                                         select c).ToList();
-                                //var  listCustomerInfoModel1 = listCustomerInfoModel.Where(c => !strCompanyNameFilter.Any(folder => c.CompanyName.ToLower().Trim().Contains(folder))).ToList();
-
-                            }
-                            else
-                            {
-                                listCustomerInfoModel = (from c in listCustomerInfoModel
-                                                             //where (c.CompanyName ?? "") != "" && (c.DisplayId ?? "") != ""
-                                                         select c).ToList();
-                            }
 
 
-                            Customercnt = listCustomerInfoModel.Count;
-                            ViewBag.Customercnt = listCustomerInfoModel.Count;
-                            if (allowProcess)
-                            {
-                                if (Refresh || IsBasedOnCompanyNameMatch || IsBasedOnMyObIdMatch)
+                                Customercnt = listCustomerInfoModel.Count;
+                                ViewBag.Customercnt = listCustomerInfoModel.Count;
+                                if (allowProcess)
                                 {
-                                    sb.Clear();
-                                    sb.AppendLine("=================================================================");
-                                    sb.AppendLine("allowProcess:" + allowProcess);
-                                    sb.AppendLine("FilterCustomerName:" + FilterCustomerName);
-                                    sb.AppendLine("Date:" + DateTime.UtcNow.AddHours(10));
-                                    CommonMethod.LogFile(sb, false);
-                                    //Refresh = false;
-                                    //IsBasedOnCompanyNameMatch = false;
-                                    //IsBasedOnMyObIdMatch = false;
-                                    string MYOBUID_UDF = RigonCRMReference.getMyOBUid_UDFKey();
-                                    int counter = 0;
-                                    foreach (var lci in listCustomerInfoModel)
+                                    if (Refresh || IsBasedOnCompanyNameMatch || IsBasedOnMyObIdMatch)
                                     {
-                                        counter++;
-                                        CommonMethod.RefreshToken_BasedOnCookies();
-                                        #region Update MyObId In CRM Based On Company Name Match
-                                        if (!string.IsNullOrEmpty(lci.CompanyName) && !string.IsNullOrEmpty(lci.Uid))
+                                        sb.Clear();
+                                        sb.AppendLine("=================================================================");
+                                        sb.AppendLine("allowProcess:" + allowProcess);
+                                        sb.AppendLine("FilterCustomerName:" + FilterCustomerName);
+                                        sb.AppendLine("Date:" + DateTime.UtcNow.AddHours(10));
+                                        CommonMethod.LogFile(sb, false);
+                                        //Refresh = false;
+                                        //IsBasedOnCompanyNameMatch = false;
+                                        //IsBasedOnMyObIdMatch = false;
+                                        string MYOBUID_UDF = RigonCRMReference.getMyOBUid_UDFKey();
+                                        int counter = 0;
+                                        foreach (var lci in listCustomerInfoModel)
                                         {
-                                            string res = "";
-                                            if (Refresh)
+                                            counter++;
+                                            CommonMethod.RefreshToken_BasedOnCookies();
+                                            #region Update MyObId In CRM Based On Company Name Match
+                                            if (!string.IsNullOrEmpty(lci.CompanyName) && !string.IsNullOrEmpty(lci.Uid))
                                             {
-                                                string checkCompExistOrNot = CreateCompanyInCRM(lci);
-                                                if (checkCompExistOrNot == "companycreate")
+                                                string res = "";
+                                                if (Refresh)
                                                 {
-                                                    companycreatecnt += 1;
-                                                }
-                                                else
-                                                {
-                                                    res = RigonCRMReference.UpdateCompanyNameOrMyObIdInCRM(lci.CompanyName, lci.Uid);
-                                                }
-                                            }
-                                            else if (IsBasedOnCompanyNameMatch)
-                                            {
-                                                string checkCompExistOrNot = CreateCompanyInCRM(lci);
-                                                if (checkCompExistOrNot == "companycreate")
-                                                {
-                                                    companycreatecnt += 1;
-                                                }
-                                                else
-                                                {
-                                                    res = RigonCRMReference.UpdateMyObIdInCompany(lci.CompanyName, lci.Uid, MYOBUID_UDF);
-                                                }
-                                            }
-                                            else if (IsBasedOnMyObIdMatch)
-                                            {
-                                                string checkCompExistOrNot = CreateCompanyInCRM(lci);
-                                                if (checkCompExistOrNot == "companycreate")
-                                                {
-                                                    companycreatecnt += 1;
-                                                }
-                                                else
-                                                {
-                                                    var str1 = RigonCRMReference.UpdateCompanyNameOrMyObIdInCRM(lci.CompanyName, lci.Uid);
-                                                    if (str1 == "alreadyexistmyobID")
+                                                    string checkCompExistOrNot = CreateCompanyInCRM(lci);
+                                                    if (checkCompExistOrNot == "companycreate")
                                                     {
-                                                        RigonCRMReference.UpdateMyObIdInCompany(lci.CompanyName, lci.Uid, MYOBUID_UDF);
+                                                        companycreatecnt += 1;
                                                     }
-                                                    //RigonCRMReference.UpdateMyObIdInCompany(lci.CompanyName, lci.Uid, MYOBUID_UDF);
+                                                    else
+                                                    {
+                                                        res = RigonCRMReference.UpdateCompanyNameOrMyObIdInCRM(lci.CompanyName, lci.Uid);
+                                                    }
                                                 }
-                                                res = RigonCRMReference.UpdateCompanyUDFBasedOnMYOBCustomerID(lci, cf_uri, cookie_AccessToken.Value, client_id, cftoken);
-                                                if (res == "success")
+                                                else if (IsBasedOnCompanyNameMatch)
                                                 {
-                                                    res = "udfdatafieldsupdate";
+                                                    string checkCompExistOrNot = CreateCompanyInCRM(lci);
+                                                    if (checkCompExistOrNot == "companycreate")
+                                                    {
+                                                        companycreatecnt += 1;
+                                                    }
+                                                    else
+                                                    {
+                                                        res = RigonCRMReference.UpdateMyObIdInCompany(lci.CompanyName, lci.Uid, MYOBUID_UDF);
+                                                    }
                                                 }
-                                                else if (res == "sessionexpired")
+                                                else if (IsBasedOnMyObIdMatch)
                                                 {
-                                                    res = "sessionexpired";
+                                                    string checkCompExistOrNot = CreateCompanyInCRM(lci);
+                                                    if (checkCompExistOrNot == "companycreate")
+                                                    {
+                                                        companycreatecnt += 1;
+                                                    }
+                                                    else
+                                                    {
+                                                        var str1 = RigonCRMReference.UpdateCompanyNameOrMyObIdInCRM(lci.CompanyName, lci.Uid);
+                                                        if (str1 == "alreadyexistmyobID")
+                                                        {
+                                                            RigonCRMReference.UpdateMyObIdInCompany(lci.CompanyName, lci.Uid, MYOBUID_UDF);
+                                                        }
+                                                        //RigonCRMReference.UpdateMyObIdInCompany(lci.CompanyName, lci.Uid, MYOBUID_UDF);
+                                                    }
+                                                    res = RigonCRMReference.UpdateCompanyUDFBasedOnMYOBCustomerID(lci, cf_uri, cookie_AccessToken.Value, client_id, cftoken);
+                                                    if (res == "success")
+                                                    {
+                                                        res = "udfdatafieldsupdate";
+                                                    }
+                                                    else if (res == "sessionexpired")
+                                                    {
+                                                        res = "sessionexpired";
+                                                    }
+                                                    else if (res == "error")
+                                                    {
+                                                        res = "error";
+                                                        errorcnt += 1; 
+                                                        lstErrorComp.Add(lci.CompanyName);
+                                                    }
+                                                    else
+                                                    {
+                                                        res = "myobnotfound";
+                                                    }
+                                                }
+
+                                                if (res == "companynameupdate")
+                                                {
+                                                    companynameupdatecnt += 1;
+                                                }
+                                                else if (res == "myobupdate")
+                                                {
+                                                    myobupdatecnt += 1;
                                                 }
                                                 else
+                                                if (res == "alreadyexistmyobID")
                                                 {
-                                                    res = "myobnotfound";
+                                                    myobalreadyexistcnt += 1;
+                                                }
+                                                else
+                                                if (res == "invalidcompanyname")
+                                                {
+                                                    companynotfoundcnt += 1;
+                                                }
+                                                else
+                                                if (res == "udfdatafieldsupdate")
+                                                {
+                                                    udfdatafieldsupdatecnt += 1;
+                                                }
+                                                else
+                                                if (res == "myobnotfound")
+                                                {
+                                                    myobnotfoundcnt += 1;
                                                 }
                                             }
+                                            #endregion
 
-                                            if (res == "companynameupdate")
-                                            {
-                                                companynameupdatecnt += 1;
-                                            }
-                                            else if (res == "myobupdate")
-                                            {
-                                                myobupdatecnt += 1;
-                                            }
-                                            else
-                                            if (res == "alreadyexistmyobID")
-                                            {
-                                                myobalreadyexistcnt += 1;
-                                            }
-                                            else
-                                            if (res == "invalidcompanyname")
-                                            {
-                                                companynotfoundcnt += 1;
-                                            }
-                                            else
-                                            if (res == "udfdatafieldsupdate")
-                                            {
-                                                udfdatafieldsupdatecnt += 1;
-                                            }
-                                            else
-                                            if (res == "myobnotfound")
-                                            {
-                                                myobnotfoundcnt += 1;
-                                            }
                                         }
-                                        #endregion
-
                                     }
                                 }
                             }
                         }
                     }
                 }
-            }
-            if (Request.IsAjaxRequest())
-            {
-                if (FilterData)
+                if (Request.IsAjaxRequest())
                 {
-                    return PartialView(listCustomerInfoModel);
-                }
-                var jsonData = new
-                {
-                    CustomerInfocnt = Customercnt,
-                    companynameupdate = companynameupdatecnt,
-                    companycreate = companycreatecnt,
-                    myobupdate = myobupdatecnt,
-                    myobalreadyexist = myobalreadyexistcnt,
-                    companynotfound = companynotfoundcnt,
-                    myobnotfound = myobnotfoundcnt,
-                    udfdatafieldsupdate = udfdatafieldsupdatecnt
-                };
+                    if (FilterData)
+                    {
+                        return PartialView(listCustomerInfoModel);
+                    }
+                    string strErrorCompList = "";
+                    if (lstErrorComp != null && lstErrorComp.Count > 0)
+                    {
+                        strErrorCompList = string.Join(", ", lstErrorComp);
+                    }
+                    var jsonData = new
+                    {
+                        CustomerInfocnt = Customercnt,
+                        companynameupdate = companynameupdatecnt,
+                        companycreate = companycreatecnt,
+                        myobupdate = myobupdatecnt,
+                        myobalreadyexist = myobalreadyexistcnt,
+                        companynotfound = companynotfoundcnt,
+                        myobnotfound = myobnotfoundcnt,
+                        udfdatafieldsupdate = udfdatafieldsupdatecnt,
+                        errorCompcnt = errorcnt,
+                        errorCompList = strErrorCompList
+                    };
 
-                return Json(jsonData, JsonRequestBehavior.AllowGet);
+                    return Json(jsonData, JsonRequestBehavior.AllowGet);
+                }
+                return PartialView(listCustomerInfoModel);
             }
-            return PartialView(listCustomerInfoModel);
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public string CreateCompanyInCRM(CustomerInfo objCustomerInfo)
@@ -2279,8 +2327,8 @@ namespace EnquiryInsertToCRM.Controllers
 
             //Run Only This Start
             string client_id = ConfigurationManager.AppSettings["DeveloperKey"];
-            string strUrl = "https://ar1.api.myob.com/accountright/6185379c-2a07-4d75-bcd5-ca2ede7a5717/Contact/Customer/652596c7-8449-43ac-8e18-be31e3b6cb2c";
-            string strToken = "AAEAAKAzTDSCv9SGCuqHgj71baUq85Ci8vtOkpgEGG1QXDMqv5T0he9i_yr9L9W1WyFJtlYaLuSTvct56Y5M2FMZXtRta7FOjM7hdtHQT10PvFjam4OQWIPdQDHPHcL0jecU05mkLGQ861w4DGn6hLx-L5LRlcl3ITwYqOcbRUigYObQnCm8q3m5diemfopGeIiZxQNth6vw04GI44hf27LYm4dcqiEJSa9qY6-9sYClTrwDNFL6VHxsf9QK9xa2cNz9dttk9ZFtCklHialrooSUPlVQ9Mai2J8d-NDhhMNrZgo19foNAcJCAc7lXSkxD1fPwYtWwaiggXVEqB4I9qDY7_ikAQAAAAEAALecbZQfkZPyyD9BGpjlurPM-K2Xa_6FIn1yuA2KreoMkVLc0cCeGxe4hVLDr5rGbgTjly-fcwmpWhyiXO0Q6s2BAO3hU-r16dJy5I7bfrjrdnJi-NhbgT7bDgN-G-v7WTEzLT9EgtqcpqKQdLIkjmBGfq3bSMl2NhY3kaac15ScnAnQXJTh5nnT1_b1rEBdtPF-z67dIlXBs7dUwSQNfJwifRdd3K8robpG3f4ksnt4CYjLeoUTCHso8t_DWR4SxBkCsKNi_OO-P_sJobms5axHXAxyGmfaMC5VykwhRtOtG3cC_gdDUWuFiDYJe9NbbZqcBmaTpscpr5cPyaErav7xAG6SsKOZ6pijNdBlWr5LFbsoafNSCXGedNFrYY4iai_Os5ZtX88lYxM-C4FArT1L1kCL0D-if19agjeHjXK5fbSn3RZYnsyYa5rD5NAOE8mA8qKXM_YqP_gBxnJCeZFK3OdwyI1lcmm75veXbWKha2V13Ogg1ecuxFMC82dQWUZms9B5Q7dzp2wuloovRUyg0qJuQgtFU3p9F76gmzEX";
+            string strUrl = "https://ar1.api.myob.com/accountright/6185379c-2a07-4d75-bcd5-ca2ede7a5717/Contact/Customer/88cf4743-43b4-4f34-8464-b70877ccbb60";
+            string strToken = "AAEAAJOrqsudbifNlhfFpB74eBod3NTlXlDnxE3A78vgcqF9a8a0BRSrEw9v7ItRlICUXZy429saIz0Vku1p4bMkRWH1zs9e6J5kWpuonhnAOHUgA3ALmjf8LP-xuvfBEL9cq788wqg0aO-lquAZKeLMEvAvb0Wfe3ilMwwoQBtXAQXcbxhITy9_aHL1QCAhzRWT1nyZDrvGwUuwVKx5iUMtGppxGRVzQC60e6EnUWMRLJNzkYpOUOznUtv8kT8MGshn71R3La_vPOIMVLPP48a6bkMpE89ph6G6svFZKxMQfnpLMCvHaaEGy9use8pu1Ru1lR0WENrZ2v_BtuqYf0ppY9ekAQAAAAEAAGMkdsSih0ogbm1tAeYxdJsaliWx60SMpRir448tDl4EyRxrorx3wu6kMcdAI8ul1t6Tlc9Aj4hh-tHNBO3x6yu0xngz9VantQJgIGoSDiuAkk0m8G2g9Hayta74Jy6dz7X4dd-wmdRo_Y46sf4rRBqbEV2dIlOzsAA_nQYpsezBh_j7B0rWFYWZAXnWQVQiYiogPvBrQP5aZFJ1QGgulYyEf9hVxGr5SGqwMtVZAC9MthoGM5vNLXV-Pu3_Gkm4iXzQrIOb7ItwefxL0gJDfolT38JDfXnHyR8zsQCfaKgWfmr6kVMre1_CXUPNajY308Uox_Zut0UxUH9-BsxHldQSAK5VSI8vUWqkiEqfHZe5A2C-FVhSeemGQTIP_7Y2OfqYKEbGBHwYoQCP014GitOAX2158bILbUILIiEnNL2jOoc6Y_lSBP17nloPDQ7tnmdxE5BLfmrXDFPymT_RtpxJnihn5AGEtD_n6QPb9ZeTwBz0V_R86xcXOsJW0S7qceQ9yaY5DplWMLTgAM1v37zpVQxUMPaGH2ATctAGrYbB";
             string strKey = ConfigurationManager.AppSettings["DeveloperKey"];
             CustomerInfo listCustomerInfoModel = new CustomerInfo();
             var jt = CommonMethod.MakeAccountRightAPICall_SingleItemReturn(strUrl, strToken, strKey, "");
@@ -2517,290 +2565,313 @@ namespace EnquiryInsertToCRM.Controllers
         }
         public ActionResult GetPkPartialCustomerInfo(bool FilterData = false, bool Refresh = false, bool IsBasedOnCompanyNameMatch = false, bool IsBasedOnMyObIdMatch = false, string FilterDate = "", string FilterCustomerName = "", string FilterCustomerNameList = "")
         {
-            #region Get From WebConfig            
-            string redirect_uri = ConfigurationManager.AppSettings["SyncMyOb2CRM_RedirectUriForPK"];
-            string client_id = ConfigurationManager.AppSettings["DeveloperKeyFoPK"];
-            string client_secret = ConfigurationManager.AppSettings["DeveloperSecretFoPK"];
-            string myobCompany = ConfigurationManager.AppSettings["MyObCompanyFoPK"];
-
-            int companynameupdatecnt = 0;
-            int companycreatecnt = 0;
-            int myobupdatecnt = 0;
-            int myobalreadyexistcnt = 0;
-            int myobnotfoundcnt = 0;
-            int companynotfoundcnt = 0;
-            int udfdatafieldsupdatecnt = 0;
-            int Customercnt = 0;
-            #endregion           
-            string cf_guid = "";
-            string cf_uri = "https://ar1.api.myob.com/accountright/d64e5b25-0551-4e2d-a279-1cd6d4f7e6f1";
-            string FromDate = "";
-            string ToDate = "";
-            StringBuilder sb = new StringBuilder();
-            sb.Clear();
-            sb.AppendLine("=================================================================");
-            sb.AppendLine("#1");
-            //CommonMethod.LogFile_PK(sb, false);
-            string cftoken = CommonMethod.GetEncode("Nick:coffee1");
-            HttpCookie cookie_AccessToken = Request.Cookies["AccessToken_Pk"];
-            List<CustomerInfo> listCustomerInfoModel = new List<CustomerInfo>();
-            if (!string.IsNullOrEmpty(cf_uri))
+            try
             {
-                //Refresh = false;
-                //IsBasedOnCompanyNameMatch = false;
-                //IsBasedOnMyObIdMatch = false;
-                //cftoken = "";
-                string filter = "";
-                string filterBody = "";
-                if (!string.IsNullOrEmpty(FilterDate))
+                #region Get From WebConfig            
+                string redirect_uri = ConfigurationManager.AppSettings["SyncMyOb2CRM_RedirectUriForPK"];
+                string client_id = ConfigurationManager.AppSettings["DeveloperKeyFoPK"];
+                string client_secret = ConfigurationManager.AppSettings["DeveloperSecretFoPK"];
+                string myobCompany = ConfigurationManager.AppSettings["MyObCompanyFoPK"];
+
+                int companynameupdatecnt = 0;
+                int companycreatecnt = 0;
+                int myobupdatecnt = 0;
+                int myobalreadyexistcnt = 0;
+                int myobnotfoundcnt = 0;
+                int companynotfoundcnt = 0;
+                int udfdatafieldsupdatecnt = 0;
+                int Customercnt = 0;
+                #endregion
+                string cf_guid = "";
+                string cf_uri = "https://ar1.api.myob.com/accountright/d64e5b25-0551-4e2d-a279-1cd6d4f7e6f1";
+                string FromDate = "";
+                string ToDate = "";
+                StringBuilder sb = new StringBuilder();
+
+                int errorcnt = 0;
+                List<string> lstErrorComp = new List<string>();
+                sb.Clear();
+                sb.AppendLine("=================================================================");
+                sb.AppendLine("#1");
+                //CommonMethod.LogFile_PK(sb, false);
+                string cftoken = CommonMethod.GetEncode("Nick:coffee1");
+                HttpCookie cookie_AccessToken = Request.Cookies["AccessToken_Pk"];
+                List<CustomerInfo> listCustomerInfoModel = new List<CustomerInfo>();
+                if (!string.IsNullOrEmpty(cf_uri))
                 {
-                    if (FilterDate.Contains("-"))
+                    //Refresh = false;
+                    //IsBasedOnCompanyNameMatch = false;
+                    //IsBasedOnMyObIdMatch = false;
+                    //cftoken = "";
+                    string filter = "";
+                    string filterBody = "";
+                    if (!string.IsNullOrEmpty(FilterDate))
                     {
-                        string[] strFilterDateArry = FilterDate.Split('-');
-                        if (strFilterDateArry != null && strFilterDateArry.Length > 0)
+                        if (FilterDate.Contains("-"))
                         {
-                            FromDate = Convert.ToDateTime(strFilterDateArry[0]).ToString("yyyy-MM-dd");
-                            ToDate = Convert.ToDateTime(strFilterDateArry[1]).ToString("yyyy-MM-dd");
-                            filterBody += "LastModified ge datetime'" + FromDate + "' and LastModified le datetime'" + ToDate + "'";
+                            string[] strFilterDateArry = FilterDate.Split('-');
+                            if (strFilterDateArry != null && strFilterDateArry.Length > 0)
+                            {
+                                FromDate = Convert.ToDateTime(strFilterDateArry[0]).ToString("yyyy-MM-dd");
+                                ToDate = Convert.ToDateTime(strFilterDateArry[1]).ToString("yyyy-MM-dd");
+                                filterBody += "LastModified ge datetime'" + FromDate + "' and LastModified le datetime'" + ToDate + "'";
+                            }
                         }
                     }
-                }
 
-                if (!string.IsNullOrEmpty(FilterCustomerName))
-                {
+                    if (!string.IsNullOrEmpty(FilterCustomerName))
+                    {
+                        if (!string.IsNullOrEmpty(filterBody))
+                        {
+                            filterBody += " and ";
+                        }
+                        if (FilterCustomerName.Contains("'"))
+                        {
+                            FilterCustomerName = FilterCustomerName.Replace("'", "''");
+                        }
+                        filterBody += "substringof(tolower('" + HttpUtility.UrlEncode(FilterCustomerName) + "'), tolower(CompanyName)) eq true";
+                    }
                     if (!string.IsNullOrEmpty(filterBody))
                     {
-                        filterBody += " and ";
+                        filter = "?$filter=" + filterBody + "&$top=1000";
                     }
-                    if (FilterCustomerName.Contains("'"))
-                    {
-                        FilterCustomerName = FilterCustomerName.Replace("'", "''");
-                    }
-                    filterBody += "substringof(tolower('" + HttpUtility.UrlEncode(FilterCustomerName) + "'), tolower(CompanyName)) eq true";
-                }
-                if (!string.IsNullOrEmpty(filterBody))
-                {
-                    filter = "?$filter=" + filterBody + "&$top=1000";
-                }
 
-                var lstCRList = CommonMethod.MakeAccountRightAPICall(cf_uri + "/Contact/Customer/", cookie_AccessToken.Value, client_id, cftoken, filter);
+                    var lstCRList = CommonMethod.MakeAccountRightAPICall(cf_uri + "/Contact/Customer/", cookie_AccessToken.Value, client_id, cftoken, filter);
 
-                if (lstCRList != null && lstCRList.Count > 0)
-                {
-                    listCustomerInfoModel = lstCRList.ToObject<List<CustomerInfo>>();
-                    if (listCustomerInfoModel != null && listCustomerInfoModel.Count > 0)
+                    if (lstCRList != null && lstCRList.Count > 0)
                     {
-                        List<string> strCompanyNameFilter = new List<string>();
-                        if (!string.IsNullOrEmpty(FilterCustomerNameList))
+                        listCustomerInfoModel = lstCRList.ToObject<List<CustomerInfo>>();
+                        if (listCustomerInfoModel != null && listCustomerInfoModel.Count > 0)
                         {
-                            sb.Clear();
-                            sb.AppendLine("#2.9");
-                            sb.AppendLine("#FilterCustomerNameList: " + FilterCustomerNameList);
-                            //CommonMethod.LogFile_PK(sb, false);
-                            FilterCustomerNameList = FilterCustomerNameList.Replace("[REPLACEANDCHAR]", "&");
-                            if (FilterCustomerNameList.Contains("\\n"))
+                            List<string> strCompanyNameFilter = new List<string>();
+                            if (!string.IsNullOrEmpty(FilterCustomerNameList))
                             {
+                                sb.Clear();
+                                sb.AppendLine("#2.9");
+                                sb.AppendLine("#FilterCustomerNameList: " + FilterCustomerNameList);
+                                //CommonMethod.LogFile_PK(sb, false);
+                                FilterCustomerNameList = FilterCustomerNameList.Replace("[REPLACEANDCHAR]", "&");
+                                if (FilterCustomerNameList.Contains("\\n"))
+                                {
 
-                                FilterCustomerNameList = FilterCustomerNameList.Replace(@"""", @"\""").Replace(@"\""", @"").Replace("\\n", "\n");
+                                    FilterCustomerNameList = FilterCustomerNameList.Replace(@"""", @"\""").Replace(@"\""", @"").Replace("\\n", "\n");
 
-                                strCompanyNameFilter = FilterCustomerNameList.Split('\n').ToList();
+                                    strCompanyNameFilter = FilterCustomerNameList.Split('\n').ToList();
+                                }
+                                else if (FilterCustomerNameList.Contains(","))
+                                {
+                                    strCompanyNameFilter = FilterCustomerNameList.Split(',').ToList();
+                                }
+                                else
+                                {
+                                    strCompanyNameFilter.Add(FilterCustomerNameList.Replace(@"""", @"\""").Replace(@"\""", @""));
+                                }
                             }
-                            else if (FilterCustomerNameList.Contains(","))
+                            if (strCompanyNameFilter != null && strCompanyNameFilter.Count > 0)
                             {
-                                strCompanyNameFilter = FilterCustomerNameList.Split(',').ToList();
+                                listCustomerInfoModel = (from c in listCustomerInfoModel
+                                                         where strCompanyNameFilter.Contains(c.CompanyName)
+                                                         select c).ToList();
+                                //var  listCustomerInfoModel1 = listCustomerInfoModel.Where(c => !strCompanyNameFilter.Any(folder => c.CompanyName.ToLower().Trim().Contains(folder))).ToList();
+
                             }
                             else
                             {
-                                strCompanyNameFilter.Add(FilterCustomerNameList.Replace(@"""", @"\""").Replace(@"\""", @""));
+                                listCustomerInfoModel = (from c in listCustomerInfoModel
+                                                             //where (c.CompanyName ?? "") != "" && (c.DisplayId ?? "") != ""
+                                                         select c).ToList();
                             }
-                        }
-                        if (strCompanyNameFilter != null && strCompanyNameFilter.Count > 0)
-                        {
-                            listCustomerInfoModel = (from c in listCustomerInfoModel
-                                                     where strCompanyNameFilter.Contains(c.CompanyName)
-                                                     select c).ToList();
-                            //var  listCustomerInfoModel1 = listCustomerInfoModel.Where(c => !strCompanyNameFilter.Any(folder => c.CompanyName.ToLower().Trim().Contains(folder))).ToList();
-
-                        }
-                        else
-                        {
-                            listCustomerInfoModel = (from c in listCustomerInfoModel
-                                                         //where (c.CompanyName ?? "") != "" && (c.DisplayId ?? "") != ""
-                                                     select c).ToList();
-                        }
 
 
-                        Customercnt = listCustomerInfoModel.Count;
-                        sb.Clear();
-                        sb.AppendLine("#5 counter=" + Customercnt);
-                        //CommonMethod.LogFile_PK(sb, false);
+                            Customercnt = listCustomerInfoModel.Count;
+                            sb.Clear();
+                            sb.AppendLine("#5 counter=" + Customercnt);
+                            //CommonMethod.LogFile_PK(sb, false);
 
-                        ViewBag.Customercnt = listCustomerInfoModel.Count;
-                        sb.Clear();
-                        sb.AppendLine("#6 Refresh=" + Refresh.ToString());
-                        sb.AppendLine("#7 IsBasedOnCompanyNameMatch=" + IsBasedOnCompanyNameMatch.ToString());
-                        sb.AppendLine("#8 IsBasedOnMyObIdMatch=" + IsBasedOnMyObIdMatch.ToString());
-                        //CommonMethod.LogFile_PK(sb, false);
-                        if (Refresh || IsBasedOnCompanyNameMatch || IsBasedOnMyObIdMatch)
-                        {
-                            try
+                            ViewBag.Customercnt = listCustomerInfoModel.Count;
+                            sb.Clear();
+                            sb.AppendLine("#6 Refresh=" + Refresh.ToString());
+                            sb.AppendLine("#7 IsBasedOnCompanyNameMatch=" + IsBasedOnCompanyNameMatch.ToString());
+                            sb.AppendLine("#8 IsBasedOnMyObIdMatch=" + IsBasedOnMyObIdMatch.ToString());
+                            //CommonMethod.LogFile_PK(sb, false);
+                            if (Refresh || IsBasedOnCompanyNameMatch || IsBasedOnMyObIdMatch)
                             {
-                                sb.Clear();
-                                sb.AppendLine("#6 Refresh=" + Refresh.ToString());
-                                sb.AppendLine("#7 IsBasedOnCompanyNameMatch=" + IsBasedOnCompanyNameMatch.ToString());
-                                sb.AppendLine("#8 IsBasedOnMyObIdMatch=" + IsBasedOnMyObIdMatch.ToString());
-                                //CommonMethod.LogFile_PK(sb, false);
-                                string MYOBUID_UDF = PKCRMReference.getMyOBUid_UDFKey();
-                                int counter = 0;
-                                foreach (var lci in listCustomerInfoModel)
+                                try
                                 {
                                     sb.Clear();
-                                    sb.AppendLine("#9 counter:" + counter);
+                                    sb.AppendLine("#6 Refresh=" + Refresh.ToString());
+                                    sb.AppendLine("#7 IsBasedOnCompanyNameMatch=" + IsBasedOnCompanyNameMatch.ToString());
+                                    sb.AppendLine("#8 IsBasedOnMyObIdMatch=" + IsBasedOnMyObIdMatch.ToString());
                                     //CommonMethod.LogFile_PK(sb, false);
-                                    counter++;
-                                    CommonMethod.RefreshTokenForPk_BasedOnCookies();
-
-                                    #region Update MyObId In CRM Based On Company Name Match
-                                    if (!string.IsNullOrEmpty(lci.CompanyName) && !string.IsNullOrEmpty(lci.Uid))
+                                    string MYOBUID_UDF = PKCRMReference.getMyOBUid_UDFKey();
+                                    int counter = 0;
+                                    foreach (var lci in listCustomerInfoModel)
                                     {
-                                        string res = "";
-                                        if (Refresh)
+                                        sb.Clear();
+                                        sb.AppendLine("#9 counter:" + counter);
+                                        //CommonMethod.LogFile_PK(sb, false);
+                                        counter++;
+                                        CommonMethod.RefreshTokenForPk_BasedOnCookies();
+
+                                        #region Update MyObId In CRM Based On Company Name Match
+                                        if (!string.IsNullOrEmpty(lci.CompanyName) && !string.IsNullOrEmpty(lci.Uid))
                                         {
-                                            string checkCompExistOrNot = CreateCompanyInPkCRM(lci);
-                                            if (checkCompExistOrNot == "companycreate")
+                                            string res = "";
+                                            if (Refresh)
                                             {
-                                                companycreatecnt += 1;
-                                            }
-                                            else
-                                            {
-                                                res = PKCRMReference.UpdateCompanyNameOrMyObIdInCRM(lci.CompanyName, lci.Uid);
-                                            }
-                                        }
-                                        else if (IsBasedOnCompanyNameMatch)
-                                        {
-                                            string checkCompExistOrNot = CreateCompanyInPkCRM(lci);
-                                            if (checkCompExistOrNot == "companycreate")
-                                            {
-                                                companycreatecnt += 1;
-                                            }
-                                            else
-                                            {
-                                                res = PKCRMReference.UpdateMyObIdInCompany(lci.CompanyName, lci.Uid, MYOBUID_UDF);
-                                            }
-                                        }
-                                        else if (IsBasedOnMyObIdMatch)
-                                        {
-                                            //StringBuilder sb = new StringBuilder();
-                                            sb.Clear();
-                                            sb.AppendLine("Processing For Start");
-                                            sb.AppendLine("----------------------");
-                                            sb.AppendLine("CompanyName:" + lci.CompanyName);
-                                            sb.AppendLine("DisplayID:" + lci.DisplayId);
-                                            sb.AppendLine("counter:" + counter);
-                                            sb.AppendLine("");
-                                            //CommonMethod.LogFile_PK(sb, false);
-                                            string checkCompExistOrNot = CreateCompanyInPkCRM(lci);
-                                            if (checkCompExistOrNot == "companycreate")
-                                            {
-                                                companycreatecnt += 1;
-                                            }
-                                            else
-                                            {
-                                                var str1 = PKCRMReference.UpdateCompanyNameOrMyObIdInCRM(lci.CompanyName, lci.Uid);
-                                                if (str1 == "alreadyexistmyobID")
+                                                string checkCompExistOrNot = CreateCompanyInPkCRM(lci);
+                                                if (checkCompExistOrNot == "companycreate")
                                                 {
-                                                    PKCRMReference.UpdateMyObIdInCompany(lci.CompanyName, lci.Uid, MYOBUID_UDF);
+                                                    companycreatecnt += 1;
+                                                }
+                                                else
+                                                {
+                                                    res = PKCRMReference.UpdateCompanyNameOrMyObIdInCRM(lci.CompanyName, lci.Uid);
                                                 }
                                             }
-                                            res = PKCRMReference.UpdateCompanyUDFBasedOnMYOBCustomerID(lci, cf_uri, cookie_AccessToken.Value, client_id, cftoken);
-                                            if (res == "success")
+                                            else if (IsBasedOnCompanyNameMatch)
                                             {
-                                                res = "udfdatafieldsupdate";
+                                                string checkCompExistOrNot = CreateCompanyInPkCRM(lci);
+                                                if (checkCompExistOrNot == "companycreate")
+                                                {
+                                                    companycreatecnt += 1;
+                                                }
+                                                else
+                                                {
+                                                    res = PKCRMReference.UpdateMyObIdInCompany(lci.CompanyName, lci.Uid, MYOBUID_UDF);
+                                                }
                                             }
-                                            else if (res == "sessionexpired")
+                                            else if (IsBasedOnMyObIdMatch)
                                             {
-                                                res = "sessionexpired";
+                                                //StringBuilder sb = new StringBuilder();
+                                                sb.Clear();
+                                                sb.AppendLine("Processing For Start");
+                                                sb.AppendLine("----------------------");
+                                                sb.AppendLine("CompanyName:" + lci.CompanyName);
+                                                sb.AppendLine("DisplayID:" + lci.DisplayId);
+                                                sb.AppendLine("counter:" + counter);
+                                                sb.AppendLine("");
+                                                //CommonMethod.LogFile_PK(sb, false);
+                                                string checkCompExistOrNot = CreateCompanyInPkCRM(lci);
+                                                if (checkCompExistOrNot == "companycreate")
+                                                {
+                                                    companycreatecnt += 1;
+                                                }
+                                                else
+                                                {
+                                                    var str1 = PKCRMReference.UpdateCompanyNameOrMyObIdInCRM(lci.CompanyName, lci.Uid);
+                                                    if (str1 == "alreadyexistmyobID")
+                                                    {
+                                                        PKCRMReference.UpdateMyObIdInCompany(lci.CompanyName, lci.Uid, MYOBUID_UDF);
+                                                    }
+                                                }
+                                                res = PKCRMReference.UpdateCompanyUDFBasedOnMYOBCustomerID(lci, cf_uri, cookie_AccessToken.Value, client_id, cftoken);
+                                                if (res == "success")
+                                                {
+                                                    res = "udfdatafieldsupdate";
+                                                }
+                                                else if (res == "sessionexpired")
+                                                {
+                                                    res = "sessionexpired";
+                                                }
+                                                else if (res == "error")
+                                                {
+                                                    res = "error";
+                                                    errorcnt += 1;
+                                                    lstErrorComp.Add(lci.CompanyName);
+                                                }
+                                                else
+                                                {
+                                                    res = "myobnotfound";
+                                                }
+
+                                                sb.Clear();
+                                                sb.AppendLine("Processing For Done");
+                                                sb.AppendLine("----------------------");
+                                                sb.AppendLine("Res:" + res);
+                                                sb.AppendLine("CompanyName:" + lci.CompanyName);
+                                                sb.AppendLine("DisplayID:" + lci.DisplayId);
+                                                sb.AppendLine("counter:" + counter);
+                                                sb.AppendLine("");
+                                                sb.AppendLine("========================================================================");
+                                                sb.AppendLine("");
+                                                //CommonMethod.LogFile_PK(sb, false);
+                                            }
+
+                                            if (res == "companynameupdate")
+                                            {
+                                                companynameupdatecnt += 1;
+                                            }
+                                            else if (res == "myobupdate")
+                                            {
+                                                myobupdatecnt += 1;
                                             }
                                             else
+                                            if (res == "alreadyexistmyobID")
                                             {
-                                                res = "myobnotfound";
+                                                myobalreadyexistcnt += 1;
                                             }
+                                            else
+                                            if (res == "invalidcompanyname")
+                                            {
+                                                companynotfoundcnt += 1;
+                                            }
+                                            else
+                                            if (res == "udfdatafieldsupdate")
+                                            {
+                                                udfdatafieldsupdatecnt += 1;
+                                            }
+                                            else
+                                            if (res == "myobnotfound")
+                                            {
+                                                myobnotfoundcnt += 1;
+                                            }
+                                        }
+                                        #endregion
 
-                                            sb.Clear();
-                                            sb.AppendLine("Processing For Done");
-                                            sb.AppendLine("----------------------");
-                                            sb.AppendLine("Res:" + res);
-                                            sb.AppendLine("CompanyName:" + lci.CompanyName);
-                                            sb.AppendLine("DisplayID:" + lci.DisplayId);
-                                            sb.AppendLine("counter:" + counter);
-                                            sb.AppendLine("");
-                                            sb.AppendLine("========================================================================");
-                                            sb.AppendLine("");
-                                            //CommonMethod.LogFile_PK(sb, false);
-                                        }
-
-                                        if (res == "companynameupdate")
-                                        {
-                                            companynameupdatecnt += 1;
-                                        }
-                                        else if (res == "myobupdate")
-                                        {
-                                            myobupdatecnt += 1;
-                                        }
-                                        else
-                                        if (res == "alreadyexistmyobID")
-                                        {
-                                            myobalreadyexistcnt += 1;
-                                        }
-                                        else
-                                        if (res == "invalidcompanyname")
-                                        {
-                                            companynotfoundcnt += 1;
-                                        }
-                                        else
-                                        if (res == "udfdatafieldsupdate")
-                                        {
-                                            udfdatafieldsupdatecnt += 1;
-                                        }
-                                        else
-                                        if (res == "myobnotfound")
-                                        {
-                                            myobnotfoundcnt += 1;
-                                        }
                                     }
-                                    #endregion
-
                                 }
-                            }
-                            catch (Exception ex)
-                            {
-                                CommonMethod.LogFile_PK(sb, true);
+                                catch (Exception ex)
+                                {
+                                    CommonMethod.LogFile_PK(sb, true);
+                                }
                             }
                         }
                     }
                 }
-            }
-            if (Request.IsAjaxRequest())
-            {
-                if (FilterData)
+                if (Request.IsAjaxRequest())
                 {
-                    return PartialView(listCustomerInfoModel);
-                }
-                var jsonData = new
-                {
-                    CustomerInfocnt = Customercnt,
-                    companynameupdate = companynameupdatecnt,
-                    companycreate = companycreatecnt,
-                    myobupdate = myobupdatecnt,
-                    myobalreadyexist = myobalreadyexistcnt,
-                    companynotfound = companynotfoundcnt,
-                    myobnotfound = myobnotfoundcnt,
-                    udfdatafieldsupdate = udfdatafieldsupdatecnt
-                };
+                    if (FilterData)
+                    {
+                        return PartialView(listCustomerInfoModel);
+                    }
+                    string strErrorCompList = "";
+                    if (lstErrorComp != null && lstErrorComp.Count > 0)
+                    {
+                        strErrorCompList = string.Join(", ", lstErrorComp);
+                    }
+                    var jsonData = new
+                    {
+                        CustomerInfocnt = Customercnt,
+                        companynameupdate = companynameupdatecnt,
+                        companycreate = companycreatecnt,
+                        myobupdate = myobupdatecnt,
+                        myobalreadyexist = myobalreadyexistcnt,
+                        companynotfound = companynotfoundcnt,
+                        myobnotfound = myobnotfoundcnt,
+                        udfdatafieldsupdate = udfdatafieldsupdatecnt,
+                        errorCompcnt = errorcnt,
+                        errorCompList = strErrorCompList
+                    };
 
-                return Json(jsonData, JsonRequestBehavior.AllowGet);
+                    return Json(jsonData, JsonRequestBehavior.AllowGet);
+                }
+                return PartialView(listCustomerInfoModel);
             }
-            return PartialView(listCustomerInfoModel);
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         public IOAuthKeyService setSessionTokenFor_Pk(string code = "")
         {
@@ -2843,6 +2914,6 @@ namespace EnquiryInsertToCRM.Controllers
         }
         #endregion
 
-        
+
     }
 }
