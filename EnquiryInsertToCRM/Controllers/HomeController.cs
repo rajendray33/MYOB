@@ -2325,9 +2325,23 @@ namespace EnquiryInsertToCRM.Controllers
             //6185379c-2a07-4d75-bcd5-ca2ede7a5717
             //11f266c9-71ec-45fc-ab0e-332fffb63428
 
+            ////Run Only This Start
+            //string client_id = ConfigurationManager.AppSettings["DeveloperKey"];
+            //string strUrl = "https://ar1.api.myob.com/accountright/6185379c-2a07-4d75-bcd5-ca2ede7a5717/Contact/Customer/88cf4743-43b4-4f34-8464-b70877ccbb60";
+            //string strToken = "AAEAAJOrqsudbifNlhfFpB74eBod3NTlXlDnxE3A78vgcqF9a8a0BRSrEw9v7ItRlICUXZy429saIz0Vku1p4bMkRWH1zs9e6J5kWpuonhnAOHUgA3ALmjf8LP-xuvfBEL9cq788wqg0aO-lquAZKeLMEvAvb0Wfe3ilMwwoQBtXAQXcbxhITy9_aHL1QCAhzRWT1nyZDrvGwUuwVKx5iUMtGppxGRVzQC60e6EnUWMRLJNzkYpOUOznUtv8kT8MGshn71R3La_vPOIMVLPP48a6bkMpE89ph6G6svFZKxMQfnpLMCvHaaEGy9use8pu1Ru1lR0WENrZ2v_BtuqYf0ppY9ekAQAAAAEAAGMkdsSih0ogbm1tAeYxdJsaliWx60SMpRir448tDl4EyRxrorx3wu6kMcdAI8ul1t6Tlc9Aj4hh-tHNBO3x6yu0xngz9VantQJgIGoSDiuAkk0m8G2g9Hayta74Jy6dz7X4dd-wmdRo_Y46sf4rRBqbEV2dIlOzsAA_nQYpsezBh_j7B0rWFYWZAXnWQVQiYiogPvBrQP5aZFJ1QGgulYyEf9hVxGr5SGqwMtVZAC9MthoGM5vNLXV-Pu3_Gkm4iXzQrIOb7ItwefxL0gJDfolT38JDfXnHyR8zsQCfaKgWfmr6kVMre1_CXUPNajY308Uox_Zut0UxUH9-BsxHldQSAK5VSI8vUWqkiEqfHZe5A2C-FVhSeemGQTIP_7Y2OfqYKEbGBHwYoQCP014GitOAX2158bILbUILIiEnNL2jOoc6Y_lSBP17nloPDQ7tnmdxE5BLfmrXDFPymT_RtpxJnihn5AGEtD_n6QPb9ZeTwBz0V_R86xcXOsJW0S7qceQ9yaY5DplWMLTgAM1v37zpVQxUMPaGH2ATctAGrYbB";
+            //string strKey = ConfigurationManager.AppSettings["DeveloperKey"];
+            //CustomerInfo listCustomerInfoModel = new CustomerInfo();
+            //var jt = CommonMethod.MakeAccountRightAPICall_SingleItemReturn(strUrl, strToken, strKey, "");
+            //listCustomerInfoModel = jt.ToObject<CustomerInfo>();
+            //RigonCRMReference.UpdateCompanyUDFBasedOnMYOBCustomerID(listCustomerInfoModel, "https://ar1.api.myob.com/accountright/6185379c-2a07-4d75-bcd5-ca2ede7a5717", strToken, strKey, "");
+            ////Run Only This End
+
             //Run Only This Start
-            string client_id = ConfigurationManager.AppSettings["DeveloperKey"];
-            string strUrl = "https://ar1.api.myob.com/accountright/6185379c-2a07-4d75-bcd5-ca2ede7a5717/Contact/Customer/88cf4743-43b4-4f34-8464-b70877ccbb60";
+            string redirect_uri = ConfigurationManager.AppSettings["SyncMyOb2CRM_RedirectUriForPK"];
+            string client_id = ConfigurationManager.AppSettings["DeveloperKeyFoPK"];
+            string client_secret = ConfigurationManager.AppSettings["DeveloperSecretFoPK"];
+            
+            string strUrl = "https://ar1.api.myob.com/accountright/d64e5b25-0551-4e2d-a279-1cd6d4f7e6f1/Contact/Customer/e2d8113b-cf94-42de-9a95-60a3261846b0";
             string strToken = "AAEAAJOrqsudbifNlhfFpB74eBod3NTlXlDnxE3A78vgcqF9a8a0BRSrEw9v7ItRlICUXZy429saIz0Vku1p4bMkRWH1zs9e6J5kWpuonhnAOHUgA3ALmjf8LP-xuvfBEL9cq788wqg0aO-lquAZKeLMEvAvb0Wfe3ilMwwoQBtXAQXcbxhITy9_aHL1QCAhzRWT1nyZDrvGwUuwVKx5iUMtGppxGRVzQC60e6EnUWMRLJNzkYpOUOznUtv8kT8MGshn71R3La_vPOIMVLPP48a6bkMpE89ph6G6svFZKxMQfnpLMCvHaaEGy9use8pu1Ru1lR0WENrZ2v_BtuqYf0ppY9ekAQAAAAEAAGMkdsSih0ogbm1tAeYxdJsaliWx60SMpRir448tDl4EyRxrorx3wu6kMcdAI8ul1t6Tlc9Aj4hh-tHNBO3x6yu0xngz9VantQJgIGoSDiuAkk0m8G2g9Hayta74Jy6dz7X4dd-wmdRo_Y46sf4rRBqbEV2dIlOzsAA_nQYpsezBh_j7B0rWFYWZAXnWQVQiYiogPvBrQP5aZFJ1QGgulYyEf9hVxGr5SGqwMtVZAC9MthoGM5vNLXV-Pu3_Gkm4iXzQrIOb7ItwefxL0gJDfolT38JDfXnHyR8zsQCfaKgWfmr6kVMre1_CXUPNajY308Uox_Zut0UxUH9-BsxHldQSAK5VSI8vUWqkiEqfHZe5A2C-FVhSeemGQTIP_7Y2OfqYKEbGBHwYoQCP014GitOAX2158bILbUILIiEnNL2jOoc6Y_lSBP17nloPDQ7tnmdxE5BLfmrXDFPymT_RtpxJnihn5AGEtD_n6QPb9ZeTwBz0V_R86xcXOsJW0S7qceQ9yaY5DplWMLTgAM1v37zpVQxUMPaGH2ATctAGrYbB";
             string strKey = ConfigurationManager.AppSettings["DeveloperKey"];
             CustomerInfo listCustomerInfoModel = new CustomerInfo();
@@ -2686,7 +2700,7 @@ namespace EnquiryInsertToCRM.Controllers
                             Customercnt = listCustomerInfoModel.Count;
                             sb.Clear();
                             sb.AppendLine("#5 counter=" + Customercnt);
-                            //CommonMethod.LogFile_PK(sb, false);
+                            CommonMethod.LogFile_PK(sb, false);
 
                             ViewBag.Customercnt = listCustomerInfoModel.Count;
                             sb.Clear();
@@ -2708,7 +2722,7 @@ namespace EnquiryInsertToCRM.Controllers
                                     foreach (var lci in listCustomerInfoModel)
                                     {
                                         sb.Clear();
-                                        sb.AppendLine("#9 counter:" + counter);
+                                        //sb.AppendLine("#9 counter:" + counter);
                                         //CommonMethod.LogFile_PK(sb, false);
                                         counter++;
                                         CommonMethod.RefreshTokenForPk_BasedOnCookies();
@@ -2751,7 +2765,7 @@ namespace EnquiryInsertToCRM.Controllers
                                                 sb.AppendLine("DisplayID:" + lci.DisplayId);
                                                 sb.AppendLine("counter:" + counter);
                                                 sb.AppendLine("");
-                                                //CommonMethod.LogFile_PK(sb, false);
+                                                CommonMethod.LogFile_PK(sb, false);
                                                 string checkCompExistOrNot = CreateCompanyInPkCRM(lci);
                                                 if (checkCompExistOrNot == "companycreate")
                                                 {

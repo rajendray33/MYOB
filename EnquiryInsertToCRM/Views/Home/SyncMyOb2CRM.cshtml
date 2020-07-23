@@ -357,6 +357,14 @@
                     //    });
                     //}
                     //End Commented On 08072020
+                }else if (count > 0)
+                {
+                    if ($('#dateRange').val() != null)
+                    {
+                        loadingStart();
+                        strdata += "&FilterDate=" + $('#dateRange').val() + "&allowProcess=true";
+                        getRequestForList(strdata);
+                    }
                 }
             }
 

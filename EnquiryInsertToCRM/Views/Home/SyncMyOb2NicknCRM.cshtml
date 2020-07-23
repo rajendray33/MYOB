@@ -303,8 +303,8 @@
                 if (stringFilterCompany.length > 0) {
                     loadingStart();
                     strdata += "&FilterDate=" + $('#dateRange').val() + "&FilterCustomerName=" + stringFilterCompany;
-                    getRequestForSingle(strdata, 0);                    
-                    
+                    getRequestForSingle(strdata, 0);
+
                 } else if (compList.length > 0) {
                     loadingStart();
 
@@ -321,6 +321,14 @@
                     //    console.log(custFilt1);
                     //    getRequestForList(custFilt1);
                     //});
+                } else if (count > 0)
+                {
+                    if ($('#dateRange').val() != null)
+                    {
+                        loadingStart();
+                        strdata += "&FilterDate=" + $('#dateRange').val() + "&allowProcess=true";
+                        getRequestForList(strdata);
+                    }
                 }
             }
 
